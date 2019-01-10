@@ -4086,9 +4086,11 @@ void RoomScene::doLightboxAnimation(const QString &, const QStringList &args)
         _m_animationContext->setContextProperty("hero", hero);
         _m_animationContext->setContextProperty("skill", Sanguosha->translate(skill));
         QGraphicsObject *object = qobject_cast<QGraphicsObject *>(_m_animationComponent->create(_m_animationContext));
-        connect(object, SIGNAL(animationCompleted()), object, SLOT(deleteLater())); // cannot replace?
-        addItem(object);
-        bringToFront(object);
+        if (object) {
+            connect(object, SIGNAL(animationCompleted()), object, SLOT(deleteLater())); // cannot replace?
+            addItem(object);
+            bringToFront(object);
+        }
     }
 #endif
     else {
