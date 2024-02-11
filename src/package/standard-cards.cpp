@@ -1583,7 +1583,7 @@ StandardCardPackage::StandardCardPackage()
         << new HalberdSkill;
 
     skills << new SpearEmotion;
-    related_skills.insertMulti("spear", "#spear-emotion");
+    related_skills.insert("spear", "#spear-emotion");
 
     QList<Card *> horses;
     horses << new DefensiveHorse(Card::Spade, 5)

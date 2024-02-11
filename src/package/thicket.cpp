@@ -955,7 +955,7 @@ ThicketPackage::ThicketPackage()
     General *xuhuang = new General(this, "xuhuang", "wei"); // WEI 010
     xuhuang->addSkill(new Duanliang);
     xuhuang->addSkill(new DuanliangTargetMod);
-    related_skills.insertMulti("duanliang", "#duanliang-target");
+    related_skills.insert("duanliang", "#duanliang-target");
 
     General *caopi = new General(this, "caopi$", "wei", 3); // WEI 014
     caopi->addSkill(new Xingshang);
@@ -966,13 +966,13 @@ ThicketPackage::ThicketPackage()
     menghuo->addSkill(new SavageAssaultAvoid("huoshou"));
     menghuo->addSkill(new Huoshou);
     menghuo->addSkill(new Zaiqi);
-    related_skills.insertMulti("huoshou", "#sa_avoid_huoshou");
+    related_skills.insert("huoshou", "#sa_avoid_huoshou");
 
     General *zhurong = new General(this, "zhurong", "shu", 4, false); // SHU 015
     zhurong->addSkill(new SavageAssaultAvoid("juxiang"));
     zhurong->addSkill(new Juxiang);
     zhurong->addSkill(new Lieren);
-    related_skills.insertMulti("juxiang", "#sa_avoid_juxiang");
+    related_skills.insert("juxiang", "#sa_avoid_juxiang");
 
     General *sunjian = new General(this, "sunjian", "wu"); // WU 009
     sunjian->addSkill(new Yinghun);
@@ -982,8 +982,8 @@ ThicketPackage::ThicketPackage()
     lusu->addSkill(new HaoshiViewAsSkill);
     lusu->addSkill(new HaoshiGive);
     lusu->addSkill(new Dimeng);
-    related_skills.insertMulti("haoshi", "#haoshi");
-    related_skills.insertMulti("haoshi", "#haoshi-give");
+    related_skills.insert("haoshi", "#haoshi");
+    related_skills.insert("haoshi", "#haoshi-give");
 
     General *dongzhuo = new General(this, "dongzhuo$", "qun", 8); // QUN 006
     dongzhuo->addSkill(new Jiuchi);

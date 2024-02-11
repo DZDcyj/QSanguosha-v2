@@ -702,8 +702,8 @@ JSPPackage::JSPPackage()
     jsp_huangyy->addSkill(new Linglong);
     jsp_huangyy->addSkill(new LinglongTreasure);
     jsp_huangyy->addSkill(new LinglongMax);
-    related_skills.insertMulti("linglong", "#linglong-horse");
-    related_skills.insertMulti("linglong", "#linglong-treasure");
+    related_skills.insert("linglong", "#linglong-horse");
+    related_skills.insert("linglong", "#linglong-treasure");
 
     skills << new Nuzhan;
 

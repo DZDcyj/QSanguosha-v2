@@ -1258,12 +1258,12 @@ YJCM2014Package::YJCM2014Package()
     caifuren->addSkill(new Qieting);
     caifuren->addSkill(new QietingRecord);
     caifuren->addSkill(new Xianzhou);
-    related_skills.insertMulti("qieting", "#qieting-record");
+    related_skills.insert("qieting", "#qieting-record");
 
     General *caozhen = new General(this, "caozhen", "wei"); // YJ 302
     caozhen->addSkill(new Sidi);
     caozhen->addSkill(new SidiTargetMod);
-    related_skills.insertMulti("sidi", "#sidi-target");
+    related_skills.insert("sidi", "#sidi-target");
 
     General *chenqun = new General(this, "chenqun", "wei", 3); // YJ 303
     chenqun->addSkill(new Dingpin);
@@ -1279,15 +1279,15 @@ YJCM2014Package::YJCM2014Package()
     hanhaoshihuan->addSkill(new ShenduanTargetMod);
     hanhaoshihuan->addSkill(new Yonglve);
     hanhaoshihuan->addSkill(new YonglveSlash);
-    related_skills.insertMulti("shenduan", "#shenduan");
-    related_skills.insertMulti("shenduan", "#shenduan-target");
-    related_skills.insertMulti("yonglve", "#yonglve");
+    related_skills.insert("shenduan", "#shenduan");
+    related_skills.insert("shenduan", "#shenduan-target");
+    related_skills.insert("yonglve", "#yonglve");
 
     General *jvshou = new General(this, "jvshou", "qun", 3); // YJ 306
     jvshou->addSkill(new Jianying);
     jvshou->addSkill(new Shibei);
     jvshou->addSkill(new ShibeiRecord);
-    related_skills.insertMulti("shibei", "#shibei-record");
+    related_skills.insert("shibei", "#shibei-record");
 
     General *sunluban = new General(this, "sunluban", "wu", 3, false); // YJ 307
     sunluban->addSkill(new Zenhui);
@@ -1297,8 +1297,8 @@ YJCM2014Package::YJCM2014Package()
     wuyi->addSkill(new Benxi);
     wuyi->addSkill(new BenxiTargetMod);
     wuyi->addSkill(new BenxiDistance);
-    related_skills.insertMulti("benxi", "#benxi-target");
-    related_skills.insertMulti("benxi", "#benxi-dist");
+    related_skills.insert("benxi", "#benxi-target");
+    related_skills.insert("benxi", "#benxi-dist");
 
     General *zhangsong = new General(this, "zhangsong", "shu", 3); // YJ 309
     zhangsong->addSkill(new Qiangzhi);

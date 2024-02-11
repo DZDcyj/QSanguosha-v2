@@ -1134,7 +1134,7 @@ Special1v1Package::Special1v1Package()
     General *kof_nos_zhangliao = new General(this, "kof_nos_zhangliao", "wei");
     kof_nos_zhangliao->addSkill(new KOFTuxi);
     kof_nos_zhangliao->addSkill(new KOFTuxiAct);
-    related_skills.insertMulti("koftuxi", "#koftuxi");
+    related_skills.insert("koftuxi", "#koftuxi");
 
     General *kof_nos_xuchu = new General(this, "kof_nos_xuchu", "wei");
     kof_nos_xuchu->addSkill("nosluoyi");
@@ -1160,7 +1160,7 @@ Special1v1Package::Special1v1Package()
     kof_nos_huangyueying->addSkill("nosjizhi");
     kof_nos_huangyueying->addSkill(new Cangji);
     kof_nos_huangyueying->addSkill(new CangjiInstall);
-    related_skills.insertMulti("cangji", "#cangji-install");
+    related_skills.insert("cangji", "#cangji-install");
 
     General *kof_huangzhong = new General(this, "kof_huangzhong", "shu");
     kof_huangzhong->addSkill(new KOFLiegong);
@@ -1175,7 +1175,7 @@ Special1v1Package::Special1v1Package()
     kof_menghuo->addSkill(new Manyi);
     kof_menghuo->addSkill(new ManyiAvoid);
     kof_menghuo->addSkill("zaiqi");
-    related_skills.insertMulti("manyi", "#manyi-avoid");
+    related_skills.insert("manyi", "#manyi-avoid");
 
     General *kof_zhurong = new General(this, "kof_zhurong", "shu", 4, false);
     kof_zhurong->addSkill("manyi");
@@ -1185,7 +1185,7 @@ Special1v1Package::Special1v1Package()
     kof_nos_lvmeng->addSkill(new Shenju);
     kof_nos_lvmeng->addSkill(new Botu);
     kof_nos_lvmeng->addSkill(new BotuCount);
-    related_skills.insertMulti("botu", "#botu-count");
+    related_skills.insert("botu", "#botu-count");
 
     General *kof_nos_daqiao = new General(this, "kof_nos_daqiao", "wu", 3, false);
     kof_nos_daqiao->addSkill("nosguose");
@@ -1225,7 +1225,7 @@ Special1v1ExtPackage::Special1v1ExtPackage()
     hansui->addSkill("mashu");
     hansui->addSkill(new Niluan);
     hansui->addSkill(new NiluanRecord);
-    related_skills.insertMulti("niluan", "#niluan-record");
+    related_skills.insert("niluan", "#niluan-record");
 
     addMetaObject<MouzhuCard>();
 }

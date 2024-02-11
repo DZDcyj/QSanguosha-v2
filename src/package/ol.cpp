@@ -3109,7 +3109,7 @@ OLPackage::OLPackage()
     sunru->addSkill(new Qingyi);
     sunru->addSkill(new SlashNoDistanceLimitSkill("qingyi"));
     sunru->addSkill(new Shixin);
-    related_skills.insertMulti("qingyi", "#qingyi-slash-ndl");
+    related_skills.insert("qingyi", "#qingyi-slash-ndl");
 
     General *liuzan = new General(this, "liuzan", "wu");
     liuzan->addSkill(new Fenyin);
@@ -3119,17 +3119,17 @@ OLPackage::OLPackage()
     lifeng->addSkill(new TunchuEffect);
     lifeng->addSkill(new Tunchu);
     lifeng->addSkill(new Shuliang);
-    related_skills.insertMulti("tunchu", "#tunchu-effect");
-    related_skills.insertMulti("tunchu", "#tunchu-disable");
+    related_skills.insert("tunchu", "#tunchu-effect");
+    related_skills.insert("tunchu", "#tunchu-disable");
 
     General *zhuling = new General(this, "zhuling", "wei");
     zhuling->addSkill(new Zhanyi);
     zhuling->addSkill(new ZhanyiDiscard2);
     zhuling->addSkill(new ZhanyiNoDistanceLimit);
     zhuling->addSkill(new ZhanyiRemove);
-    related_skills.insertMulti("zhanyi", "#zhanyi-basic");
-    related_skills.insertMulti("zhanyi", "#zhanyi-equip");
-    related_skills.insertMulti("zhanyi", "#zhanyi-trick");
+    related_skills.insert("zhanyi", "#zhanyi-basic");
+    related_skills.insert("zhanyi", "#zhanyi-equip");
+    related_skills.insert("zhanyi", "#zhanyi-trick");
 
     General *zhugeguo = new General(this, "zhugeguo", "shu", 3, false);
     zhugeguo->addSkill(new OlYuhua);
@@ -3154,7 +3154,7 @@ OLPackage::OLPackage()
     ol_madai->addSkill("mashu");
     ol_madai->addSkill(new OlQianxi);
     ol_madai->addSkill(new OlQianxiClear);
-    related_skills.insertMulti("olqianxi", "#olqianxi-clear");
+    related_skills.insert("olqianxi", "#olqianxi-clear");
 
     General *ol_wangyi = new General(this, "ol_wangyi", "wei", 3, false);
     ol_wangyi->addSkill("zhenlie");
@@ -3179,7 +3179,7 @@ OLPackage::OLPackage()
     General *ol_xusheng = new General(this, "ol_xusheng", "wu");
     ol_xusheng->addSkill(new OlPojun);
     ol_xusheng->addSkill(new FakeMoveSkill("olpojun"));
-    related_skills.insertMulti("olpojun", "#olpojun-fake-move");
+    related_skills.insert("olpojun", "#olpojun-fake-move");
 
     General *ol_x1aohu = new General(this, "ol_sun1uyu", "wu", 3, false);
     ol_x1aohu->addSkill(new OlMeibu2);
@@ -3190,8 +3190,8 @@ OLPackage::OLPackage()
     shixie->addSkill(new BiluanDist);
     shixie->addSkill(new Lixia);
     shixie->addSkill(new LixiaDist);
-    related_skills.insertMulti("biluan", "#biluan-dist");
-    related_skills.insertMulti("lixia", "#lixia-dist");
+    related_skills.insert("biluan", "#biluan-dist");
+    related_skills.insert("lixia", "#lixia-dist");
 
     General *zhanglu = new General(this, "zhanglu", "qun", 3);
     zhanglu->addSkill(new Yishe);
@@ -3202,7 +3202,7 @@ OLPackage::OLPackage()
     mayl->addSkill("mashu");
     mayl->addSkill(new Fengpo);
     mayl->addSkill(new FengpoRecord);
-    related_skills.insertMulti("fengpo", "#fengpo-record");
+    related_skills.insert("fengpo", "#fengpo-record");
 
     General *olDB = new General(this, "ol_caiwenji", "wei", 3, false);
     olDB->addSkill(new Chenqing);

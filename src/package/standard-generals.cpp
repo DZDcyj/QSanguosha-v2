@@ -2719,18 +2719,18 @@ void StandardPackage::addGenerals()
     General *zhangliao = new General(this, "zhangliao", "wei"); // WEI 004
     zhangliao->addSkill(new Tuxi);
     zhangliao->addSkill(new TuxiAct);
-    related_skills.insertMulti("tuxi", "#tuxi");
+    related_skills.insert("tuxi", "#tuxi");
 
     General *xuchu = new General(this, "xuchu", "wei"); // WEI 005
     xuchu->addSkill(new Luoyi);
     xuchu->addSkill(new LuoyiBuff);
-    related_skills.insertMulti("luoyi", "#luoyi");
+    related_skills.insert("luoyi", "#luoyi");
 
     General *guojia = new General(this, "guojia", "wei", 3); // WEI 006
     guojia->addSkill(new Tiandu);
     guojia->addSkill(new Yiji);
     guojia->addSkill(new YijiObtain);
-    related_skills.insertMulti("yiji", "#yiji");
+    related_skills.insert("yiji", "#yiji");
 
     General *zhenji = new General(this, "zhenji", "wei", 3, false); // WEI 007
     zhenji->addSkill(new Qingguo);
@@ -2757,7 +2757,7 @@ void StandardPackage::addGenerals()
     zhugeliang->addSkill(new Guanxing);
     zhugeliang->addSkill(new Kongcheng);
     zhugeliang->addSkill(new KongchengEffect);
-    related_skills.insertMulti("kongcheng", "#kongcheng-effect");
+    related_skills.insert("kongcheng", "#kongcheng-effect");
 
     General *zhaoyun = new General(this, "zhaoyun", "shu"); // SHU 005
     zhaoyun->addSkill(new Longdan);
@@ -2767,7 +2767,7 @@ void StandardPackage::addGenerals()
     machao->addSkill(new Mashu);
     machao->addSkill(new Tieji);
     machao->addSkill(new TiejiClear);
-    related_skills.insertMulti("tieji", "#tieji-clear");
+    related_skills.insert("tieji", "#tieji-clear");
 
     General *huangyueying = new General(this, "huangyueying", "shu", 3, false); // SHU 007
     huangyueying->addSkill(new Jizhi);
@@ -2796,14 +2796,14 @@ void StandardPackage::addGenerals()
     huanggai->addSkill(new Zhaxiang);
     huanggai->addSkill(new ZhaxiangRedSlash);
     huanggai->addSkill(new ZhaxiangTargetMod);
-    related_skills.insertMulti("zhaxiang", "#zhaxiang");
-    related_skills.insertMulti("zhaxiang", "#zhaxiang-target");
+    related_skills.insert("zhaxiang", "#zhaxiang");
+    related_skills.insert("zhaxiang", "#zhaxiang-target");
 
     General *zhouyu = new General(this, "zhouyu", "wu", 3); // WU 005
     zhouyu->addSkill(new Yingzi);
     zhouyu->addSkill(new YingziMaxCards);
     zhouyu->addSkill(new Fanjian);
-    related_skills.insertMulti("yingzi", "#yingzi");
+    related_skills.insert("yingzi", "#yingzi");
 
     General *daqiao = new General(this, "daqiao", "wu", 3, false); // WU 006
     daqiao->addSkill(new Guose);
@@ -2837,7 +2837,7 @@ void StandardPackage::addGenerals()
     st_yuanshu->addSkill(new Wangzun);
     st_yuanshu->addSkill(new WangzunMaxCards);
     st_yuanshu->addSkill(new Tongji);
-    related_skills.insertMulti("wangzun", "#wangzun-maxcard");
+    related_skills.insert("wangzun", "#wangzun-maxcard");
 
     General *st_gongsunzan = new General(this, "st_gongsunzan", "qun"); // QUN 026
     st_gongsunzan->addSkill(new Qiaomeng);
@@ -3209,19 +3209,19 @@ TestPackage::TestPackage()
     gaodayihao->addSkill(new GdJuejingSkipDraw);
     gaodayihao->addSkill(new GdLonghun);
     gaodayihao->addSkill(new GdLonghunDuojian);
-    related_skills.insertMulti("gdjuejing", "#gdjuejing");
-    related_skills.insertMulti("gdlonghun", "#gdlonghun-duojian");
+    related_skills.insert("gdjuejing", "#gdjuejing");
+    related_skills.insert("gdlonghun", "#gdlonghun-duojian");
 
     General *super_yuanshu = new General(this, "super_yuanshu", "qun", 4, true, true);
     super_yuanshu->addSkill(new SuperYongsi);
     super_yuanshu->addSkill(new MarkAssignSkill("@yongsi_test", 4));
-    related_skills.insertMulti("super_yongsi", "#@yongsi_test-4");
+    related_skills.insert("super_yongsi", "#@yongsi_test-4");
     super_yuanshu->addSkill("weidi");
 
     General *super_caoren = new General(this, "super_caoren", "wei", 4, true, true);
     super_caoren->addSkill(new SuperJushou);
     super_caoren->addSkill(new MarkAssignSkill("@jushou_test", 5));
-    related_skills.insertMulti("super_jushou", "#@jushou_test-5");
+    related_skills.insert("super_jushou", "#@jushou_test-5");
 
     General *nobenghuai_dongzhuo = new General(this, "nobenghuai_dongzhuo$", "qun", 4, true, true);
     nobenghuai_dongzhuo->addSkill("jiuchi");
@@ -3235,8 +3235,8 @@ TestPackage::TestPackage()
 
     skills << new SuperMaxCards << new SuperOffensiveDistance << new SuperDefensiveDistance;
     skills << new Gepi << new GepiReset << new GepiInv;
-    related_skills.insertMulti("gepi", "#gepi");
-    related_skills.insertMulti("gepi", "#gepi-inv");
+    related_skills.insert("gepi", "#gepi");
+    related_skills.insert("gepi", "#gepi-inv");
 }
 
 ADD_PACKAGE(Test)

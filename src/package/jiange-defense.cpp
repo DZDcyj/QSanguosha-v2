@@ -996,7 +996,7 @@ JianGeDefensePackage::JianGeDefensePackage()
     Soul *jg_soul_zhugeliang = new Soul(this, "jg_soul_zhugeliang", "shu", 4, true, true);
     jg_soul_zhugeliang->addSkill(new JGBiantian);
     jg_soul_zhugeliang->addSkill("bazhen");
-    related_skills.insertMulti("jgbiantian", "#qixing-clear");
+    related_skills.insert("jgbiantian", "#qixing-clear");
 
     Soul *jg_soul_huangyueying = new Soul(this, "jg_soul_huangyueying", "shu", 4, false, true);
     jg_soul_huangyueying->addSkill(new JGGongshen);
@@ -1012,7 +1012,7 @@ JianGeDefensePackage::JianGeDefensePackage()
     jg_machine_yunpingqinglong->addSkill("jgjiguan");
     jg_machine_yunpingqinglong->addSkill(new JGMojian);
     jg_machine_yunpingqinglong->addSkill(new JGMojianProhibit);
-    related_skills.insertMulti("jgmojian", "#jgmojian-prohibit");
+    related_skills.insert("jgmojian", "#jgmojian-prohibit");
 
     Machine *jg_machine_jileibaihu = new Machine(this, "jg_machine_jileibaihu", "shu", 4, true, true);
     jg_machine_jileibaihu->addSkill("jgjiguan");

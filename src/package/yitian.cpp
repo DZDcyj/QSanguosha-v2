@@ -2130,8 +2130,8 @@ YitianPackage::YitianPackage()
     jinxuandi->addSkill(new WulingEffect);
     jinxuandi->addSkill(new WulingExEffect);
 
-    related_skills.insertMulti("wuling", "#wuling-effect");
-    related_skills.insertMulti("wuling", "#wuling-ex-effect");
+    related_skills.insert("wuling", "#wuling-effect");
+    related_skills.insert("wuling", "#wuling-ex-effect");
 
     General *xiahoujuan = new General(this, "xiahoujuan", "wei", 3, false);
     xiahoujuan->addSkill(new Lianli);
@@ -2141,10 +2141,10 @@ YitianPackage::YitianPackage()
     xiahoujuan->addSkill(new Tongxin);
     xiahoujuan->addSkill(new Skill("liqian", Skill::Compulsory));
 
-    related_skills.insertMulti("lianli", "#lianli-slash");
-    related_skills.insertMulti("lianli", "#lianli-jink");
-    related_skills.insertMulti("lianli", "#lianli-clear");
-    //related_skills.insertMulti("lianli", "liqian");
+    related_skills.insert("lianli", "#lianli-slash");
+    related_skills.insert("lianli", "#lianli-jink");
+    related_skills.insert("lianli", "#lianli-clear");
+    //related_skills.insert("lianli", "liqian");
 
     General *caizhaoji = new General(this, "caizhaoji", "qun", 3, false);
     caizhaoji->addSkill(new Guihan);
@@ -2159,7 +2159,7 @@ YitianPackage::YitianPackage()
     zhongshiji->addSkill(new Gongmou);
     zhongshiji->addSkill(new GongmouExchange);
 
-    related_skills.insertMulti("gongmou", "#gongmou-exchange");
+    related_skills.insert("gongmou", "#gongmou-exchange");
 
     General *jiangboyue = new General(this, "jiangboyue", "shu");
     jiangboyue->addSkill(new Lexue);
@@ -2177,7 +2177,7 @@ YitianPackage::YitianPackage()
     dengshizai->addSkill(new Zhenggong);
     dengshizai->addSkill(new Toudu);
     /*dengshizai->addSkill(new SlashNoDistanceLimitSkill("toudu"));
-    related_skills.insertMulti("toudu", "#toudu-slash-ndl");*/
+    related_skills.insert("toudu", "#toudu-slash-ndl");*/
 
     General *zhanggongqi = new General(this, "zhanggongqi", "qun", 3);
     zhanggongqi->addSkill(new YtYishe);

@@ -1396,7 +1396,7 @@ MountainPackage::MountainPackage()
     dengai->addSkill(new TuntianDistance);
     dengai->addSkill(new Zaoxian);
     dengai->addRelateSkill("jixi");
-    related_skills.insertMulti("tuntian", "#tuntian-dist");
+    related_skills.insert("tuntian", "#tuntian-dist");
 
     General *jiangwei = new General(this, "jiangwei", "shu"); // SHU 012
     jiangwei->addSkill(new Tiaoxin);
@@ -1421,8 +1421,8 @@ MountainPackage::MountainPackage()
     zuoci->addSkill(new HuashenSelect);
     zuoci->addSkill(new HuashenClear);
     zuoci->addSkill(new Xinsheng);
-    related_skills.insertMulti("huashen", "#huashen-select");
-    related_skills.insertMulti("huashen", "#huashen-clear");
+    related_skills.insert("huashen", "#huashen-select");
+    related_skills.insert("huashen", "#huashen-clear");
 
     General *caiwenji = new General(this, "caiwenji", "qun", 3, false); // QUN 012
     caiwenji->addSkill(new Beige);

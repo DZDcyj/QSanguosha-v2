@@ -1061,13 +1061,13 @@ YJCM2012Package::YJCM2012Package()
     General *caozhang = new General(this, "caozhang", "wei"); // YJ 102
     caozhang->addSkill(new Jiangchi);
     caozhang->addSkill(new JiangchiTargetMod);
-    related_skills.insertMulti("jiangchi", "#jiangchi-target");
+    related_skills.insert("jiangchi", "#jiangchi-target");
 
     General *chengpu = new General(this, "chengpu", "wu"); // YJ 103
     chengpu->addSkill(new Lihuo);
     chengpu->addSkill(new LihuoTargetMod);
     chengpu->addSkill(new Chunlao);
-    related_skills.insertMulti("lihuo", "#lihuo-target");
+    related_skills.insert("lihuo", "#lihuo-target");
 
     General *guanxingzhangbao = new General(this, "guanxingzhangbao", "shu"); // YJ 104
     guanxingzhangbao->addSkill(new Fuhun);
@@ -1091,7 +1091,7 @@ YJCM2012Package::YJCM2012Package()
     madai->addSkill("mashu");
     madai->addSkill(new Qianxi);
     madai->addSkill(new QianxiClear);
-    related_skills.insertMulti("qianxi", "#qianxi-clear");
+    related_skills.insert("qianxi", "#qianxi-clear");
 
     General *wangyi = new General(this, "wangyi", "wei", 3, false); // YJ 110
     wangyi->addSkill(new Zhenlie);

@@ -829,7 +829,7 @@ HegemonyPackage::HegemonyPackage()
     General *jiling = new General(this, "jiling", "qun", 4); // QUN 015
     jiling->addSkill(new Shuangren);
     jiling->addSkill(new SlashNoDistanceLimitSkill("shuangren"));
-    related_skills.insertMulti("shuangren", "#shuangren-slash-ndl");
+    related_skills.insert("shuangren", "#shuangren-slash-ndl");
 
     General *tianfeng = new General(this, "tianfeng", "qun", 3); // QUN 016
     tianfeng->addSkill(new Sijian);
@@ -843,8 +843,8 @@ HegemonyPackage::HegemonyPackage()
     zoushi->addSkill(new HuoshuiInvalidity);
     zoushi->addSkill(new Qingcheng);
     zoushi->addSkill(new QingchengInvalidity);
-    related_skills.insertMulti("huoshui", "#huoshui-inv");
-    related_skills.insertMulti("qingcheng", "#qingcheng-inv");
+    related_skills.insert("huoshui", "#huoshui-inv");
+    related_skills.insert("qingcheng", "#qingcheng-inv");
 
     General *heg_caopi = new General(this, "heg_caopi$", "wei", 3, true, true); // WEI 014 G
     heg_caopi->addSkill("fangzhu");
