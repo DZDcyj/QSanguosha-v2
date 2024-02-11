@@ -16,6 +16,9 @@ CONFIG += precompile_header
 PRECOMPILED_HEADER = src/pch.h
 DEFINES += USING_PCH
 
+CONFIG += debug
+OBJECTS_DIR = build
+
 SOURCES += \
     src/main.cpp \
     src/client/aux-skills.cpp \
