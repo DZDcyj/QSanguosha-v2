@@ -906,11 +906,11 @@ void GameRule::acquireBossSkills(ServerPlayer *player, int level) const
     QStringList skills = Config.BossEndlessSkills;
     int num = qBound(qMin(5, skills.length()), 5 + level - Config.BossLevel, qMin(10, skills.length()));
     for (int i = 0; i < num; i++) {
-        QString skill = skills.at(qrand() % skills.length());
+        QString skill = skills.at(QRandomGenerator::global()->bounded(skills.length()));
         skills.removeOne(skill);
         if (skill.contains("+")) {
             QStringList subskills = skill.split("+");
-            skill = subskills.at(qrand() % subskills.length());
+            skill = subskills.at(QRandomGenerator::global()->bounded(subskills.length()));
         }
         player->getRoom()->acquireSkill(player, skill);
     }

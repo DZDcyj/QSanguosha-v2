@@ -457,7 +457,7 @@ public:
                             }
                         }
                         Q_ASSERT(!victims.isEmpty());
-                        extra->tag["collateralVictim"] = QVariant::fromValue((victims.at(qrand() % victims.length() - 1)));
+                        extra->tag["collateralVictim"] = QVariant::fromValue((victims.at(QRandomGenerator::global()->bounded(victims.length()) - 1)));
                     }
                 }
                 use.to.append(extra);

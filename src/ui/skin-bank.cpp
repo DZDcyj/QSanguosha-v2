@@ -551,7 +551,7 @@ QString IQSanComponentSkin::getRandomAudioFileName(const QString &key) const
 {
     QStringList audios = getAudioFileNames(key);
     if (audios.isEmpty()) return QString();
-    int r = qrand() % audios.length();
+    int r = QRandomGenerator::global()->bounded(audios.length());
     return audios[r];
 }
 

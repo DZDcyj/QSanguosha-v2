@@ -2793,7 +2793,7 @@ public:
                     room->sendCompulsoryTriggerLog(player, objectName());
                     if (!room->askForDiscard(player, objectName(), 1, 1, false, true, "@canshi-discard")) {
                         QList<const Card *> cards = player->getCards("he");
-                        const Card *c = cards.at(qrand() % cards.length());
+                        const Card *c = cards.at(QRandomGenerator::global()->bounded(cards.length()));
                         room->throwCard(c, player);
                     }
                 }

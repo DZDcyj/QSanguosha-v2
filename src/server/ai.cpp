@@ -232,10 +232,10 @@ QString TrustAI::askForKingdom()
     ServerPlayer *lord = room->getLord();
     QStringList kingdoms = Sanguosha->getKingdoms();
     kingdoms.removeOne("god");
-    if (!lord) return kingdoms.at(qrand() % kingdoms.length());
+    if (!lord) return kingdoms.at(QRandomGenerator::global()->bounded(kingdoms.length()));
 
     switch (self->getRoleEnum()) {
-    case Player::Lord: role = kingdoms.at(qrand() % kingdoms.length()); break;
+    case Player::Lord: role = kingdoms.at(QRandomGenerator::global()->bounded(kingdoms.length())); break;
     case Player::Renegade:
     case Player::Rebel: {
         if ((lord->hasLordSkill("xueyi") && self->getRoleEnum() == Player::Rebel) || lord->hasLordSkill("shichou"))
@@ -251,7 +251,7 @@ QString TrustAI::askForKingdom()
             role = lord->getGeneral2()->getKingdom();
         else {
             if (lord->hasSkill("yongsi")) kingdoms.removeOne(lord->getKingdom());
-            role = kingdoms.at(qrand() % kingdoms.length());
+            role = kingdoms.at(QRandomGenerator::global()->bounded(kingdoms.length()));
         }
         break;
     }
@@ -270,7 +270,7 @@ bool TrustAI::askForSkillInvoke(const QString &, const QVariant &)
 QString TrustAI::askForChoice(const QString &, const QString &choice, const QVariant &)
 {
     QStringList choices = choice.split("+");
-    return choices.at(qrand() % choices.length());
+    return choices.at(QRandomGenerator::global()->bounded(choices.length()));
 }
 
 QList<int> TrustAI::askForDiscard(const QString &, int, int min_num, bool optional, bool include_equip, const QString &pattern)
@@ -348,7 +348,7 @@ ServerPlayer *TrustAI::askForPlayerChosen(const QList<ServerPlayer *> &targets, 
 {
     Q_UNUSED(reason);
 
-    int r = qrand() % targets.length();
+    int r = QRandomGenerator::global()->bounded(targets.length());
     return targets.at(r);
 }
 

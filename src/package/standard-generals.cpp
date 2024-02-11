@@ -449,7 +449,7 @@ public:
         const Card *card = room->askForCard(player, forced ? "..!" : "..", prompt, QVariant::fromValue(judge), Card::MethodResponse, judge->who, true);
         if (forced && card == NULL) {
             QList<const Card *> c = player->getCards("he");
-            card = c.at(qrand() % c.length());
+            card = c.at(QRandomGenerator::global()->bounded(c.length()));
         }
 
         if (card) {

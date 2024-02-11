@@ -1219,7 +1219,7 @@ int Room::askForCardChosen(ServerPlayer *player, ServerPlayer *who, const QStrin
                     }
                 }
                 Q_ASSERT(!cards.isEmpty());
-                card_id = cards.at(qrand() % cards.length())->getId();
+                card_id = cards.at(QRandomGenerator::global()->bounded(cards.length()))->getId();
             }
         } else {
             JsonArray arg;
@@ -1242,7 +1242,7 @@ int Room::askForCardChosen(ServerPlayer *player, ServerPlayer *who, const QStrin
                     }
                 }
                 Q_ASSERT(!cards.isEmpty());
-                card_id = cards.at(qrand() % cards.length())->getId();
+                card_id = cards.at(QRandomGenerator::global()->bounded(cards.length()))->getId();
             } else
                 card_id = clientReply.toInt();
 
@@ -2806,7 +2806,7 @@ void Room::chooseGeneralsOfJianGeDefenseMode()
             QString result = _chooseDefaultGeneral(player);
             if (player->property("jiange_defense_type").toString() != "general") { // randomly chosen
                 QStringList selected = player->getSelected();
-                result = selected.at(qrand() % selected.length());
+                result = selected.at(QRandomGenerator::global()->bounded(selected.length()));
             }
             _setPlayerGeneral(player, result, true);
         }
@@ -5361,7 +5361,7 @@ ServerPlayer *Room::askForPlayerChosen(ServerPlayer *player, const QList<ServerP
     if (choice && !targets.contains(choice))
         choice = NULL;
     if (choice == NULL && !optional)
-        choice = targets.at(qrand() % targets.length());
+        choice = targets.at(QRandomGenerator::global()->bounded(targets.length()));
     if (choice) {
         if (notify_skill) {
             notifySkillInvoked(player, skillName);
@@ -5403,7 +5403,7 @@ QString Room::askForGeneral(ServerPlayer *player, const QStringList &generals, Q
         return generals.first();
 
     if (default_choice.isEmpty())
-        default_choice = generals.at(qrand() % generals.length());
+        default_choice = generals.at(QRandomGenerator::global()->bounded(generals.length()));
 
     if (player->isOnline()) {
         JsonArray options = JsonUtils::toJsonArray(generals).value<JsonArray>();
