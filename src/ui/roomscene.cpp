@@ -1428,7 +1428,7 @@ void RoomScene::keyReleaseEvent(QKeyEvent *event)
             doCancelButton();
         else if (discard_button->isEnabled())
             doDiscardButton();
-    }
+    } break;
 
     case Qt::Key_0:
     case Qt::Key_1:
@@ -1440,7 +1440,7 @@ void RoomScene::keyReleaseEvent(QKeyEvent *event)
             dashboard->selectEquip(position);
             break;
         }
-    }
+    } [[fallthrough]];
     case Qt::Key_5:
     case Qt::Key_6:
     case Qt::Key_7:
