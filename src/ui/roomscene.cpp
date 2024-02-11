@@ -14,7 +14,6 @@
 #include "pixmapanimation.h"
 #include "audio.h"
 #include "skin-bank.h"
-#include "wind.h"
 #include "record-analysis.h"
 #include "mountain.h"
 #include "bubblechatbox.h"
@@ -44,7 +43,7 @@ void RoomScene::resetPiles()
 #include "qsanbutton.h"
 
 RoomScene::RoomScene(QMainWindow *main_window)
-    : main_window(main_window), game_started(false), m_tableBgPixmap(1, 1), m_tableBgPixmapOrig(1, 1)
+    : main_window(main_window), m_tableBgPixmap(1, 1), m_tableBgPixmapOrig(1, 1), game_started(false)
 {
     setParent(main_window);
 
@@ -1072,7 +1071,7 @@ void RoomScene::arrangeSeats(const QList<const ClientPlayer *> &seats)
         const Player *player = seats.at(i);
         for (int j = i; j < photos.length(); j++) {
             if (photos.at(j)->getPlayer() == player) {
-                photos.swap(i, j);
+                photos.swapItemsAt(i, j);
                 break;
             }
         }
