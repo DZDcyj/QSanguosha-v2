@@ -315,7 +315,7 @@ int TrustAI::askForAG(const QList<int> &card_ids, bool refusable, const QString 
     if (refusable)
         return -1;
 
-    int r = qrand() % card_ids.length();
+    int r = QRandomGenerator::global()->bounded(card_ids.length());
     return card_ids.at(r);
 }
 

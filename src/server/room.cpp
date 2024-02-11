@@ -1017,7 +1017,7 @@ QString Room::askForChoice(ServerPlayer *player, const QString &skill_name, cons
     }
 
     if (!validChoices.contains(answer))
-        answer = validChoices.at(qrand() % validChoices.length());
+        answer = validChoices.at(QRandomGenerator::global()->bounded(validChoices.length()));
 
     QVariant decisionData = QVariant::fromValue("skillChoice:" + skill_name + ":" + answer);
     thread->trigger(ChoiceMade, this, player, decisionData);

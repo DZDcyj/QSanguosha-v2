@@ -842,7 +842,7 @@ void GameRule::changeGeneralBossMode(ServerPlayer *player) const
             if (Config.value("OptionalBoss", false).toBool())
                 general = room->askForGeneral(player, boss_generals);
             else
-                general = boss_generals.at(qrand() % boss_generals.length());
+                general = boss_generals.at(QRandomGenerator::global()->bounded(boss_generals.length()));
         }
     } else {
         general = (QRandomGenerator::global()->bounded(2) == 0) ? "sujiang" : "sujiangf";

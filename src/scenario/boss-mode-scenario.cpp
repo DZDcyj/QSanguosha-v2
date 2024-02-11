@@ -294,7 +294,7 @@ public:
             QString new_lord;
 
             do {
-                int seed = qrand() % all_generals.length();
+                int seed = QRandomGenerator::global()->bounded(all_generals.length());
                 new_lord = all_generals[seed];
             } while (boss_banlist.contains(new_lord));
 
@@ -325,7 +325,7 @@ public:
         do {
             int index;
             do {
-                index = qrand() % all_skills.length();
+                index = QRandomGenerator::global()->bounded(all_skills.length());
             } while (player->isLord() && boss_skillbanned.contains(all_skills[index]));
             got_skill = all_skills[index];
 

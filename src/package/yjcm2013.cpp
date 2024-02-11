@@ -448,7 +448,7 @@ public:
                         }
                     }
                     if (extra == NULL) {
-                        extra = available_targets.at(qrand() % available_targets.length() - 1);
+                        extra = available_targets.at(QRandomGenerator::global()->bounded(available_targets.length()) - 1);
                         QList<ServerPlayer *> victims;
                         foreach (ServerPlayer *p, room->getOtherPlayers(extra)) {
                             if (extra->canSlash(p)
