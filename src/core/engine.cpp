@@ -543,7 +543,7 @@ QStringList Engine::getBanPackages() const
     if (qApp->arguments().contains("-server"))
         return Config.BanPackages;
     else
-        return ban_package.toList();
+        return ban_package.values();
 }
 
 QList<const Package *> Engine::getPackages() const
@@ -1256,25 +1256,30 @@ QStringList Engine::getLimitedGeneralNames(const QString &kingdom) const
 QStringList Engine::getRandomGenerals(int count, const QSet<QString> &ban_set, const QString &kingdom) const
 {
     QStringList all_generals = getLimitedGeneralNames(kingdom);
-    QSet<QString> general_set = all_generals.toSet();
+    QSet<QString> general_set = {all_generals.begin(), all_generals.end()};
 
     Q_ASSERT(all_generals.count() >= count);
 
+    auto f_subtract = [&general_set](const char* name) {
+        auto the_list = Config.value(name, "").toStringList();
+        QSet<QString> the_set  = {the_list.begin(), the_list.end()};
+        general_set = general_set.subtract(the_set);
+    };
     if (Config.EnableBasara)
-        general_set = general_set.subtract(Config.value("Banlist/Basara", "").toStringList().toSet());
+        f_subtract("Banlist/Basara");
     if (Config.EnableHegemony)
-        general_set = general_set.subtract(Config.value("Banlist/Hegemony", "").toStringList().toSet());
+        f_subtract("Banlist/Hegemony");
     if (ServerInfo.GameMode == "04_boss")
-        general_set = general_set.subtract(Config.value("Banlist/BossMode", "").toStringList().toSet());
+        f_subtract("Banlist/BossMode");
 
     if (isNormalGameMode(ServerInfo.GameMode)
         || ServerInfo.GameMode.contains("_mini_")
         || ServerInfo.GameMode == "custom_scenario")
-        general_set.subtract(Config.value("Banlist/Roles", "").toStringList().toSet());
+        f_subtract("Banlist/Roles");
 
     godLottery(general_set);
 
-    all_generals = general_set.subtract(ban_set).toList();
+    all_generals = general_set.subtract(ban_set).values();
 
     // shuffle them
     qShuffle(all_generals);
@@ -1537,16 +1542,15 @@ void Engine::godLottery(QStringList &list) const
         if(package->objectName()=="god") {
             QList<General*> generals=package->findChildren<General*>();
             General *general;
-            qsrand(QDateTime::currentMSecsSinceEpoch());
             Config.beginGroup("godlottery");
             foreach (general, generals) {
                 int p=Config.value(general->objectName(),0).toInt();
                 if(QRandomGenerator::global()->bounded(10000) < p) {
                     list.append(general->objectName());
-                    qDebug((general->objectName()+"被抽中").toUtf8().data());
+                    qDebug("%s", (general->objectName()+"被抽中").toUtf8().data());
                 }
                 else
-                    qDebug((general->objectName()+"没中").toUtf8().data());
+                    qDebug("%s", (general->objectName()+"没中").toUtf8().data());
             }
             Config.endGroup();
             break;
@@ -1556,7 +1560,7 @@ void Engine::godLottery(QStringList &list) const
 
 void Engine::godLottery(QSet<QString> &generalSet) const
 {
-	QStringList list = generalSet.toList();
+    QStringList list = generalSet.values();
 	godLottery(list);
-	generalSet = list.toSet();
+    generalSet = QSet<QString>{list.begin(), list.end()};
 }
