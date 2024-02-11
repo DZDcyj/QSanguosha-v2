@@ -6,7 +6,6 @@
 #include "ai.h"
 #include "json.h"
 #include "settings.h"
-#include "standard.h"
 #include "exppattern.h"
 
 #ifdef QSAN_UI_LIBRARY_AVAILABLE
@@ -234,7 +233,7 @@ bool CardUseStruct::tryParse(const QVariant &usage, Room *room)
 
 void CardUseStruct::parse(const QString &str, Room *room)
 {
-    QStringList words = str.split("->", QString::KeepEmptyParts);
+    QStringList words = str.split("->", Qt::SplitBehaviorFlags::KeepEmptyParts);
     Q_ASSERT(words.length() == 1 || words.length() == 2);
 
     QString card_str = words.at(0);
@@ -551,7 +550,6 @@ void RoomThread::_handleTurnBrokenNormal(GameRule *game_rule)
 
 void RoomThread::run()
 {
-    qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
     Sanguosha->registerRoom(room);
     GameRule *game_rule;
     if (room->getMode() == "04_1v3")
@@ -664,7 +662,7 @@ bool RoomThread::trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *ta
             TriggerSkill *mutable_skill = const_cast<TriggerSkill *>(skill);
             mutable_skill->setDynamicPriority(priority);
         }
-        qStableSort(skills.begin(), skills.end(), CompareByPriority);
+        std::stable_sort(skills.begin(), skills.end(), CompareByPriority);
 
         int current_priority = 1000;
         for (int i = 0; i < skills.size(); i++) {
@@ -740,7 +738,7 @@ void RoomThread::addTriggerSkill(const TriggerSkill *skill)
             TriggerSkill *mutable_skill = const_cast<TriggerSkill *>(askill);
             mutable_skill->setDynamicPriority(priority);
         }
-        qStableSort(table.begin(), table.end(), CompareByPriority);
+        std::stable_sort(table.begin(), table.end(), CompareByPriority);
     }
 
     if (skill->isVisible()) {
