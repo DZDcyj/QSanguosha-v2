@@ -1075,7 +1075,7 @@ public:
                 if (target->getHandcardNum() > 1) {
                     card = room->askForCard(target, ".!", "@nosqiuyuan-give:" + player->objectName(), data, Card::MethodNone);
                     if (!card)
-                        card = target->getHandcards().at(qrand() % target->getHandcardNum());
+                        card = target->getHandcards().at(QRandomGenerator::global()->bounded(target->getHandcardNum()));
                 } else {
                     Q_ASSERT(target->getHandcardNum() == 1);
                     card = target->getHandcards().first();

@@ -618,7 +618,7 @@ void MouzhuCard::onEffect(const CardEffectStruct &effect) const
     if (target->getHandcardNum() > 1) {
         card = room->askForCard(target, ".!", "@mouzhu-give:" + hejin->objectName(), QVariant(), Card::MethodNone);
         if (!card)
-            card = target->getHandcards().at(qrand() % target->getHandcardNum());
+            card = target->getHandcards().at(QRandomGenerator::global()->bounded(target->getHandcardNum()));
     } else {
         card = target->getHandcards().first();
     }

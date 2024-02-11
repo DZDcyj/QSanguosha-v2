@@ -1583,7 +1583,7 @@ public:
                         if (player->getCardCount() > 1) {
                             card = room->askForCard(player, "..!", "@kangkai-give:" + to->objectName(), data, Card::MethodNone);
                             if (!card)
-                                card = player->getCards("he").at(qrand() % player->getCardCount());
+                                card = player->getCards("he").at(QRandomGenerator::global()->bounded(player->getCardCount()));
                         } else {
                             Q_ASSERT(player->getCardCount() == 1);
                             card = player->getCards("he").first();

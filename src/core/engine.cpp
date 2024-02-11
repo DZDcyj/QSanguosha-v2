@@ -1342,7 +1342,7 @@ QList<int> Engine::getRandomCards() const
 
 QString Engine::getRandomGeneralName() const
 {
-    return generals.keys().at(qrand() % generals.size());
+    return generals.keys().at(QRandomGenerator::global()->bounded(generals.size()));
 }
 
 void Engine::playSystemAudioEffect(const QString &name, bool superpose) const
@@ -1536,7 +1536,7 @@ void Engine::godLottery(QStringList &list) const
             Config.beginGroup("godlottery");
             foreach (general, generals) {
                 int p=Config.value(general->objectName(),0).toInt();
-                if(qrand()%10000 < p) {
+                if(QRandomGenerator::global()->bounded(10000) < p) {
                     list.append(general->objectName());
                     qDebug((general->objectName()+"被抽中").toUtf8().data());
                 }
