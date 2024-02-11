@@ -9,6 +9,7 @@ QT += network widgets multimedia quick
 TEMPLATE = app
 
 CONFIG += lua audio
+CONFIG += c++17
 
 CONFIG -= flat
 

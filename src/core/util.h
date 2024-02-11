@@ -1,17 +1,17 @@
 #ifndef _UTIL_H
 #define _UTIL_H
 
+#include <QRandomGenerator>
+#include <QRandomGenerator64>
+
 struct lua_State;
 class QVariant;
 
 template<typename T>
 void qShuffle(QList<T> &list)
 {
-    int i, n = list.length();
-    for (i = 0; i < n; i++) {
-        int r = qrand() % (n - i) + i;
-        list.swap(i, r);
-    }
+    auto* qrandgen = QRandomGenerator::global();
+    std::shuffle(list.begin(), list.end(), *qrandgen);
 }
 
 // lua interpreter related
