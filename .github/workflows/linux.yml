@@ -1,0 +1,26 @@
+name: Build-Ubuntu-Debug
+
+on:
+  push:
+    branches: [ "master", "dev" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup Environment
+      run: |
+        sudo apt-get update -qq
+        sudo apt-get install -y qt5-qmake qt5-quick-demos swig g++ qtcreator qtmultimedia5-dev qtdeclarative5-dev
+        ln -s /usr/lib/qt5/bin/lrelease /usr/bin/lrelease-qt5
+
+    - name: configure
+      run: qmake
+    - name: make
+      run: make
