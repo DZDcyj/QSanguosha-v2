@@ -1,6 +1,5 @@
 #include "scenario-overview.h"
 #include "engine.h"
-#include "scenario.h"
 
 ScenarioOverview::ScenarioOverview(QWidget *parent)
     : QDialog(parent)
