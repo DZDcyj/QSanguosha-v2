@@ -71,10 +71,8 @@ struct ManualSkill
         : skill(skill),
           baseName(skill->objectName().split("_").last())
     {
-        static const QString prefixes[] = { "boss", "gd", "jg", "jsp", "kof", "neo", "nos", "ol", "sp", "tw", "vs", "yt", "diy" };
-
-        for (int i = 0; i < sizeof(prefixes) / sizeof(QString); ++i) {
-            QString prefix = prefixes[i];
+        static const auto prefixes = { "boss", "gd", "jg", "jsp", "kof", "neo", "nos", "ol", "sp", "tw", "vs", "yt", "diy" };
+        for (QString prefix : prefixes) {
             if (baseName.startsWith(prefix))
                 baseName.remove(0, prefix.length());
         }
@@ -205,7 +203,7 @@ Engine::Engine(bool isManualMode)
         QStringList pairs = cv_pair.split("->");
         QStringList cv_to = pairs.at(1).split("|");
         foreach (QString to, cv_to)
-            sp_convert_pairs.insertMulti(pairs.at(0), to);
+            sp_convert_pairs.insert(pairs.at(0), to);
     }
 
     extra_hidden_generals = GetConfigFromLuaState(lua, "extra_hidden_generals").toStringList();
@@ -289,7 +287,7 @@ Engine::Engine(bool isManualMode)
 
                 stream << translate("Manual_Head").arg(upper).arg(info)
                           .arg(getVersion())
-                       << endl;
+                       << Qt::endl;
 
                 for (QList<ManualSkill *>::iterator it = list.begin();
                      it < list.end(); ++it) {
@@ -305,7 +303,7 @@ Engine::Engine(bool isManualMode)
                               .arg(translate(skill->skill->objectName()))
                               .arg(generals.join(" "))
                               .arg(skill->skill->getDescription())
-                           << endl << endl;
+                           << Qt::endl << Qt::endl;
                 }
 
                 list.clear();
@@ -455,7 +453,14 @@ void Engine::addPackage(Package *package)
 
     package->setParent(this);
     sp_convert_pairs.unite(package->getConvertPairs());
-    patterns.unite(package->getPatterns());
+    auto other_patterns = package->getPatterns();
+    for (auto & key : other_patterns.keys()) {
+        Q_ASSERT(patterns.find(key) == patterns.end());
+    }
+    for (const auto& it : other_patterns.toStdMap()) {
+        patterns.insert(it.first, it.second);
+    }
+    // patterns.unite(package->getPatterns());
     related_skills.unite(package->getRelatedSkills());
 
     QList<Card *> all_cards = package->findChildren<Card *>();
