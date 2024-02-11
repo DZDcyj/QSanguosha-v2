@@ -2,12 +2,10 @@
 #include "serverplayer.h"
 #include "engine.h"
 #include "standard.h"
-#include "maneuvering.h"
 #include "lua.hpp"
 #include "scenario.h"
 #include "aux-skills.h"
 #include "settings.h"
-#include "roomthread.h"
 #include "wrapped-card.h"
 #include "room.h"
 

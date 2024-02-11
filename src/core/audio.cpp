@@ -1,5 +1,4 @@
 #include "audio.h"
-#include "settings.h"
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
 #include <QCoreApplication>
