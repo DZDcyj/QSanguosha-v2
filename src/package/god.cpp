@@ -178,7 +178,7 @@ public:
         room->broadcastSkillInvoke(objectName());
 
         QList<int> card_ids = room->getNCards(5);
-        qSort(card_ids.begin(), card_ids.end(), CompareBySuit);
+        std::sort(card_ids.begin(), card_ids.end(), CompareBySuit);
         room->fillAG(card_ids);
 
         QList<int> to_get, to_throw;

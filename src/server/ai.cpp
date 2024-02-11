@@ -332,7 +332,7 @@ static bool CompareByNumber(const Card *c1, const Card *c2)
 const Card *TrustAI::askForPindian(ServerPlayer *requestor, const QString &reason)
 {
     QList<const Card *> cards = self->getHandcards();
-    qSort(cards.begin(), cards.end(), CompareByNumber);
+    std::sort(cards.begin(), cards.end(), CompareByNumber);
 
     // zhiba special case
     if (reason == "zhiba_pindian" && self->hasLordSkill("zhiba"))

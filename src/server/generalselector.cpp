@@ -155,7 +155,7 @@ QStringList GeneralSelector::arrange3v3(ServerPlayer *player)
     qShuffle(arranged);
     arranged = arranged.mid(0, 3);
 
-    qSort(arranged.begin(), arranged.end(), CompareByMaxHp);
+    std::sort(arranged.begin(), arranged.end(), CompareByMaxHp);
     arranged.swap(0, 1);
 
     return arranged;
@@ -177,7 +177,7 @@ int GeneralSelector::get1v1ArrangeValue(const QString &name)
 QStringList GeneralSelector::arrange1v1(ServerPlayer *player)
 {
     QStringList arranged = player->getSelected();
-    qSort(arranged.begin(), arranged.end(), CompareFunction);
+    std::sort(arranged.begin(), arranged.end(), CompareFunction);
 
     QStringList result;
     int i;

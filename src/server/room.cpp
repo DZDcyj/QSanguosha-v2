@@ -317,7 +317,7 @@ static bool CompareByRole(ServerPlayer *player1, ServerPlayer *player2)
 void Room::updateStateItem()
 {
     QList<ServerPlayer *> players = this->m_players;
-    qSort(players.begin(), players.end(), CompareByRole);
+    std::sort(players.begin(), players.end(), CompareByRole);
     QString roles;
     foreach (ServerPlayer *p, players) {
         QChar c = "ZCFN"[p->getRoleEnum()];
@@ -4072,7 +4072,7 @@ QList<CardsMoveOneTimeStruct> Room::_mergeMoves(QList<CardsMoveStruct> cards_mov
     }
 
     if (result.size() > 1)
-        qSort(result.begin(), result.end(), CompareByActionOrder_OneTime);
+        std::sort(result.begin(), result.end(), CompareByActionOrder_OneTime);
 
     return result;
 }
@@ -4131,7 +4131,7 @@ QList<CardsMoveStruct> Room::_separateMoves(QList<CardsMoveOneTimeStruct> moveOn
         i++;
     }
     if (card_moves.size() > 1)
-        qSort(card_moves.begin(), card_moves.end(), CompareByActionOrder);
+        std::sort(card_moves.begin(), card_moves.end(), CompareByActionOrder);
     return card_moves;
 }
 
@@ -5961,7 +5961,7 @@ void Room::networkDelayTestCommand(ServerPlayer *player, const QVariant &)
 void Room::sortByActionOrder(QList<ServerPlayer *> &players)
 {
     if (players.length() > 1)
-        qSort(players.begin(), players.end(), ServerPlayer::CompareByActionOrder);
+        std::sort(players.begin(), players.end(), ServerPlayer::CompareByActionOrder);
 }
 
 int Room::getBossModeExpMult(int level) const
