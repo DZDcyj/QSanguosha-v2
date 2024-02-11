@@ -14,7 +14,6 @@
 #include "pixmapanimation.h"
 #include "audio.h"
 #include "skin-bank.h"
-#include "wind.h"
 #include "record-analysis.h"
 #include "mountain.h"
 #include "bubblechatbox.h"
@@ -44,7 +43,7 @@ void RoomScene::resetPiles()
 #include "qsanbutton.h"
 
 RoomScene::RoomScene(QMainWindow *main_window)
-    : main_window(main_window), game_started(false), m_tableBgPixmap(1, 1), m_tableBgPixmapOrig(1, 1)
+    : main_window(main_window), m_tableBgPixmap(1, 1), m_tableBgPixmapOrig(1, 1), game_started(false)
 {
     setParent(main_window);
 
@@ -580,7 +579,7 @@ void RoomScene::handleGameEvent(const QVariant &args)
         bool paused = arg[1].toBool();
         if (pausing_item->isVisible() != paused) {
             if (paused) {
-                QBrush pausing_brush(QColor(qrand() % 256, qrand() % 256, qrand() % 256));
+                QBrush pausing_brush(QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)));
                 pausing_item->setBrush(pausing_brush);
                 bringToFront(pausing_item);
                 bringToFront(pausing_text);
@@ -1072,7 +1071,7 @@ void RoomScene::arrangeSeats(const QList<const ClientPlayer *> &seats)
         const Player *player = seats.at(i);
         for (int j = i; j < photos.length(); j++) {
             if (photos.at(j)->getPlayer() == player) {
-                photos.swap(i, j);
+                photos.swapItemsAt(i, j);
                 break;
             }
         }
@@ -1429,7 +1428,7 @@ void RoomScene::keyReleaseEvent(QKeyEvent *event)
             doCancelButton();
         else if (discard_button->isEnabled())
             doDiscardButton();
-    }
+    } break;
 
     case Qt::Key_0:
     case Qt::Key_1:
@@ -1441,7 +1440,7 @@ void RoomScene::keyReleaseEvent(QKeyEvent *event)
             dashboard->selectEquip(position);
             break;
         }
-    }
+    } [[fallthrough]];
     case Qt::Key_5:
     case Qt::Key_6:
     case Qt::Key_7:

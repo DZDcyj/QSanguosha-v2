@@ -133,7 +133,7 @@ public:
 
     int getEffectIndex(const ServerPlayer *, const Card *) const
     {
-        return qrand() % 2 + 1;
+        return QRandomGenerator::global()->bounded(2) + 1;
     }
 };
 
@@ -1240,21 +1240,21 @@ YJCMPackage::YJCMPackage()
     caozhi->addSkill(new Luoying);
     caozhi->addSkill(new Jiushi);
     caozhi->addSkill(new JiushiFlip);
-    related_skills.insertMulti("jiushi", "#jiushi-flip");
+    related_skills.insert("jiushi", "#jiushi-flip");
 
     General *chengong = new General(this, "chengong", "qun", 3); // YJ 002
     chengong->addSkill(new Zhichi);
     chengong->addSkill(new ZhichiProtect);
     chengong->addSkill(new ZhichiClear);
     chengong->addSkill(new Mingce);
-    related_skills.insertMulti("zhichi", "#zhichi-protect");
-    related_skills.insertMulti("zhichi", "#zhichi-clear");
+    related_skills.insert("zhichi", "#zhichi-protect");
+    related_skills.insert("zhichi", "#zhichi-clear");
 
     General *fazheng = new General(this, "fazheng", "shu", 3); // YJ 003
     fazheng->addSkill(new Enyuan);
     fazheng->addSkill(new Xuanhuo);
     fazheng->addSkill(new FakeMoveSkill("xuanhuo"));
-    related_skills.insertMulti("xuanhuo", "#xuanhuo-fake-move");
+    related_skills.insert("xuanhuo", "#xuanhuo-fake-move");
 
     General *gaoshun = new General(this, "gaoshun", "qun"); // YJ 004
     gaoshun->addSkill(new Xianzhen);
@@ -1290,7 +1290,7 @@ YJCMPackage::YJCMPackage()
     zhonghui->addSkill(new Quanji);
     zhonghui->addSkill(new Zili);
     zhonghui->addRelateSkill("paiyi");
-    related_skills.insertMulti("quanji", "#quanji");
+    related_skills.insert("quanji", "#quanji");
 
     addMetaObject<MingceCard>();
     addMetaObject<GanluCard>();

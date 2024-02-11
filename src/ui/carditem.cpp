@@ -24,7 +24,7 @@ void CardItem::_initialize()
 CardItem::CardItem(const Card *card)
 {
     _initialize();
-    m_isShiny = (qrand() <= ((RAND_MAX + 1L) / 4096));
+    m_isShiny = (QRandomGenerator::global()->bounded(4096) == 0); // with probability of 1/4096
     setCard(card);
     setAcceptHoverEvents(true);
 }

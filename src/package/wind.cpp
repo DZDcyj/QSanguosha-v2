@@ -53,7 +53,7 @@ public:
         const Card *card = room->askForCard(player, ".|black", prompt, QVariant::fromValue(judge), Card::MethodResponse, judge->who, true);
 
         if (card != NULL) {
-            int index = qrand() % 2 + 1;
+            int index = QRandomGenerator::global()->bounded(2) + 1;
             if (Player::isNostalGeneral(player, "zhangjiao"))
                 index += 2;
             room->broadcastSkillInvoke(objectName(), index);
@@ -125,7 +125,7 @@ void HuangtianCard::use(Room *room, ServerPlayer *source, QList<ServerPlayer *> 
         if (!zhangjiao->isLord() && zhangjiao->hasSkill("weidi"))
             room->broadcastSkillInvoke("weidi");
         else {
-            int index = qrand() % 2 + 1;
+            int index = QRandomGenerator::global()->bounded(2) + 1;
             if (Player::isNostalGeneral(zhangjiao, "zhangjiao"))
                 index += 2;
             room->broadcastSkillInvoke("huangtian", index);
@@ -340,7 +340,7 @@ public:
 
     int getEffectIndex(const ServerPlayer *player, const Card *) const
     {
-        int index = qrand() % 2 + 1;
+        int index = QRandomGenerator::global()->bounded(2) + 1;
         if (!player->hasInnateSkill(this) && player->hasSkill("baobian"))
             index += 2;
         return index;
@@ -688,7 +688,7 @@ public:
 
     int getEffectIndex(const ServerPlayer *player, const Card *) const
     {
-        int index = qrand() % 2 + 1;
+        int index = QRandomGenerator::global()->bounded(2) + 1;
         if (!player->hasInnateSkill(this) && player->hasSkill("luoyan"))
             index += 2;
 
@@ -1364,7 +1364,7 @@ WindPackage::WindPackage()
     General *xiahouyuan = new General(this, "xiahouyuan", "wei"); // WEI 008
     xiahouyuan->addSkill(new Shensu);
     xiahouyuan->addSkill(new SlashNoDistanceLimitSkill("shensu"));
-    related_skills.insertMulti("shensu", "#shensu-slash-ndl");
+    related_skills.insert("shensu", "#shensu-slash-ndl");
 
     General *caoren = new General(this, "caoren", "wei"); // WEI 011
     caoren->addSkill(new Jushou);
@@ -1376,19 +1376,19 @@ WindPackage::WindPackage()
     General *weiyan = new General(this, "weiyan", "shu"); // SHU 009
     weiyan->addSkill(new Kuanggu);
     weiyan->addSkill(new KuangguRecord);
-    related_skills.insertMulti("kuanggu", "#kuanggu-record");
+    related_skills.insert("kuanggu", "#kuanggu-record");
 
     General *xiaoqiao = new General(this, "xiaoqiao", "wu", 3, false); // WU 011
     xiaoqiao->addSkill(new Tianxiang);
     xiaoqiao->addSkill(new TianxiangDraw);
     xiaoqiao->addSkill(new Hongyan);
-    related_skills.insertMulti("tianxiang", "#tianxiang");
+    related_skills.insert("tianxiang", "#tianxiang");
 
     General *zhoutai = new General(this, "zhoutai", "wu"); // WU 013
     zhoutai->addSkill(new Buqu);
     zhoutai->addSkill(new BuquMaxCards);
     zhoutai->addSkill(new Fenji);
-    related_skills.insertMulti("buqu", "#buqu");
+    related_skills.insert("buqu", "#buqu");
 
     General *zhangjiao = new General(this, "zhangjiao$", "qun", 3); // QUN 010
     zhangjiao->addSkill(new Leiji);
@@ -1398,7 +1398,7 @@ WindPackage::WindPackage()
     General *yuji = new General(this, "yuji", "qun", 3); // QUN 011
     yuji->addSkill(new Guhuo);
     yuji->addSkill(new GuhuoClear);
-    related_skills.insertMulti("guhuo", "#guhuo-clear");
+    related_skills.insert("guhuo", "#guhuo-clear");
     yuji->addRelateSkill("chanyuan");
 
     addMetaObject<ShensuCard>();
@@ -1407,7 +1407,7 @@ WindPackage::WindPackage()
     addMetaObject<GuhuoCard>();
 
     skills << new HuangtianViewAsSkill << new Chanyuan << new ChanyuanInvalidity;
-    related_skills.insertMulti("chanyuan", "#chanyuan-inv");
+    related_skills.insert("chanyuan", "#chanyuan-inv");
 }
 
 ADD_PACKAGE(Wind)

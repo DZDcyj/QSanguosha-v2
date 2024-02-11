@@ -18,8 +18,6 @@ RoomThread1v1::RoomThread1v1(Room *room)
 
 void RoomThread1v1::run()
 {
-    // initialize the random seed for this thread
-    qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
     QString rule = Config.value("1v1/Rule", "2013").toString();
     int total_num = rule != "Classical" ? 12 : 10;
 
@@ -51,7 +49,8 @@ void RoomThread1v1::run()
         qShuffle(candidates);
         general_names = candidates.mid(0, total_num);
     } else {
-        QSet<QString> banset = Config.value("Banlist/1v1").toStringList().toSet();
+        QList<QString> banlist = Config.value("Banlist/1v1").toStringList();
+        QSet<QString> banset {banlist.begin(), banlist.end()};
         general_names = Sanguosha->getRandomGenerals(total_num, banset);
     }
 
@@ -76,7 +75,7 @@ void RoomThread1v1::run()
             << "x3" << "x4" << "x5"));
     }
 
-    int index = qrand() % 2;
+    int index = QRandomGenerator::global()->bounded(2);
     ServerPlayer *first = room->getPlayers().at(index), *next = room->getPlayers().at(1 - index);
     QString order = room->askForOrder(first, "warm");
     if (order == "cool")

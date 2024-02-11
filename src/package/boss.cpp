@@ -327,7 +327,7 @@ public:
         room->sendCompulsoryTriggerLog(player, objectName());
 
         QList<const Card *> dtricks = player->getJudgingArea();
-        int index = qrand() % dtricks.length();
+        int index = QRandomGenerator::global()->bounded(dtricks.length());
         room->throwCard(dtricks.at(index), NULL, player);
         return false;
     }

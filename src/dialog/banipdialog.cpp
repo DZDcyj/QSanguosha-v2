@@ -153,7 +153,7 @@ void BanIpDialog::save()
     for (int i = 0; i < right->count(); i++)
         ip_set << right->item(i)->text();
 
-    QStringList ips = ip_set.toList();
+    QStringList ips = ip_set.values();
     Config.setValue("BannedIP", ips);
 }
 

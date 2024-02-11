@@ -2,7 +2,6 @@
 #include "general.h"
 #include "skill.h"
 #include "standard.h"
-#include "client.h"
 #include "engine.h"
 #include "maneuvering.h"
 #include "clientplayer.h"
@@ -566,7 +565,7 @@ FirePackage::FirePackage()
     General *taishici = new General(this, "taishici", "wu"); // WU 012
     taishici->addSkill(new Tianyi);
     taishici->addSkill(new TianyiTargetMod);
-    related_skills.insertMulti("tianyi", "#tianyi-target");
+    related_skills.insert("tianyi", "#tianyi-target");
 
     General *yuanshao = new General(this, "yuanshao$", "qun"); // QUN 004
     yuanshao->addSkill(new Luanji);

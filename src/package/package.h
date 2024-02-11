@@ -70,12 +70,12 @@ public:
 
     inline void insertRelatedSkills(const QString &main_skill, const QString &related_skill)
     {
-        related_skills.insertMulti(main_skill, related_skill);
+        related_skills.insert(main_skill, related_skill);
     }
 
     inline void insertConvertPairs(const QString &from, const QString &to)
     {
-        convert_pairs.insertMulti(from, to);
+        convert_pairs.insert(from, to);
     }
 
 protected:

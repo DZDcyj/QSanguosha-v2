@@ -349,7 +349,7 @@ TaiwanYJCMPackage::TaiwanYJCMPackage()
     General *caoang = new General(this, "twyj_caoang", "wei"); // TAI 003
     caoang->addSkill(new XiaolianDist);
     caoang->addSkill(new Xiaolian);
-    related_skills.insertMulti("xiaolian", "#xiaolian-dist");
+    related_skills.insert("xiaolian", "#xiaolian-dist");
 }
 
 ADD_PACKAGE(TaiwanYJCM)

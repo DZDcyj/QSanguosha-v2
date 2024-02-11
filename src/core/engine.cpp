@@ -71,10 +71,8 @@ struct ManualSkill
         : skill(skill),
           baseName(skill->objectName().split("_").last())
     {
-        static const QString prefixes[] = { "boss", "gd", "jg", "jsp", "kof", "neo", "nos", "ol", "sp", "tw", "vs", "yt", "diy" };
-
-        for (int i = 0; i < sizeof(prefixes) / sizeof(QString); ++i) {
-            QString prefix = prefixes[i];
+        static const auto prefixes = { "boss", "gd", "jg", "jsp", "kof", "neo", "nos", "ol", "sp", "tw", "vs", "yt", "diy" };
+        for (QString prefix : prefixes) {
             if (baseName.startsWith(prefix))
                 baseName.remove(0, prefix.length());
         }
@@ -205,7 +203,7 @@ Engine::Engine(bool isManualMode)
         QStringList pairs = cv_pair.split("->");
         QStringList cv_to = pairs.at(1).split("|");
         foreach (QString to, cv_to)
-            sp_convert_pairs.insertMulti(pairs.at(0), to);
+            sp_convert_pairs.insert(pairs.at(0), to);
     }
 
     extra_hidden_generals = GetConfigFromLuaState(lua, "extra_hidden_generals").toStringList();
@@ -289,7 +287,7 @@ Engine::Engine(bool isManualMode)
 
                 stream << translate("Manual_Head").arg(upper).arg(info)
                           .arg(getVersion())
-                       << endl;
+                       << Qt::endl;
 
                 for (QList<ManualSkill *>::iterator it = list.begin();
                      it < list.end(); ++it) {
@@ -305,7 +303,7 @@ Engine::Engine(bool isManualMode)
                               .arg(translate(skill->skill->objectName()))
                               .arg(generals.join(" "))
                               .arg(skill->skill->getDescription())
-                           << endl << endl;
+                           << Qt::endl << Qt::endl;
                 }
 
                 list.clear();
@@ -455,7 +453,14 @@ void Engine::addPackage(Package *package)
 
     package->setParent(this);
     sp_convert_pairs.unite(package->getConvertPairs());
-    patterns.unite(package->getPatterns());
+    auto other_patterns = package->getPatterns();
+    for (auto & key : other_patterns.keys()) {
+        Q_ASSERT(patterns.find(key) == patterns.end());
+    }
+    for (const auto& it : other_patterns.toStdMap()) {
+        patterns.insert(it.first, it.second);
+    }
+    // patterns.unite(package->getPatterns());
     related_skills.unite(package->getRelatedSkills());
 
     QList<Card *> all_cards = package->findChildren<Card *>();
@@ -538,7 +543,7 @@ QStringList Engine::getBanPackages() const
     if (qApp->arguments().contains("-server"))
         return Config.BanPackages;
     else
-        return ban_package.toList();
+        return ban_package.values();
 }
 
 QList<const Package *> Engine::getPackages() const
@@ -1189,7 +1194,7 @@ QStringList Engine::getRandomLords() const
     if (lord_num != -1 && lord_num < lords.length()) {
         int to_remove = lords.length() - lord_num;
         for (int i = 0; i < to_remove; i++) {
-            lords.removeAt(qrand() % lords.length());
+            lords.removeAt(QRandomGenerator::global()->bounded(lords.length()));
         }
     }
 
@@ -1251,25 +1256,30 @@ QStringList Engine::getLimitedGeneralNames(const QString &kingdom) const
 QStringList Engine::getRandomGenerals(int count, const QSet<QString> &ban_set, const QString &kingdom) const
 {
     QStringList all_generals = getLimitedGeneralNames(kingdom);
-    QSet<QString> general_set = all_generals.toSet();
+    QSet<QString> general_set = {all_generals.begin(), all_generals.end()};
 
     Q_ASSERT(all_generals.count() >= count);
 
+    auto f_subtract = [&general_set](const char* name) {
+        auto the_list = Config.value(name, "").toStringList();
+        QSet<QString> the_set  = {the_list.begin(), the_list.end()};
+        general_set = general_set.subtract(the_set);
+    };
     if (Config.EnableBasara)
-        general_set = general_set.subtract(Config.value("Banlist/Basara", "").toStringList().toSet());
+        f_subtract("Banlist/Basara");
     if (Config.EnableHegemony)
-        general_set = general_set.subtract(Config.value("Banlist/Hegemony", "").toStringList().toSet());
+        f_subtract("Banlist/Hegemony");
     if (ServerInfo.GameMode == "04_boss")
-        general_set = general_set.subtract(Config.value("Banlist/BossMode", "").toStringList().toSet());
+        f_subtract("Banlist/BossMode");
 
     if (isNormalGameMode(ServerInfo.GameMode)
         || ServerInfo.GameMode.contains("_mini_")
         || ServerInfo.GameMode == "custom_scenario")
-        general_set.subtract(Config.value("Banlist/Roles", "").toStringList().toSet());
+        f_subtract("Banlist/Roles");
 
     godLottery(general_set);
 
-    all_generals = general_set.subtract(ban_set).toList();
+    all_generals = general_set.subtract(ban_set).values();
 
     // shuffle them
     qShuffle(all_generals);
@@ -1342,7 +1352,7 @@ QList<int> Engine::getRandomCards() const
 
 QString Engine::getRandomGeneralName() const
 {
-    return generals.keys().at(qrand() % generals.size());
+    return generals.keys().at(QRandomGenerator::global()->bounded(generals.size()));
 }
 
 void Engine::playSystemAudioEffect(const QString &name, bool superpose) const
@@ -1532,16 +1542,15 @@ void Engine::godLottery(QStringList &list) const
         if(package->objectName()=="god") {
             QList<General*> generals=package->findChildren<General*>();
             General *general;
-            qsrand(QDateTime::currentMSecsSinceEpoch());
             Config.beginGroup("godlottery");
             foreach (general, generals) {
                 int p=Config.value(general->objectName(),0).toInt();
-                if(qrand()%10000 < p) {
+                if(QRandomGenerator::global()->bounded(10000) < p) {
                     list.append(general->objectName());
-                    qDebug((general->objectName()+"被抽中").toUtf8().data());
+                    qDebug("%s", (general->objectName()+"被抽中").toUtf8().data());
                 }
                 else
-                    qDebug((general->objectName()+"没中").toUtf8().data());
+                    qDebug("%s", (general->objectName()+"没中").toUtf8().data());
             }
             Config.endGroup();
             break;
@@ -1551,7 +1560,7 @@ void Engine::godLottery(QStringList &list) const
 
 void Engine::godLottery(QSet<QString> &generalSet) const
 {
-	QStringList list = generalSet.toList();
+    QStringList list = generalSet.values();
 	godLottery(list);
-	generalSet = list.toSet();
+    generalSet = QSet<QString>{list.begin(), list.end()};
 }

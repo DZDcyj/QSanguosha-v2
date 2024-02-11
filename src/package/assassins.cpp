@@ -1,7 +1,6 @@
 #include "assassins.h"
 #include "skill.h"
 #include "standard.h"
-#include "clientplayer.h"
 #include "engine.h"
 #include "util.h"
 #include "room.h"
@@ -700,13 +699,13 @@ AssassinsPackage::AssassinsPackage() : Package("assassins")
     jiben->addSkill(new Duyi);
     jiben->addSkill(new Duanzhi);
     jiben->addSkill(new FakeMoveSkill("duanzhi"));
-    related_skills.insertMulti("duanzhi", "#duanzhi-fake-move");
+    related_skills.insert("duanzhi", "#duanzhi-fake-move");
 
     General *fuwan = new General(this, "as_fuwan", "qun", 3);
     fuwan->addSkill(new Fengyin);
     fuwan->addSkill(new ChizhongKeep);
     fuwan->addSkill(new Chizhong);
-    related_skills.insertMulti("chizhong", "#chizhong");
+    related_skills.insert("chizhong", "#chizhong");
 
     General *mushun = new General(this, "as_mushun", "qun");
     mushun->addSkill(new Moukui);
@@ -715,7 +714,7 @@ AssassinsPackage::AssassinsPackage() : Package("assassins")
     hanxiandi->addSkill(new Tianming);
     hanxiandi->addSkill(new Mizhao);
     hanxiandi->addSkill(new MizhaoSlashNoDistanceLimit);
-    related_skills.insertMulti("mizhao", "#mizhao-slash-ndl");
+    related_skills.insert("mizhao", "#mizhao-slash-ndl");
 
     General *lingju = new General(this, "as_lingju", "qun", 3, false);
     lingju->addSkill(new Jieyuan);

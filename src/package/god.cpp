@@ -178,7 +178,7 @@ public:
         room->broadcastSkillInvoke(objectName());
 
         QList<int> card_ids = room->getNCards(5);
-        qSort(card_ids.begin(), card_ids.end(), CompareBySuit);
+        std::sort(card_ids.begin(), card_ids.end(), CompareBySuit);
         room->fillAG(card_ids);
 
         QList<int> to_get, to_throw;
@@ -274,7 +274,7 @@ public:
 
     int getEffectIndex(const ServerPlayer *player, const Card *) const
     {
-        int index = qrand() % 2 + 1;
+        int index = QRandomGenerator::global()->bounded(2) + 1;
         if (!player->hasInnateSkill(this) && player->getMark("qinxue") > 0)
             index += 2;
         return index;
@@ -1579,8 +1579,8 @@ GodPackage::GodPackage()
     shenguanyu->addSkill(new WushenTargetMod);
     shenguanyu->addSkill(new Wuhun);
     shenguanyu->addSkill(new WuhunRevenge);
-    related_skills.insertMulti("wushen", "#wushen-target");
-    related_skills.insertMulti("wuhun", "#wuhun");
+    related_skills.insert("wushen", "#wushen-target");
+    related_skills.insert("wuhun", "#wuhun");
 
     General *shenlvmeng = new General(this, "shenlvmeng", "god", 3); // LE 002
     shenlvmeng->addSkill(new Shelie);
@@ -1598,10 +1598,10 @@ GodPackage::GodPackage()
     shenzhugeliang->addSkill(new FakeMoveSkill("qixing"));
     shenzhugeliang->addSkill(new Kuangfeng);
     shenzhugeliang->addSkill(new Dawu);
-    related_skills.insertMulti("qixing", "#qixing");
-    related_skills.insertMulti("qixing", "#qixing-ask");
-    related_skills.insertMulti("qixing", "#qixing-clear");
-    related_skills.insertMulti("qixing", "#qixing-fake-move");
+    related_skills.insert("qixing", "#qixing");
+    related_skills.insert("qixing", "#qixing-ask");
+    related_skills.insert("qixing", "#qixing-clear");
+    related_skills.insert("qixing", "#qixing-fake-move");
 
     General *shencaocao = new General(this, "shencaocao", "god", 3); // LE 005
     shencaocao->addSkill(new Guixin);
@@ -1613,22 +1613,22 @@ GodPackage::GodPackage()
     shenlvbu->addSkill(new Wumou);
     shenlvbu->addSkill(new Wuqian);
     shenlvbu->addSkill(new Shenfen);
-    related_skills.insertMulti("kuangbao", "#@wrath-2");
+    related_skills.insert("kuangbao", "#@wrath-2");
 
     General *shenzhaoyun = new General(this, "shenzhaoyun", "god", 2); // LE 007
     shenzhaoyun->addSkill(new JuejingKeep);
     shenzhaoyun->addSkill(new Juejing);
     shenzhaoyun->addSkill(new Longhun);
-    related_skills.insertMulti("juejing", "#juejing-draw");
+    related_skills.insert("juejing", "#juejing-draw");
 
     General *shensimayi = new General(this, "shensimayi", "god", 4); // LE 008
     shensimayi->addSkill(new Renjie);
     shensimayi->addSkill(new Baiyin);
     shensimayi->addRelateSkill("jilve");
-    related_skills.insertMulti("jilve", "#jilve-clear");
+    related_skills.insert("jilve", "#jilve-clear");
     shensimayi->addSkill(new Lianpo);
     shensimayi->addSkill(new LianpoCount);
-    related_skills.insertMulti("lianpo", "#lianpo-count");
+    related_skills.insert("lianpo", "#lianpo-count");
 
     addMetaObject<GongxinCard>();
     addMetaObject<YeyanCard>();

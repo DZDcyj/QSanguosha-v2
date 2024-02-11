@@ -63,9 +63,6 @@ QStringList RoomThread3v3::getGeneralsWithoutExtension() const
 
 void RoomThread3v3::run()
 {
-    // initialize the random seed for this thread
-    qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
-
     QString scheme = Config.value("3v3/RoleChoose", "Normal").toString();
     assignRoles(scheme);
     room->adjustSeats();
@@ -279,7 +276,7 @@ void RoomThread3v3::assignRoles(const QString &scheme)
         assignRoles(all_roles, scheme);
 
         QMap<QString, QString> map;
-        if (qrand() % 2 == 0) {
+        if (QRandomGenerator::global()->bounded(2) == 0) {
             map["leader1"] = "lord";
             map["guard1"] = "loyalist";
             map["leader2"] = "renegade";
@@ -290,9 +287,9 @@ void RoomThread3v3::assignRoles(const QString &scheme)
             map["leader2"] = "lord";
             map["guard2"] = "loyalist";
 
-            room->m_players.swap(0, 3);
-            room->m_players.swap(1, 4);
-            room->m_players.swap(2, 5);
+            room->m_players.swapItemsAt(0, 3);
+            room->m_players.swapItemsAt(1, 4);
+            room->m_players.swapItemsAt(2, 5);
         }
 
         foreach(ServerPlayer *player, room->m_players)

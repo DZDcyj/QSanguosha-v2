@@ -1,7 +1,6 @@
 #include "player.h"
 #include "engine.h"
 #include "room.h"
-#include "client.h"
 #include "standard.h"
 #include "settings.h"
 #include "clientstruct.h"
@@ -9,12 +8,12 @@
 #include "wrapped-card.h"
 
 Player::Player(QObject *parent)
-    : QObject(parent), owner(false), general(NULL), general2(NULL),
-    m_gender(General::Sexless), hp(-1), max_hp(-1), state("online"), seat(0), alive(true),
-    phase(NotActive),
-    weapon(NULL), armor(NULL), defensive_horse(NULL), offensive_horse(NULL), treasure(NULL),
-    face_up(true), chained(false),
-    role_shown(false), pile_open(QMap<QString, QStringList>())
+    : QObject(parent), pile_open(QMap<QString, QStringList>()), owner(false), general(NULL),
+      general2(NULL), m_gender(General::Sexless), hp(-1), max_hp(-1), role_shown(false), state("online"),
+      seat(0),
+      alive(true), phase(NotActive), weapon(NULL), armor(NULL), defensive_horse(NULL),
+      offensive_horse(NULL), treasure(NULL),
+      face_up(true), chained(false)
 {
 }
 
@@ -158,12 +157,12 @@ void Player::setAlive(bool alive)
 
 QString Player::getFlags() const
 {
-    return QStringList(flags.toList()).join("|");
+    return QStringList(flags.values()).join("|");
 }
 
 QStringList Player::getFlagList() const
 {
-    return QStringList(flags.toList());
+    return QStringList(flags.values());
 }
 
 void Player::setFlags(const QString &flag)
@@ -1042,7 +1041,8 @@ QSet<const TriggerSkill *> Player::getTriggerSkills() const
 {
     QSet<const TriggerSkill *> skillList;
     QStringList skill_list = skills + acquired_skills;
-    foreach (QString skill_name, skill_list.toSet()) {
+    QSet<QString> skill_set {skill_list.begin(), skill_list.end()};
+    for (const QString& skill_name : skill_set) {
         const TriggerSkill *skill = Sanguosha->getTriggerSkill(skill_name);
         if (skill && !hasEquipSkill(skill->objectName()))
             skillList << skill;
@@ -1053,7 +1053,8 @@ QSet<const TriggerSkill *> Player::getTriggerSkills() const
 
 QSet<const Skill *> Player::getSkills(bool include_equip, bool visible_only) const
 {
-    return getSkillList(include_equip, visible_only).toSet();
+    auto list = getSkillList(include_equip, visible_only);
+    return {list.begin(), list.end()};
 }
 
 QList<const Skill *> Player::getSkillList(bool include_equip, bool visible_only) const
@@ -1073,7 +1074,8 @@ QList<const Skill *> Player::getSkillList(bool include_equip, bool visible_only)
 
 QSet<const Skill *> Player::getVisibleSkills(bool include_equip) const
 {
-    return getVisibleSkillList(include_equip).toSet();
+    auto list = getVisibleSkillList(include_equip);
+    return {list.begin(), list.end()};
 }
 
 QList<const Skill *> Player::getVisibleSkillList(bool include_equip) const

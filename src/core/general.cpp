@@ -2,7 +2,6 @@
 #include "engine.h"
 #include "skill.h"
 #include "package.h"
-#include "client.h"
 #include "clientstruct.h"
 
 General::General(Package *package, const QString &name, const QString &kingdom,
@@ -123,7 +122,8 @@ QList<const Skill *> General::getVisibleSkillList() const
 
 QSet<const Skill *> General::getVisibleSkills() const
 {
-    return getVisibleSkillList().toSet();
+    auto the_list = getVisibleSkillList();
+    return {the_list.begin(), the_list.end()};
 }
 
 QSet<const TriggerSkill *> General::getTriggerSkills() const

@@ -323,7 +323,7 @@ void GeneralOverview::fillGenerals(const QList<const General *> &generals, bool 
         nickname_item->setTextAlignment(Qt::AlignCenter);
 
         if (Sanguosha->isGeneralHidden(general_name)) {
-            nickname_item->setBackgroundColor(Qt::gray);
+            nickname_item->setBackground(Qt::gray);
             nickname_item->setToolTip(tr("This general is hidden"));
         }
 
@@ -336,7 +336,7 @@ void GeneralOverview::fillGenerals(const QList<const General *> &generals, bool 
         }
 
         if (Sanguosha->isGeneralHidden(general_name)) {
-            name_item->setBackgroundColor(Qt::gray);
+            name_item->setBackground(Qt::gray);
             name_item->setToolTip(tr("This general is hidden"));
         }
 
@@ -352,7 +352,7 @@ void GeneralOverview::fillGenerals(const QList<const General *> &generals, bool 
         QTableWidgetItem *package_item = new QTableWidgetItem(package);
         package_item->setTextAlignment(Qt::AlignCenter);
         if (Config.value("LuaPackages", QString()).toString().split("+").contains(general->getPackage())) {
-            package_item->setBackgroundColor(QColor(0x66, 0xCC, 0xFF));
+            package_item->setBackground(QColor(0x66, 0xCC, 0xFF));
             package_item->setToolTip(tr("This is an Lua extension"));
         }
 

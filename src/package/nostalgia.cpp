@@ -183,7 +183,7 @@ public:
         if (triggerEvent == HpRecover) {
             RecoverStruct recover = data.value<RecoverStruct>();
             if (recover.who && recover.who != player) {
-                room->broadcastSkillInvoke("nosenyuan", qrand() % 2 + 1);
+                room->broadcastSkillInvoke("nosenyuan", QRandomGenerator::global()->bounded(2) + 1);
                 room->sendCompulsoryTriggerLog(player, objectName());
                 recover.who->drawCards(recover.recover, objectName());
             }
@@ -191,7 +191,7 @@ public:
             DamageStruct damage = data.value<DamageStruct>();
             ServerPlayer *source = damage.from;
             if (source && source != player) {
-                room->broadcastSkillInvoke("nosenyuan", qrand() % 2 + 3);
+                room->broadcastSkillInvoke("nosenyuan", QRandomGenerator::global()->bounded(2) + 3);
                 room->sendCompulsoryTriggerLog(player, objectName());
 
                 const Card *card = room->askForCard(source, ".|heart|.|hand", "@nosenyuan-heart", data, Card::MethodNone);
@@ -1075,7 +1075,7 @@ public:
                 if (target->getHandcardNum() > 1) {
                     card = room->askForCard(target, ".!", "@nosqiuyuan-give:" + player->objectName(), data, Card::MethodNone);
                     if (!card)
-                        card = target->getHandcards().at(qrand() % target->getHandcardNum());
+                        card = target->getHandcards().at(QRandomGenerator::global()->bounded(target->getHandcardNum()));
                 } else {
                     Q_ASSERT(target->getHandcardNum() == 1);
                     card = target->getHandcards().first();
@@ -2374,7 +2374,7 @@ NostalStandardPackage::NostalStandardPackage()
     General *nos_xuchu = new General(this, "nos_xuchu", "wei");
     nos_xuchu->addSkill(new NosLuoyi);
     nos_xuchu->addSkill(new NosLuoyiBuff);
-    related_skills.insertMulti("nosluoyi", "#nosluoyi");
+    related_skills.insert("nosluoyi", "#nosluoyi");
 
     General *nos_guojia = new General(this, "nos_guojia", "wei", 3);
     nos_guojia->addSkill("tiandu");
@@ -2451,8 +2451,8 @@ NostalWindPackage::NostalWindPackage()
     nos_zhoutai->addSkill(new NosBuqu);
     nos_zhoutai->addSkill(new NosBuquRemove);
     nos_zhoutai->addSkill(new NosBuquClear);
-    related_skills.insertMulti("nosbuqu", "#nosbuqu-remove");
-    related_skills.insertMulti("nosbuqu", "#nosbuqu-clear");
+    related_skills.insert("nosbuqu", "#nosbuqu-remove");
+    related_skills.insert("nosbuqu", "#nosbuqu-clear");
 
     General *nos_zhangjiao = new General(this, "nos_zhangjiao$", "qun", 3);
     nos_zhangjiao->addSkill(new NosLeiji);
@@ -2475,7 +2475,7 @@ NostalYJCMPackage::NostalYJCMPackage()
     General *nos_lingtong = new General(this, "nos_lingtong", "wu");
     nos_lingtong->addSkill(new NosXuanfeng);
     nos_lingtong->addSkill(new SlashNoDistanceLimitSkill("nosxuanfeng"));
-    related_skills.insertMulti("nosxuanfeng", "#nosxuanfeng-slash-ndl");
+    related_skills.insert("nosxuanfeng", "#nosxuanfeng-slash-ndl");
 
     General *nos_xushu = new General(this, "nos_xushu", "shu", 3);
     nos_xushu->addSkill(new NosWuyan);
@@ -2499,7 +2499,7 @@ NostalYJCM2012Package::NostalYJCM2012Package()
     nos_handang->addSkill(new NosGongqi);
     nos_handang->addSkill(new NosGongqiTargetMod);
     nos_handang->addSkill(new NosJiefan);
-    related_skills.insertMulti("nosgongqi", "#nosgongqi-target");
+    related_skills.insert("nosgongqi", "#nosgongqi-target");
 
     General *nos_madai = new General(this, "nos_madai", "shu");
     nos_madai->addSkill("mashu");
@@ -2523,7 +2523,7 @@ NostalYJCM2013Package::NostalYJCM2013Package()
     nos_fuhuanghou->addSkill(new NosZhuikong);
     nos_fuhuanghou->addSkill(new NosZhuikongClear);
     nos_fuhuanghou->addSkill(new NosQiuyuan);
-    related_skills.insertMulti("noszhuikong", "#noszhuikong-clear");
+    related_skills.insert("noszhuikong", "#noszhuikong-clear");
 
     General *nos_liru = new General(this, "nos_liru", "qun", 3);
     nos_liru->addSkill(new NosJuece);
@@ -2531,8 +2531,8 @@ NostalYJCM2013Package::NostalYJCM2013Package()
     nos_liru->addSkill(new NosMiejiForExNihiloAndCollateral);
     nos_liru->addSkill(new NosMiejiEffect);
     nos_liru->addSkill(new NosFencheng);
-    related_skills.insertMulti("nosmieji", "#nosmieji");
-    related_skills.insertMulti("nosmieji", "#nosmieji-effect");
+    related_skills.insert("nosmieji", "#nosmieji");
+    related_skills.insert("nosmieji", "#nosmieji-effect");
 
     General *nos_zhuran = new General(this, "nos_zhuran", "wu");
     nos_zhuran->addSkill(new NosDanshou);

@@ -632,7 +632,7 @@ Special3v3Package::Special3v3Package()
     vs_nos_guanyu->addSkill("wusheng");
     vs_nos_guanyu->addSkill(new Zhongyi);
     vs_nos_guanyu->addSkill(new ZhongyiAction);
-    related_skills.insertMulti("zhongyi", "#zhongyi-action");
+    related_skills.insert("zhongyi", "#zhongyi-action");
 
     General *vs_nos_zhaoyun = new General(this, "vs_nos_zhaoyun", "shu");
     vs_nos_zhaoyun->addSkill("longdan");
@@ -654,14 +654,14 @@ Special3v3ExtPackage::Special3v3ExtPackage()
     General *wenpin = new General(this, "wenpin", "wei"); // WEI 019
     wenpin->addSkill(new Zhenwei);
     wenpin->addSkill(new ZhenweiDistance);
-    related_skills.insertMulti("zhenwei", "#zhenwei");
+    related_skills.insert("zhenwei", "#zhenwei");
 
     General *zhugejin = new General(this, "zhugejin", "wu", 3, true); // WU 018
     zhugejin->addSkill(new Hongyuan);
     zhugejin->addSkill(new HongyuanDraw);
     zhugejin->addSkill(new Huanshi);
     zhugejin->addSkill(new Mingzhe);
-    related_skills.insertMulti("hongyuan", "#hongyuan");
+    related_skills.insert("hongyuan", "#hongyuan");
 
     addMetaObject<ZhenweiCard>();
     addMetaObject<HongyuanCard>();

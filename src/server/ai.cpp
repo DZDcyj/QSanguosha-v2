@@ -2,12 +2,10 @@
 #include "serverplayer.h"
 #include "engine.h"
 #include "standard.h"
-#include "maneuvering.h"
 #include "lua.hpp"
 #include "scenario.h"
 #include "aux-skills.h"
 #include "settings.h"
-#include "roomthread.h"
 #include "wrapped-card.h"
 #include "room.h"
 
@@ -223,7 +221,7 @@ bool TrustAI::useCard(const Card *card)
 
 Card::Suit TrustAI::askForSuit(const QString &)
 {
-    return Card::AllSuits[qrand() % 4];
+    return Card::AllSuits[QRandomGenerator::global()->bounded(4)];
 }
 
 QString TrustAI::askForKingdom()
@@ -232,10 +230,10 @@ QString TrustAI::askForKingdom()
     ServerPlayer *lord = room->getLord();
     QStringList kingdoms = Sanguosha->getKingdoms();
     kingdoms.removeOne("god");
-    if (!lord) return kingdoms.at(qrand() % kingdoms.length());
+    if (!lord) return kingdoms.at(QRandomGenerator::global()->bounded(kingdoms.length()));
 
     switch (self->getRoleEnum()) {
-    case Player::Lord: role = kingdoms.at(qrand() % kingdoms.length()); break;
+    case Player::Lord: role = kingdoms.at(QRandomGenerator::global()->bounded(kingdoms.length())); break;
     case Player::Renegade:
     case Player::Rebel: {
         if ((lord->hasLordSkill("xueyi") && self->getRoleEnum() == Player::Rebel) || lord->hasLordSkill("shichou"))
@@ -251,7 +249,7 @@ QString TrustAI::askForKingdom()
             role = lord->getGeneral2()->getKingdom();
         else {
             if (lord->hasSkill("yongsi")) kingdoms.removeOne(lord->getKingdom());
-            role = kingdoms.at(qrand() % kingdoms.length());
+            role = kingdoms.at(QRandomGenerator::global()->bounded(kingdoms.length()));
         }
         break;
     }
@@ -270,7 +268,7 @@ bool TrustAI::askForSkillInvoke(const QString &, const QVariant &)
 QString TrustAI::askForChoice(const QString &, const QString &choice, const QVariant &)
 {
     QStringList choices = choice.split("+");
-    return choices.at(qrand() % choices.length());
+    return choices.at(QRandomGenerator::global()->bounded(choices.length()));
 }
 
 QList<int> TrustAI::askForDiscard(const QString &, int, int min_num, bool optional, bool include_equip, const QString &pattern)
@@ -315,7 +313,7 @@ int TrustAI::askForAG(const QList<int> &card_ids, bool refusable, const QString 
     if (refusable)
         return -1;
 
-    int r = qrand() % card_ids.length();
+    int r = QRandomGenerator::global()->bounded(card_ids.length());
     return card_ids.at(r);
 }
 
@@ -332,7 +330,7 @@ static bool CompareByNumber(const Card *c1, const Card *c2)
 const Card *TrustAI::askForPindian(ServerPlayer *requestor, const QString &reason)
 {
     QList<const Card *> cards = self->getHandcards();
-    qSort(cards.begin(), cards.end(), CompareByNumber);
+    std::sort(cards.begin(), cards.end(), CompareByNumber);
 
     // zhiba special case
     if (reason == "zhiba_pindian" && self->hasLordSkill("zhiba"))
@@ -348,7 +346,7 @@ ServerPlayer *TrustAI::askForPlayerChosen(const QList<ServerPlayer *> &targets, 
 {
     Q_UNUSED(reason);
 
-    int r = qrand() % targets.length();
+    int r = QRandomGenerator::global()->bounded(targets.length());
     return targets.at(r);
 }
 

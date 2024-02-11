@@ -212,7 +212,7 @@ void Slash::onUse(Room *room, const CardUseStruct &card_use) const
             name = "huxiao";
         if (!name.isEmpty()) {
             player->setFlags("-Global_MoreSlashInOneTurn");
-            int index = qrand() % 2 + 1;
+            int index = QRandomGenerator::global()->bounded(2) + 1;
             if (name == "paoxiao") {
                 if (!player->hasInnateSkill("paoxiao") && player->hasSkill("baobian"))
                     index += 4;
@@ -1583,7 +1583,7 @@ StandardCardPackage::StandardCardPackage()
         << new HalberdSkill;
 
     skills << new SpearEmotion;
-    related_skills.insertMulti("spear", "#spear-emotion");
+    related_skills.insert("spear", "#spear-emotion");
 
     QList<Card *> horses;
     horses << new DefensiveHorse(Card::Spade, 5)

@@ -317,7 +317,7 @@ static bool CompareByRole(ServerPlayer *player1, ServerPlayer *player2)
 void Room::updateStateItem()
 {
     QList<ServerPlayer *> players = this->m_players;
-    qSort(players.begin(), players.end(), CompareByRole);
+    std::sort(players.begin(), players.end(), CompareByRole);
     QString roles;
     foreach (ServerPlayer *p, players) {
         QChar c = "ZCFN"[p->getRoleEnum()];
@@ -1017,7 +1017,7 @@ QString Room::askForChoice(ServerPlayer *player, const QString &skill_name, cons
     }
 
     if (!validChoices.contains(answer))
-        answer = validChoices.at(qrand() % validChoices.length());
+        answer = validChoices.at(QRandomGenerator::global()->bounded(validChoices.length()));
 
     QVariant decisionData = QVariant::fromValue("skillChoice:" + skill_name + ":" + answer);
     thread->trigger(ChoiceMade, this, player, decisionData);
@@ -1219,7 +1219,7 @@ int Room::askForCardChosen(ServerPlayer *player, ServerPlayer *who, const QStrin
                     }
                 }
                 Q_ASSERT(!cards.isEmpty());
-                card_id = cards.at(qrand() % cards.length())->getId();
+                card_id = cards.at(QRandomGenerator::global()->bounded(cards.length()))->getId();
             }
         } else {
             JsonArray arg;
@@ -1242,7 +1242,7 @@ int Room::askForCardChosen(ServerPlayer *player, ServerPlayer *who, const QStrin
                     }
                 }
                 Q_ASSERT(!cards.isEmpty());
-                card_id = cards.at(qrand() % cards.length())->getId();
+                card_id = cards.at(QRandomGenerator::global()->bounded(cards.length()))->getId();
             } else
                 card_id = clientReply.toInt();
 
@@ -2230,7 +2230,7 @@ void Room::prepareForStart()
         } else if (mode == "04_1v3" || mode == "04_boss") {
             if (Config.RandomSeat)
                 qShuffle(m_players);
-            ServerPlayer *lord = m_players.at(qrand() % 4);
+            ServerPlayer *lord = m_players.at(QRandomGenerator::global()->bounded(4));
             for (int i = 0; i < 4; i++) {
                 ServerPlayer *player = m_players.at(i);
                 if (player == lord)
@@ -2717,7 +2717,7 @@ void Room::chooseGenerals(QList<ServerPlayer *> players)
         if (Config.EnableSame)
             lord_list = Sanguosha->getRandomGenerals(Config.value("MaxChoice", 5).toInt());
         else if (the_lord->getState() == "robot")
-            if (((qrand() % 100 < nonlord_prob || lord_num == 0) && nonlord_num > 0)
+            if (((QRandomGenerator::global()->bounded(100) < nonlord_prob || lord_num == 0) && nonlord_num > 0)
                 || Sanguosha->getLords().length() == 0)
                 lord_list = Sanguosha->getRandomGenerals(1);
             else
@@ -2806,7 +2806,7 @@ void Room::chooseGeneralsOfJianGeDefenseMode()
             QString result = _chooseDefaultGeneral(player);
             if (player->property("jiange_defense_type").toString() != "general") { // randomly chosen
                 QStringList selected = player->getSelected();
-                result = selected.at(qrand() % selected.length());
+                result = selected.at(QRandomGenerator::global()->bounded(selected.length()));
             }
             _setPlayerGeneral(player, result, true);
         }
@@ -2928,7 +2928,7 @@ void Room::run()
             QString gen = askForGeneral(lord, boss_lv_1);
             setPlayerProperty(lord, "general", gen);
         } else {
-            setPlayerProperty(lord, "general", boss_lv_1.at(qrand() % 4));
+            setPlayerProperty(lord, "general", boss_lv_1.at(QRandomGenerator::global()->bounded(4)));
         }
         setPlayerMark(lord, "BossMode_Boss", 1);
 
@@ -4072,7 +4072,7 @@ QList<CardsMoveOneTimeStruct> Room::_mergeMoves(QList<CardsMoveStruct> cards_mov
     }
 
     if (result.size() > 1)
-        qSort(result.begin(), result.end(), CompareByActionOrder_OneTime);
+        std::sort(result.begin(), result.end(), CompareByActionOrder_OneTime);
 
     return result;
 }
@@ -4131,7 +4131,7 @@ QList<CardsMoveStruct> Room::_separateMoves(QList<CardsMoveOneTimeStruct> moveOn
         i++;
     }
     if (card_moves.size() > 1)
-        qSort(card_moves.begin(), card_moves.end(), CompareByActionOrder);
+        std::sort(card_moves.begin(), card_moves.end(), CompareByActionOrder);
     return card_moves;
 }
 
@@ -4805,7 +4805,7 @@ Card::Suit Room::askForSuit(ServerPlayer *player, const QString &reason)
 
     bool success = doRequest(player, S_COMMAND_CHOOSE_SUIT, QVariant(), true);
 
-    Card::Suit suit = Card::AllSuits[qrand() % 4];
+    Card::Suit suit = Card::AllSuits[QRandomGenerator::global()->bounded(4)];
     if (success) {
         const QVariant &clientReply = player->getClientReply();
         QString suitStr = clientReply.toString();
@@ -5361,7 +5361,7 @@ ServerPlayer *Room::askForPlayerChosen(ServerPlayer *player, const QList<ServerP
     if (choice && !targets.contains(choice))
         choice = NULL;
     if (choice == NULL && !optional)
-        choice = targets.at(qrand() % targets.length());
+        choice = targets.at(QRandomGenerator::global()->bounded(targets.length()));
     if (choice) {
         if (notify_skill) {
             notifySkillInvoked(player, skillName);
@@ -5403,7 +5403,7 @@ QString Room::askForGeneral(ServerPlayer *player, const QStringList &generals, Q
         return generals.first();
 
     if (default_choice.isEmpty())
-        default_choice = generals.at(qrand() % generals.length());
+        default_choice = generals.at(QRandomGenerator::global()->bounded(generals.length()));
 
     if (player->isOnline()) {
         JsonArray options = JsonUtils::toJsonArray(generals).value<JsonArray>();
@@ -5961,7 +5961,7 @@ void Room::networkDelayTestCommand(ServerPlayer *player, const QVariant &)
 void Room::sortByActionOrder(QList<ServerPlayer *> &players)
 {
     if (players.length() > 1)
-        qSort(players.begin(), players.end(), ServerPlayer::CompareByActionOrder);
+        std::sort(players.begin(), players.end(), ServerPlayer::CompareByActionOrder);
 }
 
 int Room::getBossModeExpMult(int level) const

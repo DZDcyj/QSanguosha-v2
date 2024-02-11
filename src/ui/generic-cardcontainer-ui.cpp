@@ -53,7 +53,7 @@ void GenericCardContainer::_disperseCards(QList<CardItem *> &cards, QRectF fillR
 {
     int numCards = cards.size();
     if (numCards == 0) return;
-    if (!keepOrder) qSort(cards.begin(), cards.end(), GenericCardContainer::_horizontalPosLessThan);
+    if (!keepOrder) std::sort(cards.begin(), cards.end(), GenericCardContainer::_horizontalPosLessThan);
     double maxWidth = fillRegion.width();
     int cardWidth = G_COMMON_LAYOUT.m_cardNormalWidth;
     double step = qMin((double)cardWidth, (maxWidth - cardWidth) / (numCards - 1));
@@ -377,7 +377,7 @@ void PlayerCardContainer::updatePile(const QString &pile_name)
             const Card *card = Sanguosha->getCard(card_id);
             if (card != NULL) cards << card;
         }
-        qSort(cards.begin(), cards.end(), CompareByNumber);
+        std::sort(cards.begin(), cards.end(), CompareByNumber);
 
         foreach(const Card *card, cards)
             menu->addAction(G_ROOM_SKIN.getCardSuitPixmap(card->getSuit()), card->getFullName());

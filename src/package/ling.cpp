@@ -261,7 +261,7 @@ LingPackage::LingPackage()
     General *neo_xuchu = new General(this, "neo_xuchu", "wei");
     neo_xuchu->addSkill(new NeoLuoyi);
     neo_xuchu->addSkill(new NeoLuoyiBuff);
-    related_skills.insertMulti("neoluoyi", "#neoluoyi");
+    related_skills.insert("neoluoyi", "#neoluoyi");
 
     General *neo_caoren = new General(this, "neo_caoren", "wei");
     neo_caoren->addSkill(new NeoJushou);

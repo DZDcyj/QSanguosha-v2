@@ -99,7 +99,7 @@ public:
         if (!caocao->isLord() && caocao->hasSkill("weidi"))
             room->broadcastSkillInvoke("weidi");
         else {
-            int index = qrand() % 2 + 1;
+            int index = QRandomGenerator::global()->bounded(2) + 1;
             if (Player::isNostalGeneral(caocao, "caocao"))
                 index += 2;
             room->broadcastSkillInvoke(objectName(), index);
@@ -227,7 +227,7 @@ public:
         QVariant data_card = QVariant::fromValue(card);
         if (room->getCardPlace(card->getEffectiveId()) == Player::PlaceJudge
             && guojia->askForSkillInvoke(this, data_card)) {
-            int index = qrand() % 2 + 1;
+            int index = QRandomGenerator::global()->bounded(2) + 1;
             if (Player::isNostalGeneral(guojia, "guojia"))
                 index += 2;
             room->broadcastSkillInvoke(objectName(), index);
@@ -449,7 +449,7 @@ public:
         const Card *card = room->askForCard(player, forced ? "..!" : "..", prompt, QVariant::fromValue(judge), Card::MethodResponse, judge->who, true);
         if (forced && card == NULL) {
             QList<const Card *> c = player->getCards("he");
-            card = c.at(qrand() % c.length());
+            card = c.at(QRandomGenerator::global()->bounded(c.length()));
         }
 
         if (card) {
@@ -796,7 +796,7 @@ public:
         if (!liubei->isLord() && liubei->hasSkill("weidi"))
             room->broadcastSkillInvoke("weidi");
         else {
-            int r = 1 + qrand() % 2;
+            int r = 1 + QRandomGenerator::global()->bounded(2);
             if (!liubei->hasInnateSkill("jijiang") && liubei->getMark("ruoyu") > 0)
                 r += 2;
             else if (liubei->hasSkill("qinwang"))
@@ -859,7 +859,7 @@ public:
 
     int getEffectIndex(const ServerPlayer *player, const Card *) const
     {
-        int index = qrand() % 2 + 1;
+        int index = QRandomGenerator::global()->bounded(2) + 1;
         if (Player::isNostalGeneral(player, "guanyu"))
             index += 2;
         else if (player->getGeneralName() == "jsp_guanyu" || (player->getGeneralName() != "guanyu" && player->getGeneral2Name() == "jsp_guanyu"))
@@ -1068,7 +1068,7 @@ public:
 
     int getEffectIndex(const ServerPlayer *player, const Card *) const
     {
-        int index = qrand() % 2 + 1;
+        int index = QRandomGenerator::global()->bounded(2) + 1;
         if (Player::isNostalGeneral(player, "zhaoyun"))
             index += 2;
         return index;
@@ -1271,7 +1271,7 @@ public:
     {
         if (zhuge->getPhase() == Player::Start && zhuge->askForSkillInvoke(this)) {
             Room *room = zhuge->getRoom();
-            int index = qrand() % 2 + 1;
+            int index = QRandomGenerator::global()->bounded(2) + 1;
             if (objectName() == "guanxing" && !zhuge->hasInnateSkill(this) && zhuge->hasSkill("zhiji"))
                 index += 2;
             room->broadcastSkillInvoke(objectName(), index);
@@ -1590,7 +1590,7 @@ public:
     {
         Room *room = zhouyu->getRoom();
 
-        int index = qrand() % 2 + 1;
+        int index = QRandomGenerator::global()->bounded(2) + 1;
         if (!zhouyu->hasInnateSkill(this)) {
             if (zhouyu->hasSkill("hunzi"))
                 index = 5;
@@ -1664,7 +1664,7 @@ public:
             if (change.to == Player::Discard && lvmeng->isAlive() && lvmeng->hasSkill(this)) {
                 if (can_trigger && lvmeng->askForSkillInvoke(this)) {
                     if (lvmeng->getHandcardNum() > lvmeng->getMaxCards()) {
-                        int index = qrand() % 2 + 1;
+                        int index = QRandomGenerator::global()->bounded(2) + 1;
                         if (!lvmeng->hasInnateSkill(this) && lvmeng->hasSkill("mouduan"))
                             index += 4;
                         else if (Player::isNostalGeneral(lvmeng, "lvmeng"))
@@ -1749,7 +1749,7 @@ public:
 
     int getEffectIndex(const ServerPlayer *player, const Card *) const
     {
-        int index = qrand() % 2 + 1;
+        int index = QRandomGenerator::global()->bounded(2) + 1;
         if (Player::isNostalGeneral(player, "ganning"))
             index += 2;
         return index;
@@ -2060,7 +2060,7 @@ public:
 
     int getEffectIndex(const ServerPlayer *player, const Card *) const
     {
-        int index = qrand() % 2 + 1;
+        int index = QRandomGenerator::global()->bounded(2) + 1;
         if (!player->hasInnateSkill(this) && player->hasSkill("luoyan"))
             index += 4;
         else if (Player::isNostalGeneral(player, "daqiao"))
@@ -2204,7 +2204,7 @@ public:
                     return false;
                 if (move.from_places[i] == Player::PlaceEquip) {
                     if (room->askForSkillInvoke(sunshangxiang, objectName())) {
-                        int index = qrand() % 2 + 1;
+                        int index = QRandomGenerator::global()->bounded(2) + 1;
                         if (!sunshangxiang->hasInnateSkill(this) && sunshangxiang->getMark("fanxiang") > 0)
                             index += 2;
                         room->broadcastSkillInvoke(objectName(), index);
@@ -2237,7 +2237,7 @@ public:
     bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
     {
         if (triggerEvent == TargetSpecified) {
-            int index = qrand() % 2 + 1;
+            int index = QRandomGenerator::global()->bounded(2) + 1;
             if (Player::isNostalGeneral(player, "lvbu")) index += 2;
             CardUseStruct use = data.value<CardUseStruct>();
             if (use.card->isKindOf("Slash") && TriggerSkill::triggerable(player)) {
@@ -2430,7 +2430,7 @@ public:
 
     int getEffectIndex(const ServerPlayer *player, const Card *) const
     {
-        int index = qrand() % 2 + 1;
+        int index = QRandomGenerator::global()->bounded(2) + 1;
         if (Player::isNostalGeneral(player, "huatuo"))
             index += 2;
         return index;
@@ -2719,18 +2719,18 @@ void StandardPackage::addGenerals()
     General *zhangliao = new General(this, "zhangliao", "wei"); // WEI 004
     zhangliao->addSkill(new Tuxi);
     zhangliao->addSkill(new TuxiAct);
-    related_skills.insertMulti("tuxi", "#tuxi");
+    related_skills.insert("tuxi", "#tuxi");
 
     General *xuchu = new General(this, "xuchu", "wei"); // WEI 005
     xuchu->addSkill(new Luoyi);
     xuchu->addSkill(new LuoyiBuff);
-    related_skills.insertMulti("luoyi", "#luoyi");
+    related_skills.insert("luoyi", "#luoyi");
 
     General *guojia = new General(this, "guojia", "wei", 3); // WEI 006
     guojia->addSkill(new Tiandu);
     guojia->addSkill(new Yiji);
     guojia->addSkill(new YijiObtain);
-    related_skills.insertMulti("yiji", "#yiji");
+    related_skills.insert("yiji", "#yiji");
 
     General *zhenji = new General(this, "zhenji", "wei", 3, false); // WEI 007
     zhenji->addSkill(new Qingguo);
@@ -2757,7 +2757,7 @@ void StandardPackage::addGenerals()
     zhugeliang->addSkill(new Guanxing);
     zhugeliang->addSkill(new Kongcheng);
     zhugeliang->addSkill(new KongchengEffect);
-    related_skills.insertMulti("kongcheng", "#kongcheng-effect");
+    related_skills.insert("kongcheng", "#kongcheng-effect");
 
     General *zhaoyun = new General(this, "zhaoyun", "shu"); // SHU 005
     zhaoyun->addSkill(new Longdan);
@@ -2767,7 +2767,7 @@ void StandardPackage::addGenerals()
     machao->addSkill(new Mashu);
     machao->addSkill(new Tieji);
     machao->addSkill(new TiejiClear);
-    related_skills.insertMulti("tieji", "#tieji-clear");
+    related_skills.insert("tieji", "#tieji-clear");
 
     General *huangyueying = new General(this, "huangyueying", "shu", 3, false); // SHU 007
     huangyueying->addSkill(new Jizhi);
@@ -2796,14 +2796,14 @@ void StandardPackage::addGenerals()
     huanggai->addSkill(new Zhaxiang);
     huanggai->addSkill(new ZhaxiangRedSlash);
     huanggai->addSkill(new ZhaxiangTargetMod);
-    related_skills.insertMulti("zhaxiang", "#zhaxiang");
-    related_skills.insertMulti("zhaxiang", "#zhaxiang-target");
+    related_skills.insert("zhaxiang", "#zhaxiang");
+    related_skills.insert("zhaxiang", "#zhaxiang-target");
 
     General *zhouyu = new General(this, "zhouyu", "wu", 3); // WU 005
     zhouyu->addSkill(new Yingzi);
     zhouyu->addSkill(new YingziMaxCards);
     zhouyu->addSkill(new Fanjian);
-    related_skills.insertMulti("yingzi", "#yingzi");
+    related_skills.insert("yingzi", "#yingzi");
 
     General *daqiao = new General(this, "daqiao", "wu", 3, false); // WU 006
     daqiao->addSkill(new Guose);
@@ -2837,7 +2837,7 @@ void StandardPackage::addGenerals()
     st_yuanshu->addSkill(new Wangzun);
     st_yuanshu->addSkill(new WangzunMaxCards);
     st_yuanshu->addSkill(new Tongji);
-    related_skills.insertMulti("wangzun", "#wangzun-maxcard");
+    related_skills.insert("wangzun", "#wangzun-maxcard");
 
     General *st_gongsunzan = new General(this, "st_gongsunzan", "qun"); // QUN 026
     st_gongsunzan->addSkill(new Qiaomeng);
@@ -3209,19 +3209,19 @@ TestPackage::TestPackage()
     gaodayihao->addSkill(new GdJuejingSkipDraw);
     gaodayihao->addSkill(new GdLonghun);
     gaodayihao->addSkill(new GdLonghunDuojian);
-    related_skills.insertMulti("gdjuejing", "#gdjuejing");
-    related_skills.insertMulti("gdlonghun", "#gdlonghun-duojian");
+    related_skills.insert("gdjuejing", "#gdjuejing");
+    related_skills.insert("gdlonghun", "#gdlonghun-duojian");
 
     General *super_yuanshu = new General(this, "super_yuanshu", "qun", 4, true, true);
     super_yuanshu->addSkill(new SuperYongsi);
     super_yuanshu->addSkill(new MarkAssignSkill("@yongsi_test", 4));
-    related_skills.insertMulti("super_yongsi", "#@yongsi_test-4");
+    related_skills.insert("super_yongsi", "#@yongsi_test-4");
     super_yuanshu->addSkill("weidi");
 
     General *super_caoren = new General(this, "super_caoren", "wei", 4, true, true);
     super_caoren->addSkill(new SuperJushou);
     super_caoren->addSkill(new MarkAssignSkill("@jushou_test", 5));
-    related_skills.insertMulti("super_jushou", "#@jushou_test-5");
+    related_skills.insert("super_jushou", "#@jushou_test-5");
 
     General *nobenghuai_dongzhuo = new General(this, "nobenghuai_dongzhuo$", "qun", 4, true, true);
     nobenghuai_dongzhuo->addSkill("jiuchi");
@@ -3235,8 +3235,8 @@ TestPackage::TestPackage()
 
     skills << new SuperMaxCards << new SuperOffensiveDistance << new SuperDefensiveDistance;
     skills << new Gepi << new GepiReset << new GepiInv;
-    related_skills.insertMulti("gepi", "#gepi");
-    related_skills.insertMulti("gepi", "#gepi-inv");
+    related_skills.insert("gepi", "#gepi");
+    related_skills.insert("gepi", "#gepi-inv");
 }
 
 ADD_PACKAGE(Test)

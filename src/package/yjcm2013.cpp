@@ -448,7 +448,7 @@ public:
                         }
                     }
                     if (extra == NULL) {
-                        extra = available_targets.at(qrand() % available_targets.length() - 1);
+                        extra = available_targets.at(QRandomGenerator::global()->bounded(available_targets.length()) - 1);
                         QList<ServerPlayer *> victims;
                         foreach (ServerPlayer *p, room->getOtherPlayers(extra)) {
                             if (extra->canSlash(p)
@@ -457,7 +457,7 @@ public:
                             }
                         }
                         Q_ASSERT(!victims.isEmpty());
-                        extra->tag["collateralVictim"] = QVariant::fromValue((victims.at(qrand() % victims.length() - 1)));
+                        extra->tag["collateralVictim"] = QVariant::fromValue((victims.at(QRandomGenerator::global()->bounded(victims.length()) - 1)));
                     }
                 }
                 use.to.append(extra);
@@ -610,7 +610,7 @@ public:
 
     int getEffectIndex(const ServerPlayer *, const Card *card) const
     {
-        int index = qrand() % 2 + 1;
+        int index = QRandomGenerator::global()->bounded(2) + 1;
         if (card->isKindOf("Slash"))
             index += 2;
         return index;
@@ -1536,13 +1536,13 @@ YJCM2013Package::YJCM2013Package()
     fuhuanghou->addSkill(new ZhuikongClear);
     fuhuanghou->addSkill(new ZhuikongProhibit);
     fuhuanghou->addSkill(new Qiuyuan);
-    related_skills.insertMulti("zhuikong", "#zhuikong");
-    related_skills.insertMulti("zhuikong", "#zhuikong-clear");
+    related_skills.insert("zhuikong", "#zhuikong");
+    related_skills.insert("zhuikong", "#zhuikong-clear");
 
     General *guohuai = new General(this, "guohuai", "wei"); // YJ 203
     guohuai->addSkill(new Jingce);
     guohuai->addSkill(new JingceRecord);
-    related_skills.insertMulti("jingce", "#jingce-record");
+    related_skills.insert("jingce", "#jingce-record");
 
     General *guanping = new General(this, "guanping", "shu", 4); // YJ 204
     guanping->addSkill(new Longyin);
@@ -1552,20 +1552,20 @@ YJCM2013Package::YJCM2013Package()
     jianyong->addSkill(new QiaoshuiUse);
     jianyong->addSkill(new QiaoshuiTargetMod);
     jianyong->addSkill(new Zongshih);
-    related_skills.insertMulti("qiaoshui", "#qiaoshui-use");
-    related_skills.insertMulti("qiaoshui", "#qiaoshui-target");
+    related_skills.insert("qiaoshui", "#qiaoshui-use");
+    related_skills.insert("qiaoshui", "#qiaoshui-target");
 
     General *liru = new General(this, "liru", "qun", 3); // YJ 206
     liru->addSkill(new Juece);
     liru->addSkill(new Mieji);
     liru->addSkill(new Fencheng);
     liru->addSkill(new FenchengMark);
-    related_skills.insertMulti("fencheng", "#fencheng");
+    related_skills.insert("fencheng", "#fencheng");
 
     General *liufeng = new General(this, "liufeng", "shu"); // YJ 207
     liufeng->addSkill(new Xiansi);
     liufeng->addSkill(new XiansiAttach);
-    related_skills.insertMulti("xiansi", "#xiansi-attach");
+    related_skills.insert("xiansi", "#xiansi-attach");
 
     General *manchong = new General(this, "manchong", "wei", 3); // YJ 208
     manchong->addSkill(new Junxing);

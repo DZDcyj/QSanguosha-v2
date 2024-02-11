@@ -125,7 +125,7 @@ void Skill::playAudioEffect(int index, bool superpose) const
 {
     if (!sources.isEmpty()) {
         if (index == -1)
-            index = qrand() % sources.length();
+            index = QRandomGenerator::global()->bounded(sources.length());
         else
             index--;
 
