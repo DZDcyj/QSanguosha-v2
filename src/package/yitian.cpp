@@ -223,7 +223,7 @@ public:
 
         QString choice = room->askForChoice(weiwudi, objectName(), "modify+obtain");
 
-        int index = qrand() % 2;
+        int index = QRandomGenerator::global()->bounded(2);
 
         if (choice == "modify") {
             ServerPlayer * to_modify = room->askForPlayerChosen(weiwudi, room->getOtherPlayers(weiwudi), objectName());
@@ -1446,7 +1446,7 @@ XunzhiCard::XunzhiCard()
 
 void XunzhiCard::use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &) const
 {
-    int index = qrand() % 2 + 1;
+    int index = QRandomGenerator::global()->bounded(2) + 1;
     room->broadcastSkillInvoke("xunzhi", index);
     //room->doLightbox("$XunzhiAnimate");
     //room->getThread()->delay(2000);

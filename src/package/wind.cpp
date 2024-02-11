@@ -53,7 +53,7 @@ public:
         const Card *card = room->askForCard(player, ".|black", prompt, QVariant::fromValue(judge), Card::MethodResponse, judge->who, true);
 
         if (card != NULL) {
-            int index = qrand() % 2 + 1;
+            int index = QRandomGenerator::global()->bounded(2) + 1;
             if (Player::isNostalGeneral(player, "zhangjiao"))
                 index += 2;
             room->broadcastSkillInvoke(objectName(), index);
@@ -125,7 +125,7 @@ void HuangtianCard::use(Room *room, ServerPlayer *source, QList<ServerPlayer *> 
         if (!zhangjiao->isLord() && zhangjiao->hasSkill("weidi"))
             room->broadcastSkillInvoke("weidi");
         else {
-            int index = qrand() % 2 + 1;
+            int index = QRandomGenerator::global()->bounded(2) + 1;
             if (Player::isNostalGeneral(zhangjiao, "zhangjiao"))
                 index += 2;
             room->broadcastSkillInvoke("huangtian", index);
@@ -340,7 +340,7 @@ public:
 
     int getEffectIndex(const ServerPlayer *player, const Card *) const
     {
-        int index = qrand() % 2 + 1;
+        int index = QRandomGenerator::global()->bounded(2) + 1;
         if (!player->hasInnateSkill(this) && player->hasSkill("baobian"))
             index += 2;
         return index;
@@ -688,7 +688,7 @@ public:
 
     int getEffectIndex(const ServerPlayer *player, const Card *) const
     {
-        int index = qrand() % 2 + 1;
+        int index = QRandomGenerator::global()->bounded(2) + 1;
         if (!player->hasInnateSkill(this) && player->hasSkill("luoyan"))
             index += 2;
 

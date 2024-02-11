@@ -99,7 +99,7 @@ public:
         if (!caocao->isLord() && caocao->hasSkill("weidi"))
             room->broadcastSkillInvoke("weidi");
         else {
-            int index = qrand() % 2 + 1;
+            int index = QRandomGenerator::global()->bounded(2) + 1;
             if (Player::isNostalGeneral(caocao, "caocao"))
                 index += 2;
             room->broadcastSkillInvoke(objectName(), index);
@@ -227,7 +227,7 @@ public:
         QVariant data_card = QVariant::fromValue(card);
         if (room->getCardPlace(card->getEffectiveId()) == Player::PlaceJudge
             && guojia->askForSkillInvoke(this, data_card)) {
-            int index = qrand() % 2 + 1;
+            int index = QRandomGenerator::global()->bounded(2) + 1;
             if (Player::isNostalGeneral(guojia, "guojia"))
                 index += 2;
             room->broadcastSkillInvoke(objectName(), index);
@@ -796,7 +796,7 @@ public:
         if (!liubei->isLord() && liubei->hasSkill("weidi"))
             room->broadcastSkillInvoke("weidi");
         else {
-            int r = 1 + qrand() % 2;
+            int r = 1 + QRandomGenerator::global()->bounded(2);
             if (!liubei->hasInnateSkill("jijiang") && liubei->getMark("ruoyu") > 0)
                 r += 2;
             else if (liubei->hasSkill("qinwang"))
@@ -859,7 +859,7 @@ public:
 
     int getEffectIndex(const ServerPlayer *player, const Card *) const
     {
-        int index = qrand() % 2 + 1;
+        int index = QRandomGenerator::global()->bounded(2) + 1;
         if (Player::isNostalGeneral(player, "guanyu"))
             index += 2;
         else if (player->getGeneralName() == "jsp_guanyu" || (player->getGeneralName() != "guanyu" && player->getGeneral2Name() == "jsp_guanyu"))
@@ -1068,7 +1068,7 @@ public:
 
     int getEffectIndex(const ServerPlayer *player, const Card *) const
     {
-        int index = qrand() % 2 + 1;
+        int index = QRandomGenerator::global()->bounded(2) + 1;
         if (Player::isNostalGeneral(player, "zhaoyun"))
             index += 2;
         return index;
@@ -1271,7 +1271,7 @@ public:
     {
         if (zhuge->getPhase() == Player::Start && zhuge->askForSkillInvoke(this)) {
             Room *room = zhuge->getRoom();
-            int index = qrand() % 2 + 1;
+            int index = QRandomGenerator::global()->bounded(2) + 1;
             if (objectName() == "guanxing" && !zhuge->hasInnateSkill(this) && zhuge->hasSkill("zhiji"))
                 index += 2;
             room->broadcastSkillInvoke(objectName(), index);
@@ -1590,7 +1590,7 @@ public:
     {
         Room *room = zhouyu->getRoom();
 
-        int index = qrand() % 2 + 1;
+        int index = QRandomGenerator::global()->bounded(2) + 1;
         if (!zhouyu->hasInnateSkill(this)) {
             if (zhouyu->hasSkill("hunzi"))
                 index = 5;
@@ -1664,7 +1664,7 @@ public:
             if (change.to == Player::Discard && lvmeng->isAlive() && lvmeng->hasSkill(this)) {
                 if (can_trigger && lvmeng->askForSkillInvoke(this)) {
                     if (lvmeng->getHandcardNum() > lvmeng->getMaxCards()) {
-                        int index = qrand() % 2 + 1;
+                        int index = QRandomGenerator::global()->bounded(2) + 1;
                         if (!lvmeng->hasInnateSkill(this) && lvmeng->hasSkill("mouduan"))
                             index += 4;
                         else if (Player::isNostalGeneral(lvmeng, "lvmeng"))
@@ -1749,7 +1749,7 @@ public:
 
     int getEffectIndex(const ServerPlayer *player, const Card *) const
     {
-        int index = qrand() % 2 + 1;
+        int index = QRandomGenerator::global()->bounded(2) + 1;
         if (Player::isNostalGeneral(player, "ganning"))
             index += 2;
         return index;
@@ -2060,7 +2060,7 @@ public:
 
     int getEffectIndex(const ServerPlayer *player, const Card *) const
     {
-        int index = qrand() % 2 + 1;
+        int index = QRandomGenerator::global()->bounded(2) + 1;
         if (!player->hasInnateSkill(this) && player->hasSkill("luoyan"))
             index += 4;
         else if (Player::isNostalGeneral(player, "daqiao"))
@@ -2204,7 +2204,7 @@ public:
                     return false;
                 if (move.from_places[i] == Player::PlaceEquip) {
                     if (room->askForSkillInvoke(sunshangxiang, objectName())) {
-                        int index = qrand() % 2 + 1;
+                        int index = QRandomGenerator::global()->bounded(2) + 1;
                         if (!sunshangxiang->hasInnateSkill(this) && sunshangxiang->getMark("fanxiang") > 0)
                             index += 2;
                         room->broadcastSkillInvoke(objectName(), index);
@@ -2237,7 +2237,7 @@ public:
     bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
     {
         if (triggerEvent == TargetSpecified) {
-            int index = qrand() % 2 + 1;
+            int index = QRandomGenerator::global()->bounded(2) + 1;
             if (Player::isNostalGeneral(player, "lvbu")) index += 2;
             CardUseStruct use = data.value<CardUseStruct>();
             if (use.card->isKindOf("Slash") && TriggerSkill::triggerable(player)) {
@@ -2430,7 +2430,7 @@ public:
 
     int getEffectIndex(const ServerPlayer *player, const Card *) const
     {
-        int index = qrand() % 2 + 1;
+        int index = QRandomGenerator::global()->bounded(2) + 1;
         if (Player::isNostalGeneral(player, "huatuo"))
             index += 2;
         return index;

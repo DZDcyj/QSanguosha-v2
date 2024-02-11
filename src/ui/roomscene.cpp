@@ -580,7 +580,7 @@ void RoomScene::handleGameEvent(const QVariant &args)
         bool paused = arg[1].toBool();
         if (pausing_item->isVisible() != paused) {
             if (paused) {
-                QBrush pausing_brush(QColor(qrand() % 256, qrand() % 256, qrand() % 256));
+                QBrush pausing_brush(QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)));
                 pausing_item->setBrush(pausing_brush);
                 bringToFront(pausing_item);
                 bringToFront(pausing_text);

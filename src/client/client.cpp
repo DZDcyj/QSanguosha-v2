@@ -2034,7 +2034,7 @@ void Client::onPlayerChooseOrder()
     if (button) {
         order = button->objectName();
     } else {
-        if (qrand() % 2 == 0)
+        if (QRandomGenerator::global()->bounded(2) == 0)
             order = "warm";
         else
             order = "cool";

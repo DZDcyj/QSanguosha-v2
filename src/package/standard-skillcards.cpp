@@ -465,7 +465,7 @@ const Card *JijiangCard::validate(CardUseStruct &cardUse) const
     if (!liubei->isLord() && liubei->hasSkill("weidi"))
         room->broadcastSkillInvoke("weidi");
     else {
-        int r = 1 + qrand() % 2;
+        int r = 1 + QRandomGenerator::global()->bounded(2);
         if (!liubei->hasInnateSkill("jijiang") && liubei->getMark("ruoyu") > 0)
             r += 2;
         else if (liubei->hasSkill("qinwang"))

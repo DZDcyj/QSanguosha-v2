@@ -183,7 +183,7 @@ public:
         if (triggerEvent == HpRecover) {
             RecoverStruct recover = data.value<RecoverStruct>();
             if (recover.who && recover.who != player) {
-                room->broadcastSkillInvoke("nosenyuan", qrand() % 2 + 1);
+                room->broadcastSkillInvoke("nosenyuan", QRandomGenerator::global()->bounded(2) + 1);
                 room->sendCompulsoryTriggerLog(player, objectName());
                 recover.who->drawCards(recover.recover, objectName());
             }
@@ -191,7 +191,7 @@ public:
             DamageStruct damage = data.value<DamageStruct>();
             ServerPlayer *source = damage.from;
             if (source && source != player) {
-                room->broadcastSkillInvoke("nosenyuan", qrand() % 2 + 3);
+                room->broadcastSkillInvoke("nosenyuan", QRandomGenerator::global()->bounded(2) + 3);
                 room->sendCompulsoryTriggerLog(player, objectName());
 
                 const Card *card = room->askForCard(source, ".|heart|.|hand", "@nosenyuan-heart", data, Card::MethodNone);

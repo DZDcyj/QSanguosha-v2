@@ -649,7 +649,7 @@ public:
 
     int getEffectIndex(const ServerPlayer *player, const Card *) const
     {
-        int index = qrand() % 2 + 1;
+        int index = QRandomGenerator::global()->bounded(2) + 1;
         if (!player->hasInnateSkill(this) && player->hasSkill("baobian"))
             index += 3;
         else if (!player->hasInnateSkill(this) && player->getMark("fengliang") > 0)

@@ -390,7 +390,7 @@ public:
 
                 room->installEquip(player, "SilverLion");
                 qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
-                if ((qrand() % 2) == 1) {
+                if ((QRandomGenerator::global()->bounded(2)) == 1) {
                     room->acquireSkill(player, "silue");
                     room->acquireSkill(player, "kedi");
                 } else {

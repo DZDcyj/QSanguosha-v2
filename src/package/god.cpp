@@ -274,7 +274,7 @@ public:
 
     int getEffectIndex(const ServerPlayer *player, const Card *) const
     {
-        int index = qrand() % 2 + 1;
+        int index = QRandomGenerator::global()->bounded(2) + 1;
         if (!player->hasInnateSkill(this) && player->getMark("qinxue") > 0)
             index += 2;
         return index;

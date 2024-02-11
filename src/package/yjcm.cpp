@@ -133,7 +133,7 @@ public:
 
     int getEffectIndex(const ServerPlayer *, const Card *) const
     {
-        return qrand() % 2 + 1;
+        return QRandomGenerator::global()->bounded(2) + 1;
     }
 };
 

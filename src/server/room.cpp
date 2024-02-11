@@ -2230,7 +2230,7 @@ void Room::prepareForStart()
         } else if (mode == "04_1v3" || mode == "04_boss") {
             if (Config.RandomSeat)
                 qShuffle(m_players);
-            ServerPlayer *lord = m_players.at(qrand() % 4);
+            ServerPlayer *lord = m_players.at(QRandomGenerator::global()->bounded(4));
             for (int i = 0; i < 4; i++) {
                 ServerPlayer *player = m_players.at(i);
                 if (player == lord)
@@ -2717,7 +2717,7 @@ void Room::chooseGenerals(QList<ServerPlayer *> players)
         if (Config.EnableSame)
             lord_list = Sanguosha->getRandomGenerals(Config.value("MaxChoice", 5).toInt());
         else if (the_lord->getState() == "robot")
-            if (((qrand() % 100 < nonlord_prob || lord_num == 0) && nonlord_num > 0)
+            if (((QRandomGenerator::global()->bounded(100) < nonlord_prob || lord_num == 0) && nonlord_num > 0)
                 || Sanguosha->getLords().length() == 0)
                 lord_list = Sanguosha->getRandomGenerals(1);
             else
@@ -2928,7 +2928,7 @@ void Room::run()
             QString gen = askForGeneral(lord, boss_lv_1);
             setPlayerProperty(lord, "general", gen);
         } else {
-            setPlayerProperty(lord, "general", boss_lv_1.at(qrand() % 4));
+            setPlayerProperty(lord, "general", boss_lv_1.at(QRandomGenerator::global()->bounded(4)));
         }
         setPlayerMark(lord, "BossMode_Boss", 1);
 
@@ -4805,7 +4805,7 @@ Card::Suit Room::askForSuit(ServerPlayer *player, const QString &reason)
 
     bool success = doRequest(player, S_COMMAND_CHOOSE_SUIT, QVariant(), true);
 
-    Card::Suit suit = Card::AllSuits[qrand() % 4];
+    Card::Suit suit = Card::AllSuits[QRandomGenerator::global()->bounded(4)];
     if (success) {
         const QVariant &clientReply = player->getClientReply();
         QString suitStr = clientReply.toString();

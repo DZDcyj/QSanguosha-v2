@@ -477,7 +477,7 @@ public:
         DamageStruct damage = data.value<DamageStruct>();
 
         if (player->askForSkillInvoke(this, data)) {
-            int n = qrand() % 2 + 1;
+            int n = QRandomGenerator::global()->bounded(2) + 1;
             if (player->getGeneralName() == "guansuo") {
                 n += 1;
             }

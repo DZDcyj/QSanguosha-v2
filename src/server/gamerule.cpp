@@ -845,7 +845,7 @@ void GameRule::changeGeneralBossMode(ServerPlayer *player) const
                 general = boss_generals.at(qrand() % boss_generals.length());
         }
     } else {
-        general = (qrand() % 2 == 0) ? "sujiang" : "sujiangf";
+        general = (QRandomGenerator::global()->bounded(2) == 0) ? "sujiang" : "sujiangf";
     }
 
     if (player->getPhase() != Player::NotActive)

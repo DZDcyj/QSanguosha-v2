@@ -223,7 +223,7 @@ bool TrustAI::useCard(const Card *card)
 
 Card::Suit TrustAI::askForSuit(const QString &)
 {
-    return Card::AllSuits[qrand() % 4];
+    return Card::AllSuits[QRandomGenerator::global()->bounded(4)];
 }
 
 QString TrustAI::askForKingdom()

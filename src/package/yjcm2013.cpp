@@ -610,7 +610,7 @@ public:
 
     int getEffectIndex(const ServerPlayer *, const Card *card) const
     {
-        int index = qrand() % 2 + 1;
+        int index = QRandomGenerator::global()->bounded(2) + 1;
         if (card->isKindOf("Slash"))
             index += 2;
         return index;

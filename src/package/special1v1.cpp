@@ -889,7 +889,7 @@ public:
     {
         CardUseStruct use = data.value<CardUseStruct>();
         if (use.card->isKindOf("Slash") && use.to.contains(player) && room->askForSkillInvoke(player, objectName(), data)) {
-            room->broadcastSkillInvoke("liuli", qrand() % 2 + 1); // wanrong has no audio effect at this time.
+            room->broadcastSkillInvoke("liuli", QRandomGenerator::global()->bounded(2) + 1); // wanrong has no audio effect at this time.
             player->drawCards(1, objectName());
         }
         return false;

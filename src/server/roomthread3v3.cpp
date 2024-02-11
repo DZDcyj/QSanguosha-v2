@@ -279,7 +279,7 @@ void RoomThread3v3::assignRoles(const QString &scheme)
         assignRoles(all_roles, scheme);
 
         QMap<QString, QString> map;
-        if (qrand() % 2 == 0) {
+        if (QRandomGenerator::global()->bounded(2) == 0) {
             map["leader1"] = "lord";
             map["guard1"] = "loyalist";
             map["leader2"] = "renegade";

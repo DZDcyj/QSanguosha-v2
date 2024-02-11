@@ -76,7 +76,7 @@ void RoomThread1v1::run()
             << "x3" << "x4" << "x5"));
     }
 
-    int index = qrand() % 2;
+    int index = QRandomGenerator::global()->bounded(2);
     ServerPlayer *first = room->getPlayers().at(index), *next = room->getPlayers().at(1 - index);
     QString order = room->askForOrder(first, "warm");
     if (order == "cool")
