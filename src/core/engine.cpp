@@ -266,7 +266,8 @@ Engine::Engine(bool isManualMode)
             QFile file(QString("manual/Chapter%1.lua").arg(upper));
             if (file.open(QFile::WriteOnly | QFile::Truncate)) {
                 QTextStream stream(&file);
-                stream.setCodec(QTextCodec::codecForName("UTF-8"));
+                // stream.setCodec(QTextCodec::codecForName("UTF-8"));
+                stream.setEncoding(QStringConverter::Utf8);
 
                 ManualSkillList list;
                 while (iter != allSkills.end()) {
