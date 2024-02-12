@@ -2,16 +2,13 @@
 #include "standard.h"
 #include "skill.h"
 #include "engine.h"
-#include "client.h"
 #include "serverplayer.h"
 #include "room.h"
 #include "standard-skillcards.h"
 #include "ai.h"
-#include "settings.h"
 #include "sp.h"
 #include "wind.h"
 #include "god.h"
-#include "maneuvering.h"
 #include "json.h"
 #include "clientplayer.h"
 #include "clientstruct.h"
@@ -2260,7 +2257,8 @@ public:
                         wushuang_tag << to->objectName();
                     player->tag["Wushuang_" + use.card->toString()] = wushuang_tag;
                 }
-                foreach (ServerPlayer *p, use.to.toSet()) {
+                QSet<ServerPlayer*> use_to_set{use.to.begin(), use.to.end()};
+                foreach (ServerPlayer *p, use_to_set) {
                     if (TriggerSkill::triggerable(p)) {
                         room->broadcastSkillInvoke(objectName(), index);
                         room->sendCompulsoryTriggerLog(p, objectName());
