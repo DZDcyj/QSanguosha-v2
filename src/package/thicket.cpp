@@ -4,7 +4,6 @@
 #include "room.h"
 #include "maneuvering.h"
 #include "clientplayer.h"
-#include "client.h"
 #include "engine.h"
 #include "general.h"
 #include "json.h"

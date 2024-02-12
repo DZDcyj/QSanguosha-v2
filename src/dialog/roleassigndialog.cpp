@@ -1,7 +1,5 @@
 #include "roleassigndialog.h"
 
-#include "general.h"
-#include "player.h"
 #include "client.h"
 #include "engine.h"
 #include "roomscene.h"

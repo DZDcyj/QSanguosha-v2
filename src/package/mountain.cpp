@@ -6,7 +6,6 @@
 #include "standard.h"
 #include "generaloverview.h"
 #include "clientplayer.h"
-#include "client.h"
 #include "ai.h"
 #include "json.h"
 #include "util.h"
@@ -1205,7 +1204,7 @@ public:
             banned << "zuoci" << "guzhielai" << "dengshizai" << "yt_caochong" << "jiangboyue";
         }
 
-        return (all - banned - huashen_set - room_set).toList();
+        return (all - banned - huashen_set - room_set).values();
     }
 
     static void SelectSkill(ServerPlayer *zuoci)

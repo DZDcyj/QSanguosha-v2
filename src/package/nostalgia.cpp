@@ -1,7 +1,6 @@
 #include "standard.h"
 #include "skill.h"
 #include "wind.h"
-#include "client.h"
 #include "engine.h"
 #include "nostalgia.h"
 #include "yjcm.h"
