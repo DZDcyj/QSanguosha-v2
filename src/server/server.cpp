@@ -87,7 +87,7 @@ QWidget *ServerDialog::createPackageTab()
     extension_group->setExclusive(false);
 
     QStringList extensions = Sanguosha->getExtensions();
-    QSet<QString> ban_packages = Config.BanPackages.toSet();
+    QSet<QString> ban_packages {Config.BanPackages.begin(), Config.BanPackages.end()};
 
     QGroupBox *box1 = new QGroupBox(tr("General package"));
     QGroupBox *box2 = new QGroupBox(tr("Card package"));
@@ -509,11 +509,11 @@ BanlistDialog::BanlistDialog(QWidget *parent, bool view)
         list->setObjectName(item);
 
         if (item == "Pairs") {
-            foreach(QString banned, BanPair::getAllBanSet().toList())
+            foreach(QString banned, BanPair::getAllBanSet().values())
                 addGeneral(banned);
-            foreach(QString banned, BanPair::getSecondBanSet().toList())
+            foreach(QString banned, BanPair::getSecondBanSet().values())
                 add2ndGeneral(banned);
-            foreach(BanPair pair, BanPair::getBanPairSet().toList())
+            foreach(BanPair pair, BanPair::getBanPairSet().values())
                 addPair(pair.first, pair.second);
         } else {
             QStringList banlist = Config.value(QString("Banlist/%1").arg(item)).toStringList();
@@ -664,7 +664,7 @@ void BanlistDialog::save()
     for (int i = 0; i < list->count(); i++)
         banset << list->item(i)->data(Qt::UserRole).toString();
 
-    QStringList banlist = banset.toList();
+    QStringList banlist = banset.values();
     Config.setValue(QString("Banlist/%1").arg(ban_list.at(item)), QVariant::fromValue(banlist));
 }
 
@@ -999,7 +999,8 @@ Select3v3GeneralDialog::Select3v3GeneralDialog(QDialog *parent)
     : QDialog(parent)
 {
     setWindowTitle(tr("Select generals in extend 3v3 mode"));
-    ex_generals = Config.value("3v3/ExtensionGenerals").toStringList().toSet();
+    auto the_list = Config.value("3v3/ExtensionGenerals").toStringList();
+    ex_generals = QSet<QString>{the_list.begin(), the_list.end()};
     QVBoxLayout *layout = new QVBoxLayout;
     tab_widget = new QTabWidget;
     fillTabWidget();
@@ -1112,7 +1113,7 @@ void Select3v3GeneralDialog::save3v3Generals()
         }
     }
 
-    QStringList list = ex_generals.toList();
+    QStringList list = ex_generals.values();
     QVariant data = QVariant::fromValue(list);
     Config.setValue("3v3/ExtensionGenerals", data);
 }
@@ -1354,7 +1355,7 @@ int ServerDialog::config()
         }
     }
 
-    Config.BanPackages = ban_packages.toList();
+    Config.BanPackages = ban_packages.values();
     Config.setValue("BanPackages", Config.BanPackages);
 
     return accept_type;

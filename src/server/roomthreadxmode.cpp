@@ -17,9 +17,6 @@ RoomThreadXMode::RoomThreadXMode(Room *room)
 
 void RoomThreadXMode::run()
 {
-    // initialize the random seed for this thread
-    qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
-
     QString scheme = Config.value("XMode/RoleChooseX", "Normal").toString();
     assignRoles(scheme);
     room->adjustSeats();

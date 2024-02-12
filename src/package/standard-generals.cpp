@@ -1031,6 +1031,8 @@ public:
                 return card->isKindOf("Jink");
             else if (pattern == "jink")
                 return card->isKindOf("Slash");
+            else
+                return false;
         }
         default:
             return false;
