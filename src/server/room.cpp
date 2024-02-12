@@ -5091,7 +5091,11 @@ void Room::askForGuanxing(ServerPlayer *zhuge, const QList<int> &cards, Guanxing
     }
 
     bool length_equal = top_cards.length() + bottom_cards.length() == cards.length();
-    bool result_equal = top_cards.toSet() + bottom_cards.toSet() == cards.toSet();
+    QSet<int> tmp_set1, tmp_set2;
+    for (auto i:top_cards)    tmp_set1.insert(i);
+    for (auto i:bottom_cards) tmp_set1.insert(i);
+    for (auto i:cards)        tmp_set2.insert(i);
+    bool result_equal = tmp_set1 == tmp_set2;
     if (!length_equal || !result_equal) {
         if (guanxing_type == GuanxingDownOnly) {
             bottom_cards = cards;
@@ -5934,7 +5938,8 @@ QString Room::askForRole(ServerPlayer *player, const QStringList &roles, const Q
     tryPause();
     notifyMoveFocus(player, S_COMMAND_CHOOSE_ROLE_3V3);
 
-    QStringList squeezed = roles.toSet().toList();
+    QSet<QString> the_set {roles.begin(), roles.end()};
+    QStringList squeezed = the_set.values();
 
     JsonArray arg;
     arg << scheme << JsonUtils::toJsonArray(squeezed);

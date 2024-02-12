@@ -288,7 +288,7 @@ void MiniSceneRule::addNPC(QString feature)
 void MiniSceneRule::setPile(QString cardList)
 {
     setup = cardList;
-    QStringList cards = setup.split(",", QString::SkipEmptyParts);
+    QStringList cards = setup.split(",", Qt::SplitBehaviorFlags::SkipEmptyParts);
     foreach (QString sid, cards) {
         bool ok;
         int id = sid.toInt(&ok);
