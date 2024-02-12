@@ -293,7 +293,7 @@ aa:
                 addr=qFromLittleEndian(addr);
                 memcpy(&port,ba.data()+pos+4,2);
                 port=qFromLittleEndian(port);
-                leftServers.append(QPair<quint32,quint16>(addr,port));
+                leftServers.push_back(QPair<quint32,quint16>(addr,port));
             }
             if(!leftServers.size())
             {
@@ -348,7 +348,8 @@ void CServerList::requestList()
             }
             for(int i=0;i<l;i++)
             {
-                pair=leftServers.takeFirst();
+                pair=leftServers.front();
+                leftServers.pop_front();
                 addAddress(j+i,pair.first,pair.second);
             }
             if(!leftServers.size())
