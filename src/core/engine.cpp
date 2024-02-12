@@ -7,7 +7,6 @@
 #include "lua.hpp"
 #include "banpair.h"
 #include "audio.h"
-#include "protocol.h"
 #include "structs.h"
 #include "lua-wrapper.h"
 #include "room-state.h"

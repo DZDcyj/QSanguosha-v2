@@ -1,8 +1,6 @@
 #include "gamerule.h"
 #include "serverplayer.h"
 #include "room.h"
-#include "standard.h"
-#include "maneuvering.h"
 #include "engine.h"
 #include "settings.h"
 #include "json.h"

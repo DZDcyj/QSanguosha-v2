@@ -1,6 +1,7 @@
 #include "timed-progressbar.h"
 #include "clientstruct.h"
 #include "skin-bank.h"
+#include "settings.h"
 
 void TimedProgressBar::show()
 {
