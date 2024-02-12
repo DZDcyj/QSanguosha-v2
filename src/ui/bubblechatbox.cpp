@@ -61,7 +61,7 @@ void BubbleChatBox::setText(const QString &text)
 
     QFontMetrics fontMetrics(chatLabel->font());
     int imageCount = text.count("</img>");
-    int width = qAbs(fontMetrics.width(plainText)) + imageCount * ChatFaceWidth;
+    int width = qAbs(fontMetrics.horizontalAdvance(plainText)) + imageCount * ChatFaceWidth;
     int lineCount = 1;
     if (width > PixelsPerLine) {
         lineCount = width / PixelsPerLine;

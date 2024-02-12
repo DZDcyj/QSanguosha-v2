@@ -1,6 +1,5 @@
 #include "skin-bank.h"
 #include "json.h"
-#include "protocol.h"
 #include "ui-utils.h"
 #include "engine.h"
 #include "settings.h"

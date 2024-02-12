@@ -21,7 +21,7 @@ public slots:
     void record(const char *line);
 
 private:
-    QTime watch;
+    QElapsedTimer watch;
     QByteArray data;
 };
 
