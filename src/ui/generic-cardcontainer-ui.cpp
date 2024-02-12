@@ -581,7 +581,7 @@ void PlayerCardContainer::addDelayedTricks(QList<CardItem *> &tricks)
         QGraphicsPixmapItem *item = new QGraphicsPixmapItem(_getDelayedTrickParent());
         QRect start = _m_layout->m_delayedTrickFirstRegion;
         QPoint step = _m_layout->m_delayedTrickStep;
-        start.translate(step * _m_judgeCards.size());
+        start.translate(step * static_cast<int>(_m_judgeCards.size())); // Qt5Qt6
         _paintPixmap(item, start, G_ROOM_SKIN.getCardJudgeIconPixmap(trick->getCard()->objectName()));
         trick->setHomeOpacity(0.0);
         trick->setHomePos(start.center());

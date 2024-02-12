@@ -1790,8 +1790,9 @@ void YtYisheCard::use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &)
 
     QList<int> to_handcard;
     QList<int> to_rice;
-
-    foreach (int id, (rice + subcards).toSet()) {
+    auto tmp_list = rice + subcards;
+    QSet<int> tmp_set {tmp_list.begin(), tmp_list.end()};
+    foreach (int id, tmp_set) {
         if (!rice.contains(id))
             to_rice << id;
         else if (!subcards.contains(id))
