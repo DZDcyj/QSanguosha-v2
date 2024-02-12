@@ -1,6 +1,5 @@
 #include "playercarddialog.h"
 #include "carditem.h"
-#include "standard.h"
 #include "engine.h"
 #include "client.h"
 #include "wrapped-card.h"

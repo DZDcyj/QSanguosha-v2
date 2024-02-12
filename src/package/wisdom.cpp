@@ -1,6 +1,5 @@
 #include "wisdom.h"
 #include "skill.h"
-#include "client.h"
 #include "engine.h"
 #include "settings.h"
 #include "room.h"

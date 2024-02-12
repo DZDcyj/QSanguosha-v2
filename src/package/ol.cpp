@@ -1,11 +1,8 @@
 #include "ol.h"
 #include "sp.h"
-#include "client.h"
 #include "general.h"
 #include "skill.h"
-#include "standard-skillcards.h"
 #include "engine.h"
-#include "maneuvering.h"
 #include "json.h"
 #include "settings.h"
 #include "clientplayer.h"
@@ -1587,7 +1584,7 @@ public:
         return false;
     }
 
-    int getEffectIndex(const ServerPlayer *, const Card *card)
+    int getEffectIndex(const ServerPlayer *, const Card *card) const
     {
         if (card->isKindOf("Slash"))
             return -2;
@@ -2177,7 +2174,8 @@ public:
     {
         if (to_select->isEquipped()) return false;
         QString ori = Self->property("moshi").toString();
-        if (ori.isEmpty()) return NULL;
+        if (ori.isEmpty())
+            return false;
         Card *a = Sanguosha->cloneCard(ori);
         a->addSubcard(to_select);
         return a->isAvailable(Self);
@@ -2388,7 +2386,7 @@ public:
                         int give = QRandomGenerator::global()->bounded(rest_num) + 1;
                         rest_num -= give;
                         QList<int> to_give = handcard_list.length() < give ? handcard_list : handcard_list.mid(0, give);
-                        ServerPlayer *receiver = room->getOtherPlayers(target).at(qrand() % (target->aliveCount() - 1));
+                        ServerPlayer *receiver = room->getOtherPlayers(target).at(QRandomGenerator::global()->bounded(target->aliveCount() - 1));
                         DummyCard *dummy = new DummyCard(to_give);
                         room->obtainCard(receiver, dummy, false);
                         delete dummy;
@@ -2542,9 +2540,10 @@ void OlRendeCard::use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &t
     if (old_value < 2 && new_value >= 2)
         room->recover(source, RecoverStruct(source));
 
-    QSet<QString> rende_prop = source->property("olrende").toString().split("+").toSet();
+    QStringList the_list = source->property("olrende").toString().split("+");
+    QSet<QString> rende_prop {the_list.begin(), the_list.end()};
     rende_prop.insert(target->objectName());
-    room->setPlayerProperty(source, "olrende", QStringList(rende_prop.toList()).join("+"));
+    room->setPlayerProperty(source, "olrende", QStringList(rende_prop.values()).join("+"));
 }
 
 class OlRendeVS : public ViewAsSkill
@@ -2831,7 +2830,7 @@ public:
         return false;
     }
 
-    bool triggerable(const Player *target) const
+    bool triggerable(const ServerPlayer *target) const
     {
         if (target)
             return target->isAlive();

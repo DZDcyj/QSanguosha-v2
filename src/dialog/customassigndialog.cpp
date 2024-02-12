@@ -1025,7 +1025,7 @@ void CustomAssignDialog::exchangeListItem()
         int id1 = pile_list->item(first_index)->data(Qt::UserRole).toInt();
         int id2 = pile_list->item(second_index)->data(Qt::UserRole).toInt();
 
-        set_pile.swap(set_pile.indexOf(id1), set_pile.indexOf(id2));
+        set_pile.swapItemsAt(set_pile.indexOf(id1), set_pile.indexOf(id2));
         updatePileInfo();
         pile_list->setCurrentRow(second_index);
     }

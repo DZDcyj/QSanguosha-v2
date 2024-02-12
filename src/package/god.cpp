@@ -1,9 +1,7 @@
 #include "god.h"
-#include "client.h"
 #include "engine.h"
 #include "maneuvering.h"
 #include "general.h"
-#include "settings.h"
 #include "clientplayer.h"
 #include "wrapped-card.h"
 #include "room.h"
@@ -310,9 +308,10 @@ bool GreatYeyanCard::targetsFeasible(const QList<const Player *> &targets, const
 
     //We can only assign 2 damage to one player
     //If we select only one target only once, we assign 3 damage to the target
-    if (targets.toSet().size() == 1)
+    QSet<const Player*> targets_set {targets.begin(), targets.end()};
+    if (targets_set.size() == 1)
         return true;
-    else if (targets.toSet().size() == 2)
+    else if (targets_set.size() == 2)
         return targets.size() == 3;
     return false;
 }
@@ -789,7 +788,10 @@ void QixingCard::onUse(Room *room, const CardUseStruct &card_use) const
     QList<int> subCards = card_use.card->getSubcards();
     QList<int> to_handcard;
     QList<int> to_pile;
-    foreach (int id, (subCards + pile).toSet()) {
+    QSet<int> subcards_and_pile {subCards.begin(), subCards.end()};
+    for (auto i:pile)
+        subcards_and_pile.insert(i);
+    foreach (int id, subcards_and_pile) {
         if (!subCards.contains(id))
             to_handcard << id;
         else if (!pile.contains(id))

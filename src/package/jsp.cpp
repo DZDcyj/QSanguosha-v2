@@ -1,16 +1,10 @@
 #include "jsp.h"
-#include "sp.h"
-#include "client.h"
 #include "general.h"
 #include "skill.h"
-#include "standard-skillcards.h"
 #include "engine.h"
-#include "maneuvering.h"
-#include "json.h"
-#include "settings.h"
+#include "standard.h"
 #include "clientplayer.h"
 #include "util.h"
-#include "wrapped-card.h"
 #include "room.h"
 #include "roomthread.h"
 
@@ -429,11 +423,12 @@ public:
         if (triggerEvent == PreCardUsed) {
             CardUseStruct use = data.value<CardUseStruct>();
             if (use.card != NULL && use.card->isKindOf("Slash") && player->getPhase() == Player::Play) {
-                QSet<QString> s = player->property("chixin").toString().split("+").toSet();
+                QStringList the_list = player->property("chixin").toString().split("+");
+                QSet<QString> s {the_list.begin(), the_list.end()};
                 foreach(ServerPlayer *p, use.to)
                     s.insert(p->objectName());
 
-                QStringList l = s.toList();
+                QStringList l = s.values();
                 room->setPlayerProperty(player, "chixin", l.join("+"));
             }
         } else if (player->getPhase() == Player::Play)

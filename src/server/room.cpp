@@ -1,7 +1,6 @@
 ﻿#include "room.h"
 #include "engine.h"
 #include "settings.h"
-#include "standard.h"
 #include "ai.h"
 #include "scenario.h"
 #include "gamerule.h"
@@ -717,7 +716,7 @@ bool Room::doBroadcastRequest(QList<ServerPlayer *> &players, QSanProtocol::Comm
     foreach(ServerPlayer *player, players)
         doRequest(player, command, player->m_commandArgs, timeOut, false);
 
-    QTime timer;
+    QElapsedTimer timer;
     time_t remainTime = timeOut;
     timer.start();
     foreach (ServerPlayer *player, players) {
@@ -754,7 +753,7 @@ ServerPlayer *Room::doBroadcastRaceRequest(QList<ServerPlayer *> &players, QSanP
 ServerPlayer *Room::getRaceResult(QList<ServerPlayer *> &players, QSanProtocol::CommandType, time_t timeOut,
     ResponseVerifyFunction validateFunc, void *funcArg)
 {
-    QTime timer;
+    QElapsedTimer timer;
     timer.start();
     bool validResult = false;
     for (int i = 0; i < players.size(); i++) {
@@ -2224,7 +2223,7 @@ void Room::prepareForStart()
                     ServerPlayer *player = findChild<ServerPlayer *>(name);
                     setPlayerProperty(player, "role", role);
 
-                    m_players.swap(i, m_players.indexOf(player));
+                    m_players.swapItemsAt(i, m_players.indexOf(player));
                 }
             }
         } else if (mode == "04_1v3" || mode == "04_boss") {
@@ -2835,8 +2834,6 @@ void Room::chooseGeneralsOfJianGeDefenseMode()
 
 void Room::run()
 {
-    // initialize random seed for later use
-    qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
     Config.AIDelay = Config.OriginAIDelay;
 
     foreach (ServerPlayer *player, m_players) {
@@ -2976,7 +2973,7 @@ void Room::swapSeat(ServerPlayer *a, ServerPlayer *b)
     int seat1 = m_players.indexOf(a);
     int seat2 = m_players.indexOf(b);
 
-    m_players.swap(seat1, seat2);
+    m_players.swapItemsAt(seat1, seat2);
 
     QStringList player_circle;
     foreach(ServerPlayer *player, m_players)
@@ -5094,7 +5091,11 @@ void Room::askForGuanxing(ServerPlayer *zhuge, const QList<int> &cards, Guanxing
     }
 
     bool length_equal = top_cards.length() + bottom_cards.length() == cards.length();
-    bool result_equal = top_cards.toSet() + bottom_cards.toSet() == cards.toSet();
+    QSet<int> tmp_set1, tmp_set2;
+    for (auto i:top_cards)    tmp_set1.insert(i);
+    for (auto i:bottom_cards) tmp_set1.insert(i);
+    for (auto i:cards)        tmp_set2.insert(i);
+    bool result_equal = tmp_set1 == tmp_set2;
     if (!length_equal || !result_equal) {
         if (guanxing_type == GuanxingDownOnly) {
             bottom_cards = cards;
@@ -5937,7 +5938,8 @@ QString Room::askForRole(ServerPlayer *player, const QStringList &roles, const Q
     tryPause();
     notifyMoveFocus(player, S_COMMAND_CHOOSE_ROLE_3V3);
 
-    QStringList squeezed = roles.toSet().toList();
+    QSet<QString> the_set {roles.begin(), roles.end()};
+    QStringList squeezed = the_set.values();
 
     JsonArray arg;
     arg << scheme << JsonUtils::toJsonArray(squeezed);

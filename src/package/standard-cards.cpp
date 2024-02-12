@@ -3,7 +3,6 @@
 #include "maneuvering.h"
 #include "general.h"
 #include "engine.h"
-#include "client.h"
 #include "room.h"
 #include "ai.h"
 #include "settings.h"
@@ -495,7 +494,8 @@ public:
         CardUseStruct use = data.value<CardUseStruct>();
         if (use.card->isKindOf("Slash")) {
             bool do_anim = false;
-            foreach (ServerPlayer *p, use.to.toSet()) {
+            QSet<ServerPlayer*> use_to_set(use.to.begin(), use.to.end());
+            foreach (ServerPlayer *p, use_to_set) {
                 if (p->getMark("Equips_of_Others_Nullified_to_You") == 0) {
                     do_anim = (p->getArmor() && p->hasArmorEffect(p->getArmor()->objectName())) || p->hasSkills("bazhen|linglong|bossmanjia");
                     p->addQinggangTag(use.card);

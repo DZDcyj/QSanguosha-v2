@@ -5,7 +5,6 @@
 #include "banpair.h"
 #include "server.h"
 #include "audio.h"
-#include "serverplayer.h"
 #include "engine.h"
 
 #if defined(WIN32) && defined(VS2010)
@@ -57,9 +56,6 @@ int main(int argc, char *argv[])
         QDir::setCurrent(qApp->applicationFilePath().replace("games", "share"));
     }
 #endif
-
-    // initialize random seed for later use
-    qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
 
     QTranslator qt_translator, translator;
     qt_translator.load("qt_zh_CN.qm");

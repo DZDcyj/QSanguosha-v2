@@ -1,8 +1,6 @@
 ﻿#ifndef MAINWINDOWSERVERLIST_H
 #define MAINWINDOWSERVERLIST_H
 
-#include "src/pch.h"
-
 class DialogSLSettings;
 class MainWindowServerList;
 class ConnectionDialog;
@@ -16,7 +14,7 @@ public:
     void requestList();
     void refresh();
 
-    QLinkedList<QPair<quint32,quint16> > leftServers;
+    std::list<QPair<quint32,quint16> > leftServers;
 	
 private slots:
     void replyFinished();

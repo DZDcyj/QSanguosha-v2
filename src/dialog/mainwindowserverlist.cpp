@@ -104,7 +104,8 @@ void MainWindowServerList::addAddress(int r, QHostAddress &address, quint16 port
     QString s=address.toString()+":"+QString::number(port);
     first=new QTableWidgetItem(s);
     CSLSocketHandle* handle=new CSLSocketHandle(address,port,first,this);
-    first->setData(Qt::UserRole,qVariantFromValue((void*)handle));
+    auto qv = QVariant::fromValue((void*)handle);
+    first->setData(Qt::UserRole,qv);
     ui->tableWidgetServerList->setItem(r,0,first);
 
     for(int i=1;i<8;i++)
@@ -293,7 +294,7 @@ aa:
                 addr=qFromLittleEndian(addr);
                 memcpy(&port,ba.data()+pos+4,2);
                 port=qFromLittleEndian(port);
-                leftServers.append(QPair<quint32,quint16>(addr,port));
+                leftServers.push_back(QPair<quint32,quint16>(addr,port));
             }
             if(!leftServers.size())
             {
@@ -348,7 +349,8 @@ void CServerList::requestList()
             }
             for(int i=0;i<l;i++)
             {
-                pair=leftServers.takeFirst();
+                pair=leftServers.front();
+                leftServers.pop_front();
                 addAddress(j+i,pair.first,pair.second);
             }
             if(!leftServers.size())
@@ -414,7 +416,7 @@ CSLSocketHandle::~CSLSocketHandle()
         if(ti->text()!="")
         {
 			ti->setText(tr("无法连接"));
-            ti->setTextColor(QColor(255,0,0));
+            ti->setForeground(QColor(255,0,0));
         }
     }
     item->setData(Qt::UserRole,0);
@@ -433,7 +435,7 @@ void CSLSocketHandle::getInfo()
     QTableWidgetItem *ti;
     ti=msl->ui->tableWidgetServerList->item(i,1);
 	ti->setText(tr("连接中"));
-    ti->setTextColor(QColor(0,0,0));
+    ti->setForeground(QColor(0,0,0));
     socket->connectToHost(hostaddress,port);
     timer.start(10000);
 }
@@ -461,15 +463,15 @@ void CSLSocketHandle::handleConnected()
     ti->setText(QString::number(ms)+"ms");
     if(ms<100)
     {
-        ti->setTextColor(QColor(0,255,0));
+        ti->setForeground(QColor(0,255,0));
     }
     else if(ms<1000)
     {
-        ti->setTextColor(QColor(255,255,0));
+        ti->setForeground(QColor(255,255,0));
     }
     else
     {
-        ti->setTextColor(QColor(255,0,0));
+        ti->setForeground(QColor(255,0,0));
     }
     timer.start(10000);
 }
@@ -498,7 +500,7 @@ aa:
     {
         ti=tw->item(i,2);
         ti->setText(packet.getMessageBody().toString());
-        ti->setTextColor(QColor(0,0,0));
+        ti->setForeground(QColor(0,0,0));
         if(socket->canReadLine())
             goto aa;
         else
@@ -523,11 +525,11 @@ aa:
         QString s=QString::fromUtf8(QByteArray::fromBase64(bal[0]));
         ti=tw->item(i,4);
         if(isOfficial) {
-            ti->setTextColor(QColor(255,153,0));
+            ti->setForeground(QColor(255,153,0));
             s.prepend("【官方服务器】 ");
         }
         else
-            ti->setTextColor(QColor(0,0,0));
+            ti->setForeground(QColor(0,0,0));
         ti->setText(s);
         s=Sanguosha->getModeName(QString::fromUtf8(bal[1]));
         ti=tw->item(i,3);
@@ -655,7 +657,7 @@ void CSLSocketHandle::infoError()
     QTableWidget* tw=msl->ui->tableWidgetServerList;
     ti=tw->item(i,2);
 	ti->setText(tr("未知版本"));
-    ti->setTextColor(QColor(255,0,0));
+    ti->setForeground(QColor(255,0,0));
     socket->deleteLater();
     socket=NULL;
 }

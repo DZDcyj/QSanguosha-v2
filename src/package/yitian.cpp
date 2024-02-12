@@ -1,8 +1,6 @@
 #include "yitian.h"
 #include "skill.h"
 #include "engine.h"
-#include "client.h"
-#include "god.h"
 #include "standard.h"
 #include "maneuvering.h"
 #include "clientplayer.h"

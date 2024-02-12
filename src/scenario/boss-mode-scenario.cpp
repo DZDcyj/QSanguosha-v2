@@ -1,8 +1,5 @@
 #include "boss-mode-scenario.h"
 #include "engine.h"
-#include "standard-skillcards.h"
-#include "clientplayer.h"
-#include "client.h"
 #include "carditem.h"
 #include "room.h"
 #include "roomthread.h"
@@ -282,7 +279,6 @@ public:
     void getRandomSkill(ServerPlayer *player, bool need_trans = false) const
     {
         Room *room = player->getRoom();
-        qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
 
         QStringList all_generals = Sanguosha->getLimitedGeneralNames();
         QList<ServerPlayer *> players = room->getAllPlayers();
@@ -389,7 +385,6 @@ public:
                 removeLordSkill(player);
 
                 room->installEquip(player, "SilverLion");
-                qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
                 if ((QRandomGenerator::global()->bounded(2)) == 1) {
                     room->acquireSkill(player, "silue");
                     room->acquireSkill(player, "kedi");

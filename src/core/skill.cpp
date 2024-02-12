@@ -3,8 +3,6 @@
 #include "engine.h"
 #include "player.h"
 #include "room.h"
-#include "client.h"
-#include "standard.h"
 #include "scenario.h"
 #include "clientplayer.h"
 #include "clientstruct.h"
@@ -13,7 +11,7 @@
 
 
 Skill::Skill(const QString &name, Frequency frequency)
-    : frequency(frequency), limit_mark(QString()), lord_skill(false), attached_lord_skill(false)
+    : frequency(frequency), limit_mark(QString()), attached_lord_skill(false), lord_skill(false)
 {
     static QChar lord_symbol('$');
     static QChar attached_lord_symbol('&');
