@@ -22,8 +22,8 @@ jobs:
     # https://askubuntu.com/questions/1460242/ubuntu-22-04-with-qt6-qmake-could-not-find-a-qt-installation-of
     - name: configure
       run: |
-      qtchooser -install qt6 $(which qmake6)
-      export QT_SELECT=qt6
-      qmake6
+        qtchooser -install qt6 $(which qmake6)
+        export QT_SELECT=qt6
+        qmake6
     - name: make
       run: make
