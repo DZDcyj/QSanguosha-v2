@@ -377,13 +377,13 @@ bb:
             switch(sta)
             {
             case 0:
-                if(i==QXmlStreamReader::StartElement&&reader.name()=="service")
+                if(i==QXmlStreamReader::StartElement&&reader.name()==QString("service"))
                 {
                     sta=1;
                 }
                 break;
             case 1:
-                if(i==QXmlStreamReader::StartElement&&reader.name()=="serviceType")
+                if(i==QXmlStreamReader::StartElement&&reader.name()==QString("serviceType"))
                 {
                     s=reader.readElementText();
                     if(s.contains(":WANIPConnection:"))
@@ -392,13 +392,13 @@ bb:
                         sta=2;
                     }
                 }
-                if(i==QXmlStreamReader::EndElement&&reader.name()=="service")
+                if(i==QXmlStreamReader::EndElement&&reader.name()==QString("service"))
                 {
                     sta=0;
                 }
                 break;
             case 2:
-                if(i==QXmlStreamReader::StartElement&&reader.name()=="controlURL")
+                if(i==QXmlStreamReader::StartElement&&reader.name()==QString("controlURL"))
                 {
                     controlURL=reader.readElementText();
                     parent->rootOK(this);
@@ -406,7 +406,7 @@ bb:
                     state=5;
                     return;
                 }
-                if(i==QXmlStreamReader::EndElement&&reader.name()=="service")
+                if(i==QXmlStreamReader::EndElement&&reader.name()==QString("service"))
                 {
                     parent->rootFailed(this);
                     return;

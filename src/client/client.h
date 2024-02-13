@@ -1,6 +1,10 @@
 #ifndef _CLIENT_H
 #define _CLIENT_H
 
+Q_MOC_INCLUDE("recorder.h")
+Q_MOC_INCLUDE("socket.h")
+Q_MOC_INCLUDE("clientplayer.h")
+
 #include "card.h"
 #include "skill.h"
 #include "room-state.h"
