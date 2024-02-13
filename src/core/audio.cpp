@@ -10,6 +10,8 @@ public:
         : QMediaPlayer(parent), path("")
     {
         this->setSource(filename);
+        audioOutput = std::make_unique<QAudioOutput>();
+        this->setAudioOutput(audioOutput.get());
     }
 
     void setSource(const QString &filename)
@@ -19,7 +21,7 @@ public:
         } else {
             QString AudioPrefix = QCoreApplication::applicationDirPath();
             this->path = QString("%1/%2").arg(AudioPrefix).arg(filename);
-            QMediaPlayer::setSource(QUrl::fromLocalFile(QFileInfo(filename).absoluteFilePath()));
+            QMediaPlayer::setSource(QFileInfo(filename).absoluteFilePath());
         }
     }
 #if QT_VERSION < QT_VERSION_CHECK(6, 5, 0)
@@ -28,16 +30,15 @@ public:
     }
 #endif
 private:
+    std::unique_ptr<QAudioOutput> audioOutput;
     QString path;
 };
 
 static QCache<QString, Sound> SoundCache;
 static std::unique_ptr<Sound> BackgroundMusic;
-static std::unique_ptr<QAudioOutput> audioOutput;
 static std::unique_ptr<QAudioOutput> bgmAudioOutput;
 
 void Audio::init(){
-    audioOutput = std::make_unique<QAudioOutput>();
     bgmAudioOutput = std::make_unique<QAudioOutput>();
 }
 void Audio::quit(){
@@ -46,13 +47,13 @@ void Audio::quit(){
 void Audio::play(const QString &filename, bool superpose){
     if (!SoundCache.contains(filename)) {
         Sound* ptr = new Sound(filename);
-        ptr->setAudioOutput(audioOutput.get());
         SoundCache.insert(filename, ptr);
     }
     Sound* sound = SoundCache[filename];
     Q_ASSERT(sound);
     if (!superpose && sound->isPlaying())
         return;
+    sound->stop();
     sound->play();
 }
 
