@@ -55,15 +55,7 @@ void Audio::play(const QString &filename, bool superpose){
         return;
     sound->play();
 }
-void Audio::stop(){
-    foreach (QString filename, SoundCache.keys()) {
-        Sound *sound = SoundCache[filename];
-        if (sound != NULL && sound->isPlaying()) {
-            sound->stop();
-        }
-    }
-    stopBGM();
-}
+
 void Audio::playBGM(const QString &filename){
     BackgroundMusic = std::make_unique<Sound>(filename);
     BackgroundMusic->setAudioOutput(bgmAudioOutput.get());
