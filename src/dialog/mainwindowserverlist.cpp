@@ -429,7 +429,7 @@ void CSLSocketHandle::getInfo()
     connect(socket,&QTcpSocket::connected,this,&CSLSocketHandle::handleConnected);
     connect(socket,&QTcpSocket::readyRead,this,&CSLSocketHandle::handleRead);
     connect(socket,&QTcpSocket::disconnected,this,&CSLSocketHandle::handleDisconnected);
-    connect(socket,SIGNAL(error(QAbstractSocket::SocketError)),this,SLOT(handleError(QAbstractSocket::SocketError)));
+    connect(socket,SIGNAL(errorOccurred(QAbstractSocket::SocketError)),this,SLOT(handleError(QAbstractSocket::SocketError)));
     lastTime=QDateTime::currentDateTime();
     int i=item->row();
     QTableWidgetItem *ti;
