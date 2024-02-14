@@ -450,7 +450,7 @@ android:DEFINES += "\"getlocaledecpoint()='.'\""
 
 
 !build_pass{
-    system("lrelease $$_PRO_FILE_PWD_/builds/sanguosha.ts -qm $$_PRO_FILE_PWD_/sanguosha.qm")
+    system("lrelease $$_PRO_FILE_PWD_/sanguosha.ts -qm $$_PRO_FILE_PWD_/sanguosha.qm")
 
     SWIG_bin = "swig"
     contains(QMAKE_HOST.os, "Windows"): SWIG_bin = "$$_PRO_FILE_PWD_/tools/swig/swig.exe"
