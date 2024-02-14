@@ -815,7 +815,7 @@ void QixingCard::onUse(Room *room, const CardUseStruct &card_use) const
     LogMessage log;
     log.type = "#QixingExchange";
     log.from = card_use.from;
-    log.arg = to_pile.length();
+    log.arg = QString::number(to_pile.length());
     log.arg2 = "qixing";
     room->sendLog(log);
 }

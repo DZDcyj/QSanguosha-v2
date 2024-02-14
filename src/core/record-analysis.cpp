@@ -56,7 +56,7 @@ void RecAnalysis::initialize(QString dir)
 
                 QStringList texts = rx.capturedTexts();
                 m_recordGameMode = texts.at(2);
-                m_recordPlayers = texts.at(2).split("_").first().remove(QRegExp("[^0-9]")).toInt();
+                m_recordPlayers = texts.at(2).split("_").first().remove(QRegularExpression("[^0-9]")).toInt();
                 QStringList ban_packages = texts.at(5).split("+");
                 foreach (const Package *package, Sanguosha->getPackages()) {
                     if (!ban_packages.contains(package->objectName())

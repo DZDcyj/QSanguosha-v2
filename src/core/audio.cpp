@@ -1,99 +1,74 @@
+#ifdef AUDIO_SUPPORT
+
 #include "audio.h"
 #include <QMediaPlayer>
-#include <QMediaPlaylist>
-#include <QCoreApplication>
-
-class Sound;
-
-static QCache<QString, Sound> SoundCache;
-static Sound *BackgroudMusic;
-static QMediaPlaylist *BgmList;
-
+#include <QAudioOutput>
 class Sound : public QMediaPlayer
 {
 public:
     Sound(const QString &filename = "", QObject *parent = nullptr)
-        : QMediaPlayer(parent, QMediaPlayer::LowLatency), path("")
+        : QMediaPlayer(parent), path("")
     {
         this->setSource(filename);
+        audioOutput = std::make_unique<QAudioOutput>();
+        this->setAudioOutput(audioOutput.get());
     }
 
     void setSource(const QString &filename)
     {
         if (filename.isEmpty()) {
-            this->setMedia(QUrl());
+            QMediaPlayer::setSource(QUrl());
         } else {
             QString AudioPrefix = QCoreApplication::applicationDirPath();
             this->path = QString("%1/%2").arg(AudioPrefix).arg(filename);
-            this->setMedia(QUrl::fromLocalFile(QFileInfo(filename).absoluteFilePath()));
+            QMediaPlayer::setSource(QFileInfo(filename).absoluteFilePath());
         }
     }
-
-    bool isPlaying() const
-    {
-        return this->state() == QMediaPlayer::State::PlayingState;
+#if QT_VERSION < QT_VERSION_CHECK(6, 5, 0)
+    bool isPlaying() const {
+        return playbackState() == QMediaPlayer::PlaybackState::PlayingState;
     }
-
+#endif
 private:
+    std::unique_ptr<QAudioOutput> audioOutput;
     QString path;
 };
 
-void Audio::init()
-{
-    BgmList = new QMediaPlaylist();
-    BackgroudMusic = new Sound();
-    BackgroudMusic->setPlaylist(BgmList);
-}
+static QCache<QString, Sound> SoundCache;
+static std::unique_ptr<Sound> BackgroundMusic;
+static std::unique_ptr<QAudioOutput> bgmAudioOutput;
 
-void Audio::quit()
-{
+void Audio::init(){
+    bgmAudioOutput = std::make_unique<QAudioOutput>();
+}
+void Audio::quit(){
     SoundCache.clear();
-    BgmList->clear();
 }
-
-void Audio::play(const QString &filename, bool superpose)
-{
-    Sound *sound = SoundCache[filename];
-    if (sound == NULL) {
-        sound = new Sound(filename);
-        SoundCache.insert(filename, sound);
-    } else if (!superpose && sound->isPlaying()) {
-        return;
+void Audio::play(const QString &filename, bool superpose){
+    if (!SoundCache.contains(filename)) {
+        Sound* ptr = new Sound(filename);
+        SoundCache.insert(filename, ptr);
     }
+    Sound* sound = SoundCache[filename];
+    Q_ASSERT(sound);
+    if (!superpose && sound->isPlaying())
+        return;
+    sound->stop();
     sound->play();
 }
 
-void Audio::stop()
-{
-    foreach (QString filename, SoundCache.keys()) {
-        Sound *sound = SoundCache[filename];
-        if (sound != NULL && sound->isPlaying()) {
-            sound->stop();
-        }
-    }
-    stopBGM();
+void Audio::playBGM(const QString &filename){
+    BackgroundMusic = std::make_unique<Sound>(filename);
+    BackgroundMusic->setAudioOutput(bgmAudioOutput.get());
+    BackgroundMusic->play();
+}
+void Audio::setBGMVolume(float volume){
+    bgmAudioOutput->setVolume(volume);
+}
+void Audio::stopBGM(){
+    if (BackgroundMusic && BackgroundMusic->isPlaying())
+        BackgroundMusic->stop();
 }
 
-void Audio::playBGM(const QString &filename)
-{
-    if (BackgroudMusic->isPlaying()) {
-        BackgroudMusic->stop();
-        BgmList->removeMedia(BgmList->currentIndex());
-    }
+#endif
 
-    BgmList->addMedia(QUrl::fromLocalFile(QFileInfo(filename).absoluteFilePath()));
-    BgmList->setPlaybackMode(QMediaPlaylist::PlaybackMode::Loop);
-    BackgroudMusic->play();
-}
-
-void Audio::setBGMVolume(float volume)
-{
-    BackgroudMusic->setVolume(100 * volume);
-}
-
-void Audio::stopBGM()
-{
-    if (BackgroudMusic->isPlaying()) {
-        BackgroudMusic->stop();
-    }
-}

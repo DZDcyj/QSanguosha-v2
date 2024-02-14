@@ -266,7 +266,8 @@ Engine::Engine(bool isManualMode)
             QFile file(QString("manual/Chapter%1.lua").arg(upper));
             if (file.open(QFile::WriteOnly | QFile::Truncate)) {
                 QTextStream stream(&file);
-                stream.setCodec(QTextCodec::codecForName("UTF-8"));
+                // stream.setCodec(QTextCodec::codecForName("UTF-8"));
+                stream.setEncoding(QStringConverter::Utf8);
 
                 ManualSkillList list;
                 while (iter != allSkills.end()) {
@@ -1126,9 +1127,9 @@ QStringList Engine::getRoleList(const QString &mode) const
     QString roles = getRoles(mode);
 
     QStringList role_list;
-    for (int i = 0; roles[i] != QChar('\0'); i++) {
+    for (QChar c : roles) {
         QString role;
-        switch (roles[i].toLatin1()) {
+        switch (c.toLatin1()) {
         case 'Z': role = "lord"; break;
         case 'C': role = "loyalist"; break;
         case 'N': role = "renegade"; break;

@@ -1163,19 +1163,25 @@ public:
 
     static QStringList GetAvailableGenerals(ServerPlayer *zuoci)
     {
-        QSet<QString> all = Sanguosha->getLimitedGeneralNames().toSet();
+        auto the_list = Sanguosha->getLimitedGeneralNames();
+        QSet<QString> all {the_list.begin(), the_list.end()};
+        auto f_subtract = [&all](const QStringList& the_list) {
+            for (auto & str : the_list) {
+                all.remove(str);
+            }
+        };
         Room *room = zuoci->getRoom();
         if (isNormalGameMode(room->getMode())
             || room->getMode().contains("_mini_")
             || room->getMode() == "custom_scenario")
-            all.subtract(Config.value("Banlist/Roles", "").toStringList().toSet());
+            f_subtract(Config.value("Banlist/Roles", "").toStringList());
         else if (room->getMode() == "06_XMode") {
             foreach(ServerPlayer *p, room->getAlivePlayers())
-                all.subtract(p->tag["XModeBackup"].toStringList().toSet());
+                f_subtract(p->tag["XModeBackup"].toStringList());
         } else if (room->getMode() == "02_1v1") {
-            all.subtract(Config.value("Banlist/1v1", "").toStringList().toSet());
+            f_subtract(Config.value("Banlist/1v1", "").toStringList());
             foreach(ServerPlayer *p, room->getAlivePlayers())
-                all.subtract(p->tag["1v1Arrange"].toStringList().toSet());
+                f_subtract(p->tag["1v1Arrange"].toStringList());
         }
         QSet<QString> huashen_set, room_set;
         QVariantList huashens = zuoci->tag["Huashens"].toList();

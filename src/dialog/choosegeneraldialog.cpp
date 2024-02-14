@@ -167,7 +167,7 @@ ChooseGeneralDialog::ChooseGeneralDialog(const QStringList &general_names, QWidg
         mapper->setMapping(this, default_name);
         connect(this, SIGNAL(rejected()), mapper, SLOT(map()));
 
-        connect(mapper, SIGNAL(mapped(QString)), ClientInstance, SLOT(onPlayerChooseGeneral(QString)));
+        connect(mapper, SIGNAL(mappedString(QString)), ClientInstance, SLOT(onPlayerChooseGeneral(QString)));
     }
 
     QVBoxLayout *dialog_layout = new QVBoxLayout;

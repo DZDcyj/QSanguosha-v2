@@ -46,7 +46,8 @@ void BubbleChatBox::paint(QPainter *painter, const QStyleOptionGraphicsItem *, Q
 
 QPainterPath BubbleChatBox::shape() const
 {
-    QRegion maskRegion(backgroundPixmap.mask().scaled(rect.size().toSize()));
+    // Qt5Qt6
+    QRegion maskRegion(backgroundPixmap.scaled(rect.size().toSize()).mask());
     QPainterPath path;
     path.addRegion(maskRegion);
     return path;

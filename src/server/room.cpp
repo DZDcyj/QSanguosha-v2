@@ -1154,7 +1154,8 @@ bool Room::_askForNullification(const Card *trick, ServerPlayer *from, ServerPla
     sendLog(log);
     useCard(CardUseStruct(card, repliedPlayer, QList<ServerPlayer *>()));
 
-    QVariant _card = card;
+    QVariant _card;
+    _card.setValue(card);
     if (thread->trigger(NullificationEffect, this, repliedPlayer, _card))
         return _askForNullification(trick, from, to, positive, aiHelper);
 

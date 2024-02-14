@@ -400,7 +400,7 @@ void CustomAssignDialog::exchangePlayersInfo(QListWidgetItem *first, QListWidget
     player_marks[first_name].clear();
     player_marks[first_name] = player_marks[second_name];
     set_nationality[first_name] = set_nationality[second_name];
-    assign_nationality[first_name] = set_nationality[second_name];
+    assign_nationality[first_name] = assign_nationality[second_name];
 
     role_mapping[second_name] = role;
     general_mapping[second_name] = general;

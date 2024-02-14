@@ -16,7 +16,7 @@ public:
     QList<T> mid(int pos, int length = -1) const;
     int indexOf(const T &value, int from = 0);
     void replace(int i, const T &value);
-    void swap(int i, int j);
+    void swapItemsAt(int i, int j);
 };
 
 %extend QList {

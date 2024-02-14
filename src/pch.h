@@ -16,6 +16,12 @@
 #include <QtGui>
 #include <QtWidgets>
 
+// Qt6-qt5compact-headers
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QRegExp>
+#include <QtCore5Compat/QTextCodec>
+#endif
+
 #ifndef Q_OS_WINRT
 #include <QtQuick>
 #include <QtQml>

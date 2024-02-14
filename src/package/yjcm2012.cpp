@@ -96,7 +96,7 @@ public:
                         int give = QRandomGenerator::global()->bounded(rest_num) + 1;
                         rest_num -= give;
                         QList<int> to_give = handcard_list.length() < give ? handcard_list : handcard_list.mid(0, give);
-                        ServerPlayer *receiver = room->getOtherPlayers(target).at(qrand() % (target->aliveCount() - 1));
+                        ServerPlayer *receiver = room->getOtherPlayers(target).at(QRandomGenerator::global()->bounded(target->aliveCount() - 1));
                         DummyCard *dummy = new DummyCard(to_give);
                         room->obtainCard(receiver, dummy, false);
                         delete dummy;
