@@ -11,8 +11,6 @@ class CardItem;
 struct CardEffectStruct;
 struct CardUseStruct;
 
-#include "src/pch.h"
-
 class Card : public QObject
 {
     Q_OBJECT

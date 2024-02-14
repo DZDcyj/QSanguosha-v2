@@ -2,7 +2,6 @@
 #include "ui_dialogslsettings.h"
 #include "defines.h"
 #include "settings.h"
-#include "src/pch.h"
 
 DialogSLSettings::DialogSLSettings(QWidget *parent) :
     QDialog(parent),
