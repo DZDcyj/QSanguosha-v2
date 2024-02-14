@@ -11,7 +11,6 @@ set(AUDIO_SUPPORT TRUE)
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Network Widgets Multimedia Quick Core5Compat LinguistTools)
 find_package(SWIG REQUIRED COMPONENTS lua)
 find_package(Threads REQUIRED)
-find_package(Lua REQUIRED)
 find_package(Freetype REQUIRED)
 
 include(${SWIG_USE_FILE})
@@ -267,43 +266,7 @@ if (AUDIO_SUPPORT)
   target_sources(${TARGET} PRIVATE src/core/audio.cpp)
 endif()
 
-if (TRUE)
-  # lua
-  target_sources(${TARGET} PRIVATE
-    src/lua/lzio.c
-    src/lua/lvm.c
-    src/lua/lundump.c
-    src/lua/ltm.c
-    src/lua/ltablib.c
-    src/lua/ltable.c
-    src/lua/lstrlib.c
-    src/lua/lstring.c
-    src/lua/lstate.c
-    src/lua/lparser.c
-    src/lua/loslib.c
-    src/lua/lopcodes.c
-    src/lua/lobject.c
-    src/lua/loadlib.c
-    src/lua/lmem.c
-    src/lua/lmathlib.c
-    src/lua/llex.c
-    src/lua/liolib.c
-    src/lua/linit.c
-    src/lua/lgc.c
-    src/lua/lfunc.c
-    src/lua/ldump.c
-    src/lua/ldo.c
-    src/lua/ldebug.c
-    src/lua/ldblib.c
-    src/lua/lctype.c
-    src/lua/lcorolib.c
-    src/lua/lcode.c
-    src/lua/lbitlib.c
-    src/lua/lbaselib.c
-    src/lua/lauxlib.c
-    src/lua/lapi.c
-  )
-endif()
+add_subdirectory(src/lua)
 
 target_include_directories(${TARGET} PRIVATE
   ${CMAKE_SOURCE_DIR}/include
@@ -352,7 +315,7 @@ message("hhhh ${LUA_LIBRARIES}")
 target_link_libraries(${TARGET} PRIVATE
   Qt6::Core Qt6::Network Qt6::Widgets Qt6::Multimedia Qt6::Quick Qt6::Core5Compat
   swig_sanguosha
-  ${LUA_LIBRARIES}
+  lua
   ${FREETYPE_LIBRARIES}
 )
 
