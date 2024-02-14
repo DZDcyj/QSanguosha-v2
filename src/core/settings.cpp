@@ -117,7 +117,7 @@ void Settings::init()
     EnableMinimizeDialog = value("EnableMinimizeDialog", false).toBool();
     EnableAutoTarget = value("EnableAutoTarget", true).toBool();
     EnableIntellectualSelection = value("EnableIntellectualSelection", true).toBool();
-    EnableDoubleClick = value("EnableDoubleClick", false).toBool();
+    EnableDoubleClick = value("EnableDoubleClick", true).toBool();
     EnableSuperDrag = value("EnableSuperDrag", false).toBool();
     EnableAutoBackgroundChange = value("EnableAutoBackgroundChange", true).toBool();
     NullificationCountDown = value("NullificationCountDown", 8).toInt();
