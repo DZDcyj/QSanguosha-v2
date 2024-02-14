@@ -18,10 +18,10 @@ PRECOMPILED_HEADER = src/pch.h
 DEFINES += USING_PCH
 
 CONFIG += debug
-OBJECTS_DIR = build-qt6/obj
-MOC_DIR = build-qt6/moc
-RCC_DIR = build-qt6/rcc
-UI_DIR  = build-qt6/ui
+OBJECTS_DIR = build/obj
+MOC_DIR = build/moc
+RCC_DIR = build/rcc
+UI_DIR  = build/ui
 
 SOURCES += \
     src/main.cpp \
