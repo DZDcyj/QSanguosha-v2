@@ -90,6 +90,7 @@ public:
                     break;
 
                 case Card::Diamond:
+                default:
                     log.type = "$ShitDamage";
                     room->sendLog(log);
                     room->damage(DamageStruct(shit, player, player));
