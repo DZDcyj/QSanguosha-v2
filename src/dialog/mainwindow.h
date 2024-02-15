@@ -1,8 +1,6 @@
 ﻿#ifndef _MAIN_WINDOW_H
 #define _MAIN_WINDOW_H
 
-#include "src/pch.h"
-
 namespace Ui {
     class MainWindow;
 }

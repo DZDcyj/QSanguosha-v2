@@ -9,8 +9,6 @@ class ServerSocket;
 class ClientSocket;
 class QtUpnpPortMapping;
 
-#include "src/pch.h"
-
 class Package;
 
 class Select3v3GeneralDialog : public QDialog

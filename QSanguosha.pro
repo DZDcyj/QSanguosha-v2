@@ -18,10 +18,10 @@ PRECOMPILED_HEADER = src/pch.h
 DEFINES += USING_PCH
 
 CONFIG += debug
-OBJECTS_DIR = build-qt6/obj
-MOC_DIR = build-qt6/moc
-RCC_DIR = build-qt6/rcc
-UI_DIR  = build-qt6/ui
+OBJECTS_DIR = build/obj
+MOC_DIR = build/moc
+RCC_DIR = build/rcc
+UI_DIR  = build/ui
 
 SOURCES += \
     src/main.cpp \
@@ -450,7 +450,7 @@ android:DEFINES += "\"getlocaledecpoint()='.'\""
 
 
 !build_pass{
-    system("lrelease $$_PRO_FILE_PWD_/builds/sanguosha.ts -qm $$_PRO_FILE_PWD_/sanguosha.qm")
+    system("lrelease $$_PRO_FILE_PWD_/sanguosha.ts -qm $$_PRO_FILE_PWD_/sanguosha.qm")
 
     SWIG_bin = "swig"
     contains(QMAKE_HOST.os, "Windows"): SWIG_bin = "$$_PRO_FILE_PWD_/tools/swig/swig.exe"
