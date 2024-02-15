@@ -33,7 +33,7 @@ config = {
 		"New3v3_2013Card",
 		"New1v1Card",
 		"YitianCard",
-	--	"Joy",
+		"Joy",
 		"Disaster",
 		"JoyEquip",
 

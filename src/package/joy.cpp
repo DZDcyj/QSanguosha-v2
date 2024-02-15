@@ -43,6 +43,9 @@ public:
 
     bool trigger(TriggerEvent , Room *room, ServerPlayer *player, QVariant &data) const {
 
+        if (room->getCurrent() != player) {
+            return false;
+        }
         CardsMoveOneTimeStruct move = data.value<CardsMoveOneTimeStruct>();
         if (!move.from)
             return false;
