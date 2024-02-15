@@ -62,9 +62,9 @@ protected:
     QPoint m_anchor;
     Qt::Alignment m_align;
     bool anchorEnabled;
-    int m_hp;
-    int m_maxHp;
-    Qt::Orientation m_orientation;
+    int m_hp = 0;
+    int m_maxHp = 0;
+    Qt::Orientation m_orientation = Qt::Vertical;
     bool m_showBackground;
     QSize m_iconSize;
     QRect m_imageArea;

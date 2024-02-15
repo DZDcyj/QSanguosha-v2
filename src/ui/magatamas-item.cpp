@@ -12,8 +12,6 @@ MagatamasBoxItem::MagatamasBoxItem()
 MagatamasBoxItem::MagatamasBoxItem(QGraphicsItem *parent)
     : QGraphicsObject(parent)
 {
-    m_hp = 0;
-    m_maxHp = 0;
 }
 
 void MagatamasBoxItem::setOrientation(Qt::Orientation orientation)
