@@ -463,7 +463,7 @@ void Dashboard::setCardSelected(CardItem* item, bool state_wanted)
 {
     bool oldState = item->isSelected();
     if (oldState == state_wanted) return;
-    m_mutex.lock();
+    QMutexLocker locker(&m_mutex);
 
     item->setSelected(state_wanted);
     QPointF oldPos = item->homePos();
@@ -471,8 +471,6 @@ void Dashboard::setCardSelected(CardItem* item, bool state_wanted)
     newPos.setY(newPos.y() + (state_wanted ? 1 : -1) * S_PENDING_OFFSET_Y);
     item->setHomePos(newPos);
     selected = item;
-
-    m_mutex.unlock();
 }
 
 void Dashboard::unselectAll(const CardItem *except)
@@ -512,7 +510,7 @@ void Dashboard::setWidth(int width)
 QSanSkillButton *Dashboard::addSkillButton(const QString &skillName)
 {
     // if it's a equip skill, add it to equip bar
-    _mutexEquipAnim.lock();
+    QMutexLocker locker(&_mutexEquipAnim);
 
     for (int i = 0; i < S_EQUIP_AREA_LENGTH; i++) {
         if (!_m_equipCards[i]) continue;
@@ -532,11 +530,9 @@ QSanSkillButton *Dashboard::addSkillButton(const QString &skillName)
             connect(_m_equipSkillBtns[i], SIGNAL(clicked()), this, SLOT(_onEquipSelectChanged()));
             connect(_m_equipSkillBtns[i], SIGNAL(enable_changed()), this, SLOT(_onEquipSelectChanged()));
             QSanSkillButton *btn = _m_equipSkillBtns[i];
-            _mutexEquipAnim.unlock();
             return btn;
         }
     }
-    _mutexEquipAnim.unlock();
 #ifndef QT_NO_DEBUG
     const Skill *skill = Sanguosha->getSkill(skillName);
     Q_ASSERT(skill && !skill->inherits("WeaponSkill") && !skill->inherits("ArmorSkill") && !skill->inherits("TreasureSkill"));
@@ -549,7 +545,7 @@ QSanSkillButton *Dashboard::addSkillButton(const QString &skillName)
 QSanSkillButton *Dashboard::removeSkillButton(const QString &skillName)
 {
     QSanSkillButton *btn = NULL;
-    _mutexEquipAnim.lock();
+    QMutexLocker locker(&_mutexEquipAnim);
     for (int i = 0; i < S_EQUIP_AREA_LENGTH; i++) {
         if (!_m_equipSkillBtns[i]) continue;
         const Skill *skill = _m_equipSkillBtns[i]->getSkill();
@@ -560,7 +556,6 @@ QSanSkillButton *Dashboard::removeSkillButton(const QString &skillName)
             continue;
         }
     }
-    _mutexEquipAnim.unlock();
     if (btn == NULL) {
         if (skillName == "shefu")
             m_btnShefu->hide();
@@ -730,9 +725,8 @@ void Dashboard::_createEquipBorderAnimations()
 
 void Dashboard::_setEquipBorderAnimation(int index, bool turnOn)
 {
-    _mutexEquipAnim.lock();
+    QMutexLocker locker(&_mutexEquipAnim);
     if (_m_isEquipsAnimOn[index] == turnOn) {
-        _mutexEquipAnim.unlock();
         return;
     }
 
@@ -766,7 +760,6 @@ void Dashboard::_setEquipBorderAnimation(int index, bool turnOn)
     }
 
     _m_isEquipsAnimOn[index] = turnOn;
-    _mutexEquipAnim.unlock();
 }
 
 void Dashboard::adjustCards(bool playAnimation)
@@ -1073,35 +1066,32 @@ void Dashboard::changeShefuState()
 
 void Dashboard::disableAllCards()
 {
-    m_mutexEnableCards.lock();
+    QMutexLocker locker(&m_mutexEnableCards);
     foreach(CardItem *card_item, m_handCards)
         card_item->setEnabled(false);
-    m_mutexEnableCards.unlock();
 }
 
 void Dashboard::enableCards()
 {
-    m_mutexEnableCards.lock();
+    QMutexLocker locker(&m_mutexEnableCards);
     foreach (const QString &pile, Self->getPileNames()) {
         if (pile.startsWith("&") || pile == "wooden_ox")
             expandPileCards(pile);
     }
     foreach(CardItem *card_item, m_handCards)
         card_item->setEnabled(card_item->getCard()->isAvailable(Self));
-    m_mutexEnableCards.unlock();
 }
 
 void Dashboard::enableAllCards()
 {
-    m_mutexEnableCards.lock();
+    QMutexLocker locker(&m_mutexEnableCards);
     foreach(CardItem *card_item, m_handCards)
         card_item->setEnabled(true);
-    m_mutexEnableCards.unlock();
 }
 
 void Dashboard::startPending(const ViewAsSkill *skill)
 {
-    m_mutexEnableCards.lock();
+    QMutexLocker locker(&m_mutexEnableCards);
     view_as_skill = skill;
     pendings.clear();
     unselectAll();
@@ -1136,12 +1126,11 @@ void Dashboard::startPending(const ViewAsSkill *skill)
     }
 
     updatePending();
-    m_mutexEnableCards.unlock();
 }
 
 void Dashboard::stopPending()
 {
-    m_mutexEnableCards.lock();
+    QMutexLocker locker(&m_mutexEnableCards);
     if (view_as_skill) {
         if (view_as_skill->objectName().contains("guhuo")) {
             foreach(CardItem *item, m_handCards)
@@ -1177,7 +1166,6 @@ void Dashboard::stopPending()
     }
     pendings.clear();
     adjustCards(true);
-    m_mutexEnableCards.unlock();
 }
 
 void Dashboard::expandPileCards(const QString &pile_name)
