@@ -311,7 +311,7 @@ set_property(TARGET swig_sanguosha PROPERTY INCLUDE_DIRECTORIES
   ${Qt6Quick_INCLUDE_DIRS}
 )
 
-target_compile_options(${TARGET} PRIVATE $<$<COMPILE_LANGUAGE:CXX>:-pedantic -Wimplicit-fallthrough -Wswitch-enum -Wall -Wextra -Wno-unused-function -Wno-sign-compare>)
+target_compile_options(${TARGET} PRIVATE $<$<COMPILE_LANGUAGE:CXX>:-pedantic -Wimplicit-fallthrough -Wall -Wextra -Wno-unused-function -Wno-sign-compare>)
 
 target_link_libraries(${TARGET} PRIVATE
   Qt6::Core Qt6::Network Qt6::Widgets Qt6::Multimedia Qt6::Quick Qt6::Core5Compat
