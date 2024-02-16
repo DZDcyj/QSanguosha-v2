@@ -41,7 +41,7 @@ public:
         global = true;
     }
 
-    bool trigger(TriggerEvent , Room *room, ServerPlayer *player, QVariant &data) const {
+    bool trigger(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data) const {
 
         if (room->getCurrent() != player) {
             return false;
@@ -68,49 +68,34 @@ public:
                 LogMessage log;
                 log.card_str = shit->toString();
                 log.from = player;
-
-                switch (shit->getSuit()) {
-
-                case Card::Spade:
+                if (player->isDead())
+                    break;
+                if (shit->getSuit() == Card::Spade) {
                     log.type = "$ShitLostHp";
                     room->sendLog(log);
                     room->loseHp(player);
-                    break;
-
-                case Card::Heart:
+                } else {
                     log.type = "$ShitDamage";
                     room->sendLog(log);
-                    room->damage(DamageStruct(shit, player, player, 1, DamageStruct::Nature::Fire));
-                    break;
-
-                case Card::Club:
-                    log.type = "$ShitDamage";
-                    room->sendLog(log);
-                    room->damage(DamageStruct(shit, player, player, 1, DamageStruct::Nature::Thunder));
-                    break;
-
-                case Card::Diamond:
-                default:
-                    log.type = "$ShitDamage";
-                    room->sendLog(log);
-                    room->damage(DamageStruct(shit, player, player));
-                    break;
+                    auto damageNature = DamageStruct::Nature::Normal;
+                    if (shit->getSuit() == Card::Heart)
+                        damageNature = DamageStruct::Nature::Fire;
+                    if (shit->getSuit() == Card::Club)
+                        damageNature = DamageStruct::Nature::Thunder;
+                    room->damage(DamageStruct(shit, player, player, 1, damageNature));
                 }
-
-                if (player->isDead())
-                    break;
             }
         }
         return false;
     }
 
-    bool triggerable(Player *target) const {
+    bool triggerable(const ServerPlayer *target) const {
         if (target)
             return target->getPhase() != Player::NotActive;
         return false;
     }
 
-    int getPriority() const {
+    int getPriority(TriggerEvent) const {
         return 1;
     }
 };
