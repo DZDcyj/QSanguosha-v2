@@ -458,7 +458,7 @@ android:DEFINES += "\"getlocaledecpoint()='.'\""
     system("$$SWIG_bin -c++ -lua $$_PRO_FILE_PWD_/swig/sanguosha.i")
 }
 
-TRANSLATIONS += builds/sanguosha.ts
+TRANSLATIONS += sanguosha.ts
 
 CONFIG(debug, debug|release): LIBS += -lfreetype_D
 else:LIBS += -lfreetype

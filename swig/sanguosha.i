@@ -3,6 +3,7 @@
 %{
 
 #include "structs.h"
+#include "joy.h"
 #include "engine.h"
 #include "client.h"
 #include "wrapped-card.h"

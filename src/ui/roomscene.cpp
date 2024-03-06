@@ -604,6 +604,7 @@ void RoomScene::handleGameEvent(const QVariant &args)
             showPindianBox(from_name, from_id, to_name, to_id, reason);
         else
             setEmotion(from_name, success ? "success" : "no-success");
+        break;
     }
     default:
         break;
@@ -2502,6 +2503,7 @@ void RoomScene::doTimeout()
     case Client::AskForArrangement: {
         arrange_items << down_generals.mid(0, 3 - arrange_items.length());
         finishArrange();
+        break;
     }
     default:
         break;

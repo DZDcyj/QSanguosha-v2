@@ -52,8 +52,8 @@ Room::Room(QObject *parent, const QString &mode)
 Room::~Room()
 {
     lua_close(L);
-	if (thread != NULL)
-		delete thread;
+    if (thread != NULL)
+        delete thread;
 }
 
 void Room::initCallbacks()
@@ -953,7 +953,7 @@ bool Room::askForSkillInvoke(ServerPlayer *player, const QString &skill_name, co
             thread->delay();
     } else {
         JsonArray skillCommand;
-        if (data.type() == QVariant::String)
+        if (data.typeId() == QVariant::String)
             skillCommand  << skill_name << data.toString();
         else {
             ServerPlayer *p = data.value<ServerPlayer *>();
@@ -967,7 +967,7 @@ bool Room::askForSkillInvoke(ServerPlayer *player, const QString &skill_name, co
             invoked = false;
         } else {
             QVariant clientReply = player->getClientReply();
-            if (clientReply.canConvert(QVariant::Bool))
+            if (clientReply.canConvert<bool>())
                 invoked = clientReply.toBool();
         }
     }
@@ -1008,7 +1008,7 @@ QString Room::askForChoice(ServerPlayer *player, const QString &skill_name, cons
         } else {
             bool success = doRequest(player, S_COMMAND_MULTIPLE_CHOICE, JsonArray() << skill_name << choices, true);
             QVariant clientReply = player->getClientReply();
-            if (!success || !clientReply.canConvert(QVariant::String))
+            if (!success || !clientReply.canConvert<QString>())
                 answer = "cancel";
             else
                 answer = clientReply.toString();
@@ -2362,7 +2362,7 @@ void Room::processRequestCheat(ServerPlayer *player, const QVariant &arg)
     player->m_cheatArgs = QVariant();
     if (!Config.EnableCheat)
         return;
-    if (!arg.canConvert<JsonArray>() || !arg.value<JsonArray>().value(0).canConvert(QVariant::Int))
+    if (!arg.canConvert<JsonArray>() || !arg.value<JsonArray>().value(0).canConvert<int>())
         return;
     //@todo: synchronize this
     player->m_cheatArgs = arg;
@@ -2397,7 +2397,7 @@ bool Room::makeSurrender(ServerPlayer *initiator)
     // collect polls
     foreach (ServerPlayer *player, playersAlive) {
         bool result = false;
-        if (!player->m_isClientResponseReady || !player->getClientReply().canConvert(QVariant::Bool))
+        if (!player->m_isClientResponseReady || !player->getClientReply().canConvert<bool>())
             result = !player->isOnline();
         else
             result = player->getClientReply().toBool();
@@ -2484,7 +2484,7 @@ void Room::processClientPacket(const QString &request)
 
 void Room::addRobotCommand(ServerPlayer *player, const QVariant &arg)
 {
-    if ((player && !player->isOwner()) || !arg.canConvert(QVariant::Int))
+    if ((player && !player->isOwner()) || !arg.canConvert<int>())
         return;
 
     int n = 0;

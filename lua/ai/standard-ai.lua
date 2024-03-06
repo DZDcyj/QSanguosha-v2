@@ -1,5 +1,5 @@
 sgs.ai_skill_invoke.jianxiong = function(self, data)
-	if self.jianxiong then self.jianxiong = nil return true end
+	if self.jianxiong then self.jianxiong = nil return not sgs.Shit_HasShit(data:toCard()) end
 	return not self:needKongcheng(self.player, true)
 end
 

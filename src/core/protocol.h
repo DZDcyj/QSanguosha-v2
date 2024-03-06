@@ -230,7 +230,7 @@ namespace QSanProtocol {
         virtual CommandType getCommandType() const = 0;
     };
 
-    class Packet : public AbstractPacket
+    class Packet final : public AbstractPacket
     {
     public:
         //format: [global_serial, local_serial, packet_type, command_name, command_body]
